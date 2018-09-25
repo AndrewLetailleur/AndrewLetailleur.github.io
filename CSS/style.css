@@ -1,0 +1,120 @@
+/* REF Site: https://www.w3schools.com/howto/tryit.asp?filename=tryhow_make_a_website*/
+
+/* Body Style, general */
+body {
+	font-family: Helvetica, Verdana, sans-serif;
+	margin: 0;
+}
+
+/* Header style, logo est*/
+.header {
+	padding: 5px;
+	text-align: center;
+	background: blue;
+	background-image: linear-gradient(to right, LightBlue, DeepSkyBlue 33%, DodgerBlue 66%, Blue); /*aqua > > blue */
+	/*url("TestIMG.png"); References goes funky if IMG is placed in a seperate folder, or folder within a folder*/
+	background-size: 100% 100%;
+	color: white;
+}
+
+/* JNC, bigger font wise, now in percentile */
+.header h1 {
+	font-size: 250%; /*approx. 41px;*/
+} /* Acts as an alt color and text scaler, code wise*/
+.header h1 span {
+	font-size: 200%;/*approx. 102px, scales up H1 text by *2*/
+	color: yellow;
+}
+
+/* Style the navbar top*/
+.navbar {
+	overflow: hidden;
+	background-color: #333;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Style the navbar links */
+.navbar a {
+    float: left;
+	font-size: 16px;
+    color: white;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+	/*display: block;*/
+}
+
+/* Right-aligned link additional*/
+.navbar a.right {
+    float: right;
+}
+
+/* Change color on hover, in general edit */
+.navbar a:hover, .dropbtn:hover, .dropbtn {/*, .dropbtn:focus */
+    background-color: red;
+}
+
+/* Responsive layout - when the screen is less than 400px wide, make the navigation links stack on top of each other instead of next to each other. Test copy over from W3S Wise. */
+@media screen and (max-width: 400px) {
+    .navbar a {
+        float: none;
+        width: 100%;
+    }
+}
+
+/*Begin another hacked image attempt, transition wise that's more efficeint than JQuery, apparently.
+	Source link - https://www.the-art-of-web.com/css/fading-slideshow-no-jquery/
+	It may not be JQuery, but it works with JavaScript.*/
+
+#stage {
+    margin: 1em auto;
+    width: 382px;
+    height: 292px;
+ }
+
+#stage a {
+    position: absolute;
+}
+#stage a img {
+    padding: 10px;
+    border: 1px solid #ccc;
+    background: #fff;
+}
+
+#stage a:nth-of-type(1) {
+    animation-name: fader;
+    animation-delay: 4s;
+    animation-duration: 1s;
+    z-index: 20;
+}
+#stage a:nth-of-type(2) {
+    z-index: 10;
+}
+#stage a:nth-of-type(n+3) {
+    display: none;
+}
+
+@keyframes fader {
+    from { opacity: 1.0; }
+    to   { opacity: 0.0; }
+}
+
+/* Footer */
+.footer {
+	text-align: center;
+	padding: 20px;
+	background: #f0f0f0;
+/*	display: -ms-flexbox;*/ /* modern only, IE10? */
+/*	display: flex;*/ /*Disabled for now, due to text-align shenanigans*/
+	-ms-flex-wrap: nowrap; /* modern only, IE10? */
+	flex-wrap: nowrap;
+}
+/*end of styles*/
+
+
+
+
+
+
+
+
