@@ -6,6 +6,13 @@ body {
 	margin: 0;
 }
 
+canvas {
+    padding: 0;
+    margin: auto;
+    display: block;
+    width: 800px;
+}
+
 /* Header style, logo est*/
 .header {
 	padding: 5px;

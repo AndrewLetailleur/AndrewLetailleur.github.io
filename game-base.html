@@ -6,28 +6,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
 	<!--BEGIN EXTERNAL LIBRARY DEPENDENCIES-->
-	
-			<!--The Phaser game engine, more important than everything else-->
-		<!-- <script src="lib/phaser.min.js"></script> -->
-	
-		<!-- <script src="src/preloadFile.js"></script> -->
-		<!-- <script src="src/menuFile.js"></script>	-->
-		<!-- <script src="src/gameFile.js"></script>	-->
-		<!-- <script src="src/winFile.js"></script>		-->
-		<!-- <script src="src/loseFile.js"></script>	-->
-
-		<script>
-			var game = new Phaser.Game(800, 600, Phaser.AUTO, "game");
-			game.state.add(“preloadState", preloadFunc);
-			game.state.add(“menuState", menuFunc);
-			game.state.add(“gameState", gameFunc);
-			game.state.add(“winState", winFunc);
-			game.state.add(“loseState" ,loseFunc);
-			game.state.start("preloadState");
-		</script> <!-- ??? -->
-
-		<!--End Phaser dependencies-->
-	
 		<!-- Latest Bootstrap 4 CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 		
@@ -44,6 +22,35 @@
 		<!-- Latest-ish Font Awesome 4. Could use 5, but prefer 4 for now. -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 	<!--Font Awesome 4 CDN-->
 	<!--END EXTERNAL LIBRARY DEPENDENCIES-->
+	
+	
+	<!--BEGIN PHASER DEPENDENCIES-->
+			<!--Under LIB: The Phaser game engine, more important than everything else-->
+		<script src="Lib\phaser.min.js"></script> <!-- version used is at 2.11.0-->
+			<!--Under SRC: The Game States. Each should be seperate-->
+		<script src="Src\phaserTestFile.js"></script> <!-- Test state version, to load game state-->
+		<!-- <script src="src/preloadFile.js"></script> -->
+		<!-- <script src="src/menuFile.js"></script>	-->
+		<!-- <script src="src/gameFile.js"></script>	-->
+		<!-- <script src="src/winFile.js"></script>		-->
+		<!-- <script src="src/loseFile.js"></script>	-->
+		
+			<!--Under SCRIPT: Load the Game States, and start a Game State. -->		
+		
+			<!--/Another Example list of states\-->
+<!--	<script> <!--Load internal Phaser game map-->
+<!--		var game = new Phaser.Game(800, 600, Phaser.AUTO, "game");	-->
+<!--		game.state.add(“preloadState", preloadFunc);				-->
+<!--		game.state.add(“menuState", menuFunc);						-->
+<!--		game.state.add(“gameState", gameFunc);						-->
+<!--		game.state.add(“winState", winFunc);						-->
+<!--		game.state.add(“loseState" ,loseFunc);						-->
+<!--		game.state.start("preloadState");							-->
+<!--		</script> <!-- ??? -->
+
+		<!--END PHASER DEPENDENCIES-->
+	
+	
 		
 	<!--BEGIN CUSTOM SCRIPTS-->
 			<!--Insert homebrew scripts last, as external libraries override--> <!--Both CSS and JavaScript-->
@@ -79,9 +86,9 @@
 	<div class="row">
 	
 		<div class="col-sm-12">
-			<h2 class="text-center">TITLE HEADING</h2>
-			<h5> To test. What to do, is to google on how to insert a 'framework' for Phaser, later.</h5>
-			<p>"Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..."</p>
+			<h2 class="text-center">A Dummy Test Phaser Project</h2>
+			<h5 class="text-center">A basic test of a dummy 'framework' for Phaser, for later switching to a proper game.</h5>
+			<p class="text-center">"Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..."</p>
 		</div>
 		
 	</div>
@@ -90,15 +97,12 @@
 
 <div class="container"> <!--To CONTAIN the content-->
 	<div class="row">
-	
 		<div id="phaser-example" style="overflow: hidden;" class="col-sm-12">
-			<canvas width="" height="" style="width: auto; height: auto;">
+		<!--	<canvas width="800" height="600" style="display: block; touch-action: none; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); width: 800px; height: 600px; cursor: inherit;"></canvas>	Not needed at all, so REDACTED	-->
 		</div> <!--To do later, ensue that the phaser game loads on this place/location-->
-		<p id="loading" class="text-center">Loading game... Phaser...</p>
-		
-		
 	</div>
 </div>
+
 
 <div class="footer">
 	<p>	&copy; Andrew Letailleur, 2018 - Present</p>
