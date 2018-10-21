@@ -21,20 +21,30 @@ var fireCtrl; //the trigger key for player
 
 var lives;
 
+	//sound fx
+var snd;
 
 //preload is called first. Normally you'd use this to load your game assets (or those needed for the current State), akin to Unity Awake?
 function preload() { 
+		//load audio
+	game.load.audio('gun', 'assets/audio/shoot.wav');
+
+		//load static art & images
 	game.load.image('playShip', 'IMG/spaceShooter/ShipMono.png'); //the ship
 	game.load.image('starfield', 'IMG/spaceShooter/starfield.png'); //the //the background, per say
 	game.load.image('pShot', 'IMG/spaceShooter/BulletO.png');//the projectile shot, to north wise hack.
+		
+		//load animations and such, 
+	//game.load.spritesheet();
 }//100% Warks
 
 //create is called once preload has completed, this includes the loading of any assets from the Loader. Akin to Unity Start?
 function create() { //create the assets
 
-	//draw icon to delete later
-	
 
+		//fx sound
+	snd = game.add.audio('pgun');
+	
 	//  The scrolling starfield background
     starfield = game.add.tileSprite(0, 0, 600, 600, 'starfield');
 	
@@ -45,8 +55,6 @@ function create() { //create the assets
 	for (var i = 0; i < 3; i++) {
 		var ship = lives.create(8 + (36 * i), 560, 'playShip');
 	}//end for
-	
-
 
 	//the bullet shot group
 	pShots = game.add.group();
@@ -80,7 +88,6 @@ function create() { //create the assets
 
 //function createBaseAI(){}
 //function createAdvAI(){}
-
 
 // It is called during the core game loop AFTER debug, physics, plugins and the Stage have had their preUpdate methods called. If is called BEFORE Stage, Tweens, Sounds, Input, Physics, Particles and Plugins have had their postUpdate methods called.
 function update() {
@@ -143,10 +150,11 @@ function fireBullet () {
 	
 	if (pShot) {
 		//fire the bullet grabbed
+		snd.play();//jnc
+			//fxgun.play();//play a sound test
 		pShot.reset(player.x, player.y - 16);
 		pShot.body.velocity.y = BULLET_VELO; //shot speed?
 	}
-	
 }
 
 
