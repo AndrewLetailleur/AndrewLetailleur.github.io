@@ -49,7 +49,7 @@ function preload() {
 	game.load.image('pShot', 'IMG/spaceShooter/BulletO.png');//the projectile shot
 		 //test enemy, make it animated later
 	//game.load.spritesheet(); //load animations and such,
-	game.load.image('enemy-test', 'IMG/SpaceShooter/FOE.png');//a basic enemy prefab hack
+	game.load.image('enemy-test', 'IMG/spaceShooter/FOE.png');//a basic enemy prefab hack
 		//get a custom asset later, instead of blindly copy/paste from tutorial's, hack wise
 	game.load.spritesheet('explosion', 'IMG/spaceShooter/explode.png', 128, 128); //perfect square
 
