@@ -108,6 +108,24 @@ function create() { //create is called once preload has completed
 //	the player controls
 	moveCtrl = game.input.keyboard.createCursorKeys();
 	fireCtrl = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);//to fire a bullet, trig wise
+//	create/set up the group of lives. Destroy the last array first, later
+	lives = game.add.group();
+	lives.setAll('alpha', 0.6);
+	for (var i = 0; i < livesVAL; i++) {
+		var ship = lives.create(8 + (36 * i), 560, 'playShip');
+	}//end for
+	//no lives.render here
+	//lives.render();
+//	do score counter instead
+	scoreTXT = game.add.text(game.world.centerX - 100, (game.world.centerY * 2 - 40), "Score: " + scoreVAL, { font: "32px Arial", fill: "#09F", align: "center" });
+	scoreBONUS = bonusREQ;//set bonus to immutable value ref
+	//scoreTXT.render();
+	//render SEEMS to be pretty bugged here
+	
+//	GameOver SFX
+    gameOver = game.add.text(game.world.centerX, game.world.centerY, 'GAME OVER!', { font: '84px Arial', fill: '#fff' });
+    gameOver.anchor.setTo(0.5, 0.5);
+    gameOver.visible = false;
 //end player prefabs
 	
 //	explode fx pool
@@ -143,23 +161,41 @@ function create() { //create is called once preload has completed
 	game.time.events.add(1000, testEnemy_Timer);//spawns the enemy, after trig.
 	//TODO later, spawn an 'array', then check to see if array is still there?
 	
-//	create/set up the group of lives. Destroy the last array first, later
-	lives = game.add.group();
-	for (var i = 0; i < livesVAL; i++) {
-		var ship = lives.create(8 + (36 * i), 560, 'playShip');
-	}//end for
-	//no lives.render here
-	//lives.render();
-//	do score counter instead
-	scoreTXT = game.add.text(game.world.centerX - 100, (game.world.centerY * 2 - 40), "Score: " + scoreVAL, { font: "32px Arial", fill: "#09F", align: "center" });
-	scoreBONUS = bonusREQ;//set bonus to immutable value ref
-	//scoreTXT.render();
-	//render SEEMS to be pretty bugged here
 	
-//	GameOver SFX
-    gameOver = game.add.text(game.world.centerX, game.world.centerY, 'GAME OVER!', { font: '84px Arial', fill: '#fff' });
-    gameOver.anchor.setTo(0.5, 0.5);
-    gameOver.visible = false;
+	//enemy bullet list, before test enemies are spawned
+	
+		//test shots
+	testEnemy_Bullets = game.add.group();
+	testEnemy_Bullets.enableBody = true;
+	testEnemy_Bullets = game.add.group();
+	testEnemy_Bullets.enableBody = true;
+	testEnemy_Bullets.physicsBodyType = Phaser.Physics.ARCADE;
+	testEnemy_Bullets.createMultiple(30, 'eShot');
+	testEnemy_Bullets.callAll('crop', null, {x: 90, y: 0, width: 90, height: 70});
+	testEnemy_Bullets.setAll('alpha', 0.9);//transparency
+	testEnemy_Bullets.setAll('anchor.x', 0.5);
+	testEnemy_Bullets.setAll('anchor.y', 0.5);
+	testEnemy_Bullets.setAll('outOfBoundsKill', true);
+	testEnemy_Bullets.setAll('checkWorldBounds', true);
+	testEnemy_Bullets.forEach(function(enemy){
+        enemy.body.setSize(20, 20);
+	});
+	
+	if (enemyBullet && this.alive &&
+		this.bullets && this.y > game.width / 8 &&
+		game.time.now > firingDelay + this.lastShot) {
+		this.lastShot = game.time.now;
+		this.bullets--;
+		enemyBullet.reset(this.x, this.y + this.height / 2);
+		enemyBullet.damageAmount = this.damageAmount;
+		var angle = game.physics.arcade.moveToObject(enemyBullet, player, bulletSpeed);
+		enemyBullet.angle = game.math.radToDeg(angle);
+	}
+		//  Fire WIPPY
+	//enemyBullet = blueEnemyBullets.getFirstExists(false);
+	
+	
+
 	
 	//	fx sound, *BUGGY ATM!* Thus, placed lastly...
 	snd = new Phaser.Sound(game, 'pgun',1,false);
@@ -220,6 +256,8 @@ function update() {//updates all per frame
 	game.physics.arcade.overlap(testEnemy, pShots, hitEnemy, null, this);
 	//check also for if test enemy est happens, est enemy wise
 
+	game.physics.arcade.overlap(testEnemy_Bullets, player, hitPlayer, null, this);//enemy hit code
+	
 	
 	//buggy game over trigger. Be VIGILANT on debugging this mess
 	if (! player.alive && gameOver.visible === false) {//the apocalypse has happened.
@@ -310,6 +348,8 @@ function testEnemy_Timer() {
 	var MAX_ENEMY_SPACING = 300;
 	var ENEMY_SPEED = 200;
 
+
+	
     var enemy = testEnemy.getFirstExists(false);
     if (enemy) {
         enemy.reset(game.rnd.integerInRange(0, game.width), 0);
@@ -318,15 +358,48 @@ function testEnemy_Timer() {
         enemy.body.drag.x = -100;//ADDS speed over time, as it's opposite of dragging
 		enemy.body.drag.y = -10;//test prefab of 50, for barring movement?
 		
+		//Set up firing
+		var bulletSpeed = 400;
+		var firingDelay = 2000;
+		enemy.bullets = 1;
+		enemy.lastShot = 0;
+	
 		//rotation tweak
 		enemy.update = function () {
 			enemy.angle = 0 - ((game.math.radToDeg(Math.atan2(enemy.body.velocity.x, enemy.body.velocity.y))) /2) ;
-		}
-    }
-	
+			
+			
+			//XXXXX Test variable_ Spawn bullets in timers/est
+			//  Fire
+			enemyBullet = testEnemy_Bullets.getFirstExists(false);//IE: Grab the prefab of enemy bullets
+		
+			if (enemyBullet && this.alive && this.bullets
+			&& this.y > game.width / 8 &&
+			game.time.now > firingDelay + this.lastShot)
+			{
+				this.lastShot = game.time.now;
+				this.bullets--;
+				enemyBullet.reset(this.x, this.y + this.height / 2);
+				enemyBullet.damageAmount = this.damageAmount; //to represent 1, parent wise
+					//shoot at player
+				var angle = game.physics.arcade.moveToObject(enemyBullet, player, bulletSpeed);
+				enemyBullet.angle = game.math.radToDeg(angle);
+			}
+			
+			
+			if (this.y > game.height + 200) {
+                this.kill();
+                this.y = -20;
+            }
+		};
+	game.time.events.add(game.rnd.integerInRange(MIN_ENEMY_SPACING, MAX_ENEMY_SPACING), testEnemy_Timer);
+	}
 
-    //  Send another enemy soon
-    game.time.events.add(game.rnd.integerInRange(MIN_ENEMY_SPACING, MAX_ENEMY_SPACING), testEnemy_Timer);
+		//  Fire WIPPY
+	//enemyBullet = blueEnemyBullets.getFirstExists(false);
+	
+	    //  Send another enemy soon
+
 }
 
 //function createBaseAI(){}
@@ -384,6 +457,15 @@ function hitEnemy(enemy, pShots) {
     pShots.kill();
 }
 
-
+function hitPlayer(player, eShots) {
+    var explosion = explosions.getFirstExists(false);
+    explosion.reset(eShots.body.x + eShots.body.halfWidth, eShots.body.y + eShots.body.halfHeight);
+    explosion.body.velocity.y = eShots.body.velocity.y;
+    explosion.alpha = 0.7;
+    explosion.play('explosion', 30, false, true);
+    eShots.kill();
+	livesVAL--;
+	healthUpdate();
+}
 
 //end of stuff
