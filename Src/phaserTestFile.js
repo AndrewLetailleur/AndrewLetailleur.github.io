@@ -26,7 +26,7 @@ var pauseKey; //pauses the game, trigger wise
 
   /*no fire rate needed by 'one shot on screen' limit via pool limitations
 	unless 'insisted' to have firing rate.*/
-	
+
 //movement varieties
 var ACCEL = 250;
 var DRAG = 400;
@@ -47,6 +47,8 @@ var scoreBONUS;
 var scoreVAL = 0;//initial score value
 var scoreTXT;//a string array of text, plus score
 //end of player variables
+
+var shields;//object, shield wise. Meant to absorb in a 'wall' manner.
 	
 	
 	//(rest of) the objects themselves
@@ -54,15 +56,17 @@ var starfield;//the starfield say
 	//include FX
 var explosions;
 
-var testEnemy_Timer;
-var testEnemy;//test prevab	//begin speculated values
-//var testEnemy_Bullets;//the attack variable for test enemies
+
+var baseFoe; //space invaders
+var baseFoe_Array;//spawn a fresh array guess
+
+var advGal_Timer;
+var advGal_FOE;//galaxians, var advFoe;
+var advGal_FOE_Bullets;//the attack variable for test enemies
 
 var testInvader_Timer;
 var testInvader;//second enemy type... Consider sine waves?
 /* 
-var baseFoe; //space invaders
-var advFoe;  //galaxians
 var bossFoe; //gorf spawner, or improvised boss
 */ //end speculated values 
 
@@ -134,6 +138,11 @@ function create() { //create is called once preload has completed
 	pauseKey = game.input.keyboard.addKey(Phaser.Keyboard.P);
     pauseKey.onDown.add(togglePause, this);
 	
+//  create shields guess values
+
+
+	
+	
 //	create/set up the group of lives. Destroy the last array first, later
 	lives = game.add.group();
 	for (var i = 0; i < livesVAL; i++) {
@@ -148,7 +157,7 @@ function create() { //create is called once preload has completed
 	//render SEEMS to be pretty bugged here
 	
 //	GameOver SFX
-    gameOver = game.add.text(game.world.centerX, game.world.centerY, 'GAME OVER!', { font: '84px Arial', fill: '#fff' });
+    gameOver = game.add.text(game.world.centerX, game.world.centerY, 'GAME OVER!\nClick/Press Input to Try Again!', { font: '72px Arial', wordWrap: true, wordWrapWidth: game.world.width, fill: '#fff', align: "center" });
     gameOver.anchor.setTo(0.5, 0.5);
     gameOver.visible = false;
 	
@@ -172,62 +181,68 @@ function create() { //create is called once preload has completed
 	
 
 //	Enemies, after player spawned
-	testEnemy = game.add.group();
-	testEnemy.enableBody = true;
-	testEnemy.physicsBodyType = Phaser.Physics.ARCADE; //sets physics
-	testEnemy.createMultiple(5, 'enemy-test');//spawns multiple, with the sprite asset in question
-	testEnemy.forEach(function(enemy){
-//		enemy.body.setSize(enemy.body.width = 8/* 3 / 4*/, enemy.body.height = 8/* 3 / 4*/);//set collision size
-		enemy.damageAmount = 1;//to represent lives takenth away
+	advGal_FOE = game.add.group();
+	advGal_FOE.enableBody = true;
+	advGal_FOE.physicsBodyType = Phaser.Physics.ARCADE; //sets physics
+	advGal_FOE.createMultiple(5, 'enemy-test');//spawns multiple, with the sprite asset in question
+	advGal_FOE.forEach(function(enemy){
+	/*//set collision size, REDACTED
+	//enemy.body.setSize(enemy.body.width = 8 * 3 / 4*, enemy.body.height = 8 * 3 / 4*);
+	*/
+	enemy.damageAmount = 1;//to represent lives takenth away
 	});
-	testEnemy.setAll('anchor.x', .5);
-	testEnemy.setAll('anchor.y', .5); //no scaling needed here
-	testEnemy.setAll('angle', 0); //already rotated
-	testEnemy.setAll('outOfBoundsKill', true);
-	testEnemy.setAll('checkWorldBounds', true);
+	advGal_FOE.setAll('anchor.x', .5);
+	advGal_FOE.setAll('anchor.y', .5); //no scaling needed here
+	advGal_FOE.setAll('angle', 0); //already rotated
+	advGal_FOE.setAll('outOfBoundsKill', true);
+	advGal_FOE.setAll('checkWorldBounds', true);
 
 		//set freqency of spawning. Cue event timers/est
-	game.time.events.add(1000, testEnemy_Timer);//spawns the enemy, after trig.
+	game.time.events.add(1000, advGal_Timer);//spawns the enemy, after trig.
 	//TODO later, spawn an 'array', then check to see if array is still there?
 	
-/*
+	
+
+// enemy
+	baseFoe_Array = game.add.group();			//use pShot as test prefab
+	baseFoe_Array.createMultiple(44, 'pShot');//spawns multiple, hack test wise
+
+
+
+	
+
 	//enemy bullet list, before test enemies are spawned
-	testEnemy_Bullets = game.add.group();
-	testEnemy_Bullets.enableBody = true;
-     //  Blue enemy's bullets
-	testEnemy_Bullets = game.add.group();
-	testEnemy_Bullets.enableBody = true;
-	testEnemy_Bullets.physicsBodyType = Phaser.Physics.ARCADE;
-	testEnemy_Bullets.createMultiple(30, 'eShot');
-	testEnemy_Bullets.callAll('crop', null, {x: 90, y: 0, width: 90, height: 70});
-	testEnemy_Bullets.setAll('alpha', 0.9);
-	testEnemy_Bullets.setAll('anchor.x', 0.5);
-	testEnemy_Bullets.setAll('anchor.y', 0.5);
-	testEnemy_Bullets.setAll('outOfBoundsKill', true);
-	testEnemy_Bullets.setAll('checkWorldBounds', true);
-	testEnemy_Bullets.forEach(function(enemy){
-        enemy.body.setSize(20, 20);
+	advGal_FOE_Bullets = game.add.group();
+	advGal_FOE_Bullets.enableBody = true;
+	advGal_FOE_Bullets.physicsBodyType = Phaser.Physics.ARCADE;
+	advGal_FOE_Bullets.createMultiple(5, 'eShot');
+	//no needed, as it could be a poor man's spritesheet instead.
+//	advGal_FOE_Bullets.callAll('crop', null, {x: 90, y: 0, width: 90, height: 70});
+	advGal_FOE_Bullets.setAll('alpha', 0.9);
+	advGal_FOE_Bullets.setAll('anchor.x', 0.5);
+	advGal_FOE_Bullets.setAll('anchor.y', 0.5);
+	advGal_FOE_Bullets.setAll('outOfBoundsKill', true);
+	advGal_FOE_Bullets.setAll('checkWorldBounds', true);
+	advGal_FOE_Bullets.forEach(function(enemy){
+        enemy.body.setSize(8, 8);
 	});
-	
-	if (enemyBullet && this.alive &&
-		this.bullets && this.y > game.width / 8 &&
-		game.time.now > firingDelay + this.lastShot) {
-		this.lastShot = game.time.now;
-		this.bullets--;
-		enemyBullet.reset(this.x, this.y + this.height / 2);
-		enemyBullet.damageAmount = this.damageAmount;
-		var angle = game.physics.arcade.moveToObject(enemyBullet, player, bulletSpeed);
-		enemyBullet.angle = game.math.radToDeg(angle);
-	}
-		//  Fire WIPPY
-	//enemyBullet = blueEnemyBullets.getFirstExists(false);
-	
-*/
+
 	
 	//	fx sound, *BUGGY ATM!* Thus, placed lastly...
 	snd = new Phaser.Sound(game, 'pgun',1,false);
 }
 //disable snd from create later?, end create
+
+function spawnBaseArray() {
+			//spawn an array, tinker/fix to screen
+	for (var y = 0; y < 5; y++) {//height
+		for (var x = 0; x < 11; x++) {//width
+			var bbaseFoe_Array = lives.create(8 + (2 * x), 8 + (2 * y), 'pShot');
+		}
+	}
+	
+	
+}
 
 
 function togglePause() {
@@ -288,10 +303,13 @@ function update() {//updates all per frame
 	player.angle = bank * 10;
 		//end player stuff for real this time
 	
-//	check collisions
-	game.physics.arcade.overlap(player, testEnemy, shipCollide, null, this);
-	game.physics.arcade.overlap(testEnemy, pShots, hitEnemy, null, this);
-//	game.physics.arcade.overlap(testEnemyBullets, player, enemyHitsPlayer, null, this);
+	//	check collisions
+		//player collides
+	game.physics.arcade.overlap(player, advGal_FOE, shipCollide, null, this);
+		//enemy collides
+	game.physics.arcade.overlap(advGal_FOE, pShots, hitEnemy, null, this);
+		//hazard collides
+	game.physics.arcade.overlap(advGal_FOE_Bullets, player, enemyHitsPlayer, null, this);
 	
 	
 	
@@ -320,91 +338,45 @@ function update() {//updates all per frame
 }//end of update function
 
 
-	//  Set up firing mechanimss
-	var shotSpeed = 400;
-	var shotDelay = 2000;//approx 2 seconds?
-	enemy.bullets = 1;
-	enemy.lastShot = 0;
+
+
+function enemy_fireBullet() {//in order to limit/slow down enemy firing rate, ideally...
 	
-
-
-function fireBullet () {
 	if (game.time.now > bullet_Timer) {
+			//  Set up firing mechanimss
+		var shotSpeed = 400;
+			//fire a random number, between min and max range, 1.5/2.5 seconds.
+		var shotDelay = (game.rnd.integerInRange(1500), 2500);//approx 2 seconds?
+		enemy.bullets = 1;
+		enemy.lastShot = 0;
 		
+		if(bullet) {
+			var bulletOffset = 20 * Math.sin(game.math.degToRad(player.angle));
+            bullet.reset(player.x + bulletOffset, player.y);
+            bullet.angle = player.angle;
+            game.physics.arcade.velocityFromAngle(bullet.angle - 90, BULLET_SPEED, bullet.body.velocity);
+            bullet.body.velocity.x += player.body.velocity.x;
+
+            bulletTimer = game.time.now + BULLET_SPACING;
+		}
 	}
-	
-	
+	/*	test code cut out
+		//  Fire WIPPY
+	//enemyBullet = blueEnemyBullets.getFirstExists(false);
+	*/
 }
-
-function restart () {//restarts the character
-	//set up, and revive character
-	livesVAL = 3;
-	player.health = livesVAL;
-	healthUpdate();
-	player.revive();
-	
-    //  Reset the enemies
-    testEnemy.callAll('kill');
-    game.time.events.remove(testEnemy_Timer);
-    game.time.events.add(1000, testEnemy_Timer);
-
-    //  Revive the player
-    scoreVAL = 0;
-	scoreBONUS = bonusREQ;//reset back to normal
-    scoreUpdate();
-
-    //  Hide the text
-    gameOver.visible = false;
-
-}
-
-function scoreUpdate() {
-	scoreTXT.text = "Score: " + scoreVAL;
-	//begin conditional life increment
-	if (scoreVAL >= scoreBONUS) {
-		scoreBONUS += bonusREQ; //so that every X gives a life
-		if (livesVAL < 5) /*if lives are below max*/
-			extraLife();
-		//endif
-	}//endif
-
-}
-
-	//health update logic COULD be used to update the assets of levels/est too
-function healthUpdate() {
-	player.health = livesVAL;
-	lives.callAll('kill');//clear, then re-add
-	if (livesVAL > 0) {
-		lives = game.add.group();
-		for (var i = 0; i < livesVAL; i++) {
-		var ship = lives.create(8 + (36 * i), 560, 'playShip');
-		}//end for
-	} else
-	player.kill();
-	//
-}
-function extraLife() {
-	if (livesVAL < 5) { //if max lives isn't reached
-		livesVAL++;
-		player.health = livesVAL;
-		lives.callAll('kill');//clear, then re-add
-		lives = game.add.group();
-		for (var i = 0; i < livesVAL; i++) {
-			var ship = lives.create(8 + (36 * i), 560, 'playShip');
-		}//end for
-	}//end if
-}
-
-
 
 	//cue enemy AI code
-//	the test code, testEnemy wise
-function testEnemy_Timer() {
+//	the test code, advGal_FOE wise
+function advGal_Timer() {
 	var MIN_ENEMY_SPACING = 30;
 	var MAX_ENEMY_SPACING = 300;
 	var ENEMY_SPEED = 200;
 
-    var enemy = testEnemy.getFirstExists(false);
+	//after for, set fring mechanics
+	
+	
+    var enemy = advGal_FOE.getFirstExists(false);
     if (enemy) {
         enemy.reset(game.rnd.integerInRange(0, game.width), 0);
         enemy.body.velocity.x = game.rnd.integerInRange(-100, 100);
@@ -412,14 +384,41 @@ function testEnemy_Timer() {
         enemy.body.drag.x = -100;//ADDS speed over time, as it's opposite of dragging
 		enemy.body.drag.y = -10;//test prefab of 50, for barring movement?
 		//rotation tweak
+		
+		//  Set up firing, for enemy.update function
+        var bulletSpeed = 200;
+        var firingDelay = 2000;
+        enemy.bullets = 1;
+        enemy.lastShot = 0;
+		
+		//the enemy.update function in the Phaser framework
 		enemy.update = function () {
+				//movement fall
 			enemy.angle = 0 - ((game.math.radToDeg(Math.atan2(enemy.body.velocity.x, enemy.body.velocity.y))) /2) ;
+			
+			//no banking here
+			
+			//attack code, then fire. Only ONE BulleT, no BulletS.
+			advGal_FOE_Bullet = advGal_FOE_Bullets.getFirstExists(false);
+			if (advGal_FOE_Bullet && this.alive && this.bullets && this.y >
+				game.width / 8 && game.time.now > firingDelay + this.lastShot) {
+				this.lastShot = game.time.now;
+				this.bullets--;
+				advGal_FOE_Bullet.reset(this.x, this.y + this.height / 2);
+				advGal_FOE_Bullet.damageAmount = this.damageAmount;//delivers the damage from enemy, onto player
+				var angle = game.physics.arcade.moveToObject(advGal_FOE_Bullet, player, bulletSpeed);
+				advGal_FOE_Bullet.angle = game.math.radToDeg(angle);
+			}
+			
+			//remove if out of screen, say. Though they do it automatically, world bound wise.
+			if (this.y > game.height + 200) {
+				this.kill();
+				this.y = -20;
+			};
 		}
     }
-	
-
     //  Send another enemy soon
-    game.time.events.add(game.rnd.integerInRange(MIN_ENEMY_SPACING, MAX_ENEMY_SPACING), testEnemy_Timer);
+    game.time.events.add(game.rnd.integerInRange(MIN_ENEMY_SPACING, MAX_ENEMY_SPACING), advGal_Timer);
 }
 
 //function createBaseAI(){}
@@ -432,13 +431,6 @@ function testEnemy_Timer() {
 //function createAdvAI(){}
 
 // It is called during the core game loop AFTER debug, physics, plugins and the Stage have had their preUpdate methods called. If is called BEFORE Stage, Tweens, Sounds, Input, Physics, Particles and Plugins have had their postUpdate methods called.
-
-
-function render() {/*debug render, very very buggy*/
-	for (var i = 0; i < testEnemy.length; i++)
-    {game.debug.body(testEnemy.children[i]);}
-    game.debug.body(player);
-}
 
 function fireBullet () {
 	//grab first bullet from the pool
@@ -454,6 +446,21 @@ function fireBullet () {
 	}
 }
 
+//the render function
+function render() {/*debug render, very very buggy*/
+//advance enemy hit boxes
+	for (var i = 0; i < advGal_FOE.length; i++)
+    {game.debug.body(advGal_FOE.children[i]);}
+//bullet test hit boxes
+	for (var i = 0; i < advGal_FOE_Bullets.length; i++)
+    {game.debug.body(advGal_FOE_Bullets.children[i]);}
+//player hit boxes
+    game.debug.body(player);
+	
+
+}
+
+
 function shipCollide(player, enemy) {
 	var explosion = explosions.getFirstExists(false);
     explosion.reset(enemy.body.x + enemy.body.halfWidth, enemy.body.y + enemy.body.halfHeight);
@@ -464,7 +471,6 @@ function shipCollide(player, enemy) {
 	livesVAL--;
 	healthUpdate();
 }
-
 function hitEnemy(enemy, pShots) {
     var explosion = explosions.getFirstExists(false);
     explosion.reset(pShots.body.x + pShots.body.halfWidth, pShots.body.y + pShots.body.halfHeight);
@@ -475,8 +481,73 @@ function hitEnemy(enemy, pShots) {
 	scoreUpdate();
     enemy.kill();
     pShots.kill();
+}//TBDL
+
+function enemyHitsPlayer(player, eShots) {
+	var explosion = explosions.getFirstExists(false);
+    explosion.reset(player.body.x + player.body.halfWidth, player.body.y + player.body.halfHeight);
+    explosion.body.velocity.y = player.body.velocity.y;
+    explosion.alpha = 0.7;
+    explosion.play('explosion', 30, false, true);
+    eShots.kill();
+	livesVAL--;//player.damage(bullet.damageAmount);
+	healthUpdate();//health.render();
 }
 
+function scoreUpdate() {
+	scoreTXT.text = "Score: " + scoreVAL;
+	//begin conditional life increment
+	if (scoreVAL >= scoreBONUS) {
+		scoreBONUS += bonusREQ; //so that every X gives a life
+		if (livesVAL < 5) /*if lives are below max*/
+			extraLife();
+		//endif
+	}//endif
+}	//health update logic COULD be used to update the assets of levels/est too
+function healthUpdate() {
+	player.health = livesVAL;
+	lives.callAll('kill');//clear, then re-add
+	if (livesVAL > 0) {
+		lives = game.add.group();
+		for (var i = 0; i < livesVAL; i++) {
+		var ship = lives.create(8 + (36 * i), 560, 'playShip');
+		}//end for
+	} else
+	player.kill();//
+}
+function extraLife() {
+	if (livesVAL < 5) { //if max lives isn't reached
+		livesVAL++;
+		player.health = livesVAL;
+		lives.callAll('kill');//clear, then re-add
+		lives = game.add.group();
+		for (var i = 0; i < livesVAL; i++) {
+			var ship = lives.create(8 + (36 * i), 560, 'playShip');
+		}//end for
+	}//end if
+}
+function restart () {//restarts the character
+	//set up, and revive character
+	livesVAL = 3;
+	player.health = livesVAL;
+	healthUpdate();
+	player.revive();
+	
+    //  Reset the enemies
+    advGal_FOE.callAll('kill');
+    game.time.events.remove(advGal_Timer);
+    game.time.events.add(1000, advGal_Timer);
 
+	//clear all bullets
+	advGal_FOE_Bullets.callAll('kill');
+	
+	
+    //  Revive the player
+    scoreVAL = 0;
+	scoreBONUS = bonusREQ;//reset back to normal
+    scoreUpdate();
 
-//end of stuff
+    //  Hide the text
+    gameOver.visible = false;
+
+}	//end of stuff
