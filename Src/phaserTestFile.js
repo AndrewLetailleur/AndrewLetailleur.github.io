@@ -1,3 +1,14 @@
+/* WIP IN PROGRESS STILL!
+
+LOOK AT THESE TUTORIALS TO FINISH THE JOB
+https://github.com/jschomay/phaser-demo-game/blob/c5824c6a7569c5536cca150a9589e814f225478b/game.js
+
+http://codeperfectionist.com/articles/phaser-js-tutorial-building-a-polished-space-shooter-game-part-4/
+
+*/
+
+
+
 var game = new Phaser.Game(600, 600, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create, update: update, render: render });
 
 //var sound = Phaser.Sound; //JNC hassle wise
@@ -11,6 +22,8 @@ var player;
 	//controls
 var moveCtrl;//the movement code for player
 var fireCtrl; //the trigger key for player
+var pauseKey; //pauses the game, trigger wise
+
   /*no fire rate needed by 'one shot on screen' limit via pool limitations
 	unless 'insisted' to have firing rate.*/
 	
@@ -22,6 +35,7 @@ var bank;
 var border_edge = 20;	
 //
 var pShots;
+var eShots;//enemy shots
 var BULLET_VELO = -600;
 	
 //player variables
@@ -41,7 +55,12 @@ var starfield;//the starfield say
 var explosions;
 
 var testEnemy_Timer;
-var testEnemy;/* //test prevab	//begin speculated values
+var testEnemy;//test prevab	//begin speculated values
+//var testEnemy_Bullets;//the attack variable for test enemies
+
+var testInvader_Timer;
+var testInvader;//second enemy type... Consider sine waves?
+/* 
 var baseFoe; //space invaders
 var advFoe;  //galaxians
 var bossFoe; //gorf spawner, or improvised boss
@@ -49,7 +68,7 @@ var bossFoe; //gorf spawner, or improvised boss
 
 //end of stuff variables.
 var gameOver;//the game over trigger, buggy ATM
-
+var gamePause;//the pause text
 
 var snd;//sound fx
 	//misc variables for player
@@ -62,6 +81,7 @@ function preload() {//preload is called first.
 	game.load.image('playShip', 'IMG/spaceShooter/ShipMono.png'); //the ship
 	game.load.image('starfield', 'IMG/spaceShooter/starfield.png'); //the background
 	game.load.image('pShot', 'IMG/spaceShooter/BulletO.png');//the projectile shot
+	game.load.image('eShot', 'IMG/spaceShooter/EnemyShot.png');//the ENEMY projectile shot
 	//game.load.spritesheet(); //test enemy, make it animated later
 	game.load.image('enemy-test', 'IMG/SpaceShooter/FOE.png');//a basic enemy
 	//get a custom asset later, potential copyright fears/est wise
@@ -72,6 +92,9 @@ function preload() {//preload is called first.
 
 //this includes the loading of any assets from the Loader. Akin to Unity Start?
 function create() { //create is called once preload has completed
+
+	game.physics.startSystem(Phaser.Physics.ARCADE);
+
 
 //  The scrolling starfield background
     starfield = game.add.tileSprite(0, 0, 600, 600, 'starfield');
@@ -108,15 +131,17 @@ function create() { //create is called once preload has completed
 //	the player controls
 	moveCtrl = game.input.keyboard.createCursorKeys();
 	fireCtrl = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);//to fire a bullet, trig wise
+	pauseKey = game.input.keyboard.addKey(Phaser.Keyboard.P);
+    pauseKey.onDown.add(togglePause, this);
+	
 //	create/set up the group of lives. Destroy the last array first, later
 	lives = game.add.group();
-	lives.setAll('alpha', 0.6);
 	for (var i = 0; i < livesVAL; i++) {
 		var ship = lives.create(8 + (36 * i), 560, 'playShip');
 	}//end for
-	//no lives.render here
-	//lives.render();
-//	do score counter instead
+	//no lives.render here //lives.render();
+
+	//	do score counter instead
 	scoreTXT = game.add.text(game.world.centerX - 100, (game.world.centerY * 2 - 40), "Score: " + scoreVAL, { font: "32px Arial", fill: "#09F", align: "center" });
 	scoreBONUS = bonusREQ;//set bonus to immutable value ref
 	//scoreTXT.render();
@@ -126,6 +151,10 @@ function create() { //create is called once preload has completed
     gameOver = game.add.text(game.world.centerX, game.world.centerY, 'GAME OVER!', { font: '84px Arial', fill: '#fff' });
     gameOver.anchor.setTo(0.5, 0.5);
     gameOver.visible = false;
+	
+	gamePause = game.add.text(game.world.centerX, game.world.centerY, 'PAUSED!\nPress [P] to CONTINUE!', { font: '32px Arial', fill: '#fff', wordWrap: true, wordWrapWidth: game.world.width, align: "center" });
+    gamePause.anchor.setTo(0.5, 0.5);
+    gamePause.visible = game.physics.arcade.isPaused;
 //end player prefabs
 	
 //	explode fx pool
@@ -133,27 +162,27 @@ function create() { //create is called once preload has completed
     explosions.enableBody = true;
     explosions.physicsBodyType = Phaser.Physics.ARCADE;//block physics by image. 
     explosions.createMultiple(30, 'explosion');
-    explosions.setAll('anchor.x', 0.5);
-    explosions.setAll('anchor.y', 0.5);
+    explosions.setAll('anchor.x', 0.75);
+    explosions.setAll('anchor.y', 0.75);
 	explosions.setAll('scale.x', 0.5);//scale down test addition
 	explosions.setAll('scale.y', 0.5);
     explosions.forEach( function(explosion) {
         explosion.animations.add('explosion');//animates the explosion, hope
     });//end for loop
 	
+
 //	Enemies, after player spawned
 	testEnemy = game.add.group();
 	testEnemy.enableBody = true;
 	testEnemy.physicsBodyType = Phaser.Physics.ARCADE; //sets physics
 	testEnemy.createMultiple(5, 'enemy-test');//spawns multiple, with the sprite asset in question
-	testEnemy.setAll('anchor.x', 1);
-	testEnemy.setAll('anchor.y', 1);
-	//no scaling needed here
-	testEnemy.setAll('angle', 0); //already rotated
 	testEnemy.forEach(function(enemy){
+//		enemy.body.setSize(enemy.body.width = 8/* 3 / 4*/, enemy.body.height = 8/* 3 / 4*/);//set collision size
 		enemy.damageAmount = 1;//to represent lives takenth away
 	});
-	
+	testEnemy.setAll('anchor.x', .5);
+	testEnemy.setAll('anchor.y', .5); //no scaling needed here
+	testEnemy.setAll('angle', 0); //already rotated
 	testEnemy.setAll('outOfBoundsKill', true);
 	testEnemy.setAll('checkWorldBounds', true);
 
@@ -161,18 +190,17 @@ function create() { //create is called once preload has completed
 	game.time.events.add(1000, testEnemy_Timer);//spawns the enemy, after trig.
 	//TODO later, spawn an 'array', then check to see if array is still there?
 	
-	
+/*
 	//enemy bullet list, before test enemies are spawned
-	
-		//test shots
 	testEnemy_Bullets = game.add.group();
 	testEnemy_Bullets.enableBody = true;
+     //  Blue enemy's bullets
 	testEnemy_Bullets = game.add.group();
 	testEnemy_Bullets.enableBody = true;
 	testEnemy_Bullets.physicsBodyType = Phaser.Physics.ARCADE;
 	testEnemy_Bullets.createMultiple(30, 'eShot');
 	testEnemy_Bullets.callAll('crop', null, {x: 90, y: 0, width: 90, height: 70});
-	testEnemy_Bullets.setAll('alpha', 0.9);//transparency
+	testEnemy_Bullets.setAll('alpha', 0.9);
 	testEnemy_Bullets.setAll('anchor.x', 0.5);
 	testEnemy_Bullets.setAll('anchor.y', 0.5);
 	testEnemy_Bullets.setAll('outOfBoundsKill', true);
@@ -194,21 +222,30 @@ function create() { //create is called once preload has completed
 		//  Fire WIPPY
 	//enemyBullet = blueEnemyBullets.getFirstExists(false);
 	
-	
-
+*/
 	
 	//	fx sound, *BUGGY ATM!* Thus, placed lastly...
 	snd = new Phaser.Sound(game, 'pgun',1,false);
 }
 //disable snd from create later?, end create
 
+
+function togglePause() {
+
+    game.physics.arcade.isPaused = (game.physics.arcade.isPaused) ? false : true;
+	gamePause.visible = (game.physics.arcade.isPaused) ? true : false; //flipped, so that it's true when paused, and false when playing
+}
+
+
 //same as Unity version, per frame say, render wise?
 function update() {//updates all per frame
 		
 		//  Scroll the background. X addition moves/shifts depending on player movement
-    starfield.tilePosition.y += 5;
-    starfield.tilePosition.x += player.body.velocity.x / (ACCEL / 3 * 2);//1;//tweak, consider doing 'random' there?
-	
+    
+	if(!gamePause.visible){
+		starfield.tilePosition.y += 5;
+		starfield.tilePosition.x += player.body.velocity.x / (ACCEL / 3 * 2);//1;//tweak, consider doing 'random' there?
+	}	
 		// set acceleration to 0, and tinker from there
     player.body.acceleration.setTo(0, 0);
 	
@@ -254,10 +291,12 @@ function update() {//updates all per frame
 //	check collisions
 	game.physics.arcade.overlap(player, testEnemy, shipCollide, null, this);
 	game.physics.arcade.overlap(testEnemy, pShots, hitEnemy, null, this);
+//	game.physics.arcade.overlap(testEnemyBullets, player, enemyHitsPlayer, null, this);
+	
+	
+	
 	//check also for if test enemy est happens, est enemy wise
 
-	game.physics.arcade.overlap(testEnemy_Bullets, player, hitPlayer, null, this);//enemy hit code
-	
 	
 	//buggy game over trigger. Be VIGILANT on debugging this mess
 	if (! player.alive && gameOver.visible === false) {//the apocalypse has happened.
@@ -279,6 +318,23 @@ function update() {//updates all per frame
         }//end setResetHandlers
     }//end alive trigger
 }//end of update function
+
+
+	//  Set up firing mechanimss
+	var shotSpeed = 400;
+	var shotDelay = 2000;//approx 2 seconds?
+	enemy.bullets = 1;
+	enemy.lastShot = 0;
+	
+
+
+function fireBullet () {
+	if (game.time.now > bullet_Timer) {
+		
+	}
+	
+	
+}
 
 function restart () {//restarts the character
 	//set up, and revive character
@@ -348,8 +404,6 @@ function testEnemy_Timer() {
 	var MAX_ENEMY_SPACING = 300;
 	var ENEMY_SPEED = 200;
 
-
-	
     var enemy = testEnemy.getFirstExists(false);
     if (enemy) {
         enemy.reset(game.rnd.integerInRange(0, game.width), 0);
@@ -357,49 +411,15 @@ function testEnemy_Timer() {
         enemy.body.velocity.y = ENEMY_SPEED;
         enemy.body.drag.x = -100;//ADDS speed over time, as it's opposite of dragging
 		enemy.body.drag.y = -10;//test prefab of 50, for barring movement?
-		
-		//Set up firing
-		var bulletSpeed = 400;
-		var firingDelay = 2000;
-		enemy.bullets = 1;
-		enemy.lastShot = 0;
-	
 		//rotation tweak
 		enemy.update = function () {
 			enemy.angle = 0 - ((game.math.radToDeg(Math.atan2(enemy.body.velocity.x, enemy.body.velocity.y))) /2) ;
-			
-			
-			//XXXXX Test variable_ Spawn bullets in timers/est
-			//  Fire
-			enemyBullet = testEnemy_Bullets.getFirstExists(false);//IE: Grab the prefab of enemy bullets
-		
-			if (enemyBullet && this.alive && this.bullets
-			&& this.y > game.width / 8 &&
-			game.time.now > firingDelay + this.lastShot)
-			{
-				this.lastShot = game.time.now;
-				this.bullets--;
-				enemyBullet.reset(this.x, this.y + this.height / 2);
-				enemyBullet.damageAmount = this.damageAmount; //to represent 1, parent wise
-					//shoot at player
-				var angle = game.physics.arcade.moveToObject(enemyBullet, player, bulletSpeed);
-				enemyBullet.angle = game.math.radToDeg(angle);
-			}
-			
-			
-			if (this.y > game.height + 200) {
-                this.kill();
-                this.y = -20;
-            }
-		};
-	game.time.events.add(game.rnd.integerInRange(MIN_ENEMY_SPACING, MAX_ENEMY_SPACING), testEnemy_Timer);
-	}
-
-		//  Fire WIPPY
-	//enemyBullet = blueEnemyBullets.getFirstExists(false);
+		}
+    }
 	
-	    //  Send another enemy soon
 
+    //  Send another enemy soon
+    game.time.events.add(game.rnd.integerInRange(MIN_ENEMY_SPACING, MAX_ENEMY_SPACING), testEnemy_Timer);
 }
 
 //function createBaseAI(){}
@@ -425,7 +445,7 @@ function fireBullet () {
 	
 	var pShot = pShots.getFirstExists(false);
 	
-	if (pShot) {
+	if (pShot && !gamePause.visible) {
 		//fire the bullet grabbed
 		//snd.play();//jnc
 			//fxgun.play();//play a sound test
@@ -457,15 +477,6 @@ function hitEnemy(enemy, pShots) {
     pShots.kill();
 }
 
-function hitPlayer(player, eShots) {
-    var explosion = explosions.getFirstExists(false);
-    explosion.reset(eShots.body.x + eShots.body.halfWidth, eShots.body.y + eShots.body.halfHeight);
-    explosion.body.velocity.y = eShots.body.velocity.y;
-    explosion.alpha = 0.7;
-    explosion.play('explosion', 30, false, true);
-    eShots.kill();
-	livesVAL--;
-	healthUpdate();
-}
+
 
 //end of stuff
