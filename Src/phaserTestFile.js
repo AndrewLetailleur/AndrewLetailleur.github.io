@@ -32,7 +32,7 @@ var ACCEL = 250;
 var DRAG = 400;
 var MAX_SPEED = 300;
 var bank;
-var border_edge = 20;	
+var border_edge = 20;//also useful for enemy side, say.	
 //
 var pShots;
 var eShots;//enemy shots
@@ -58,6 +58,7 @@ var explosions;
 
 
 var baseFoe; //space invaders
+var baseForDir = -1;//as 1/-1 is left/right-y on one axis, x/y wise
 var baseFoe_Array;//spawn a fresh array guess
 
 var advGal_Timer;
@@ -203,9 +204,6 @@ function create() { //create is called once preload has completed
 	
 	
 
-// enemy
-	baseFoe_Array = game.add.group();			//use pShot as test prefab
-	baseFoe_Array.createMultiple(44, 'pShot');//spawns multiple, hack test wise
 
 
 
@@ -235,8 +233,8 @@ function create() { //create is called once preload has completed
 
 function spawnBaseArray() {
 			//spawn an array, tinker/fix to screen
-	for (var y = 0; y < 5; y++) {//height
-		for (var x = 0; x < 11; x++) {//width
+	for (var x = 0; x < 10; x++) {//height
+		for (var y = 0; y < 4; y++) {//width
 			var bbaseFoe_Array = lives.create(8 + (2 * x), 8 + (2 * y), 'pShot');
 		}
 	}
