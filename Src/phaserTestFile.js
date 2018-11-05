@@ -32,7 +32,7 @@ var ACCEL = 250;
 var DRAG = 400;
 var MAX_SPEED = 300;
 var bank;
-var border_edge = 20;//also useful for enemy side, say.	
+var border_edge = 20;	
 //
 var pShots;
 var eShots;//enemy shots
@@ -58,8 +58,10 @@ var explosions;
 
 
 var baseFoe; //space invaders
-var baseForDir = -1;//as 1/-1 is left/right-y on one axis, x/y wise
 var baseFoe_Array;//spawn a fresh array guess
+var baseFoe_Amount = [];//equals intentionally, an array.
+var baseFoe_Dir = 1;//for movement in one dir. Multiply by -1 every time direction is shifted.
+
 
 var advGal_Timer;
 var advGal_FOE;//galaxians, var advFoe;
@@ -89,6 +91,7 @@ function preload() {//preload is called first.
 	game.load.image('eShot', 'IMG/spaceShooter/EnemyShot.png');//the ENEMY projectile shot
 	//game.load.spritesheet(); //test enemy, make it animated later
 	game.load.image('enemy-test', 'IMG/SpaceShooter/FOE.png');//a basic enemy
+	game.load.image('base-enemy', 'IMG/SpaceShooter/bFOE.png');//a basic enemy
 	//get a custom asset later, potential copyright fears/est wise
 	game.load.spritesheet('explosion', 'IMG/spaceShooter/explode.png', 128, 128); //perfect square
 	game.load.audio('gun', 'assets/audio/shoot.wav');//load audio FAIL
@@ -97,19 +100,12 @@ function preload() {//preload is called first.
 
 //this includes the loading of any assets from the Loader. Akin to Unity Start?
 function create() { //create is called once preload has completed
-
 	game.physics.startSystem(Phaser.Physics.ARCADE);
-
-
-//  The scrolling starfield background
-    starfield = game.add.tileSprite(0, 0, 600, 600, 'starfield');
-	
-//	create graphical test dummy for 'level' icon?
-/*	var gpx = game.add.graphics(100, 100);
+    starfield = game.add.tileSprite(0, 0, 600, 600, 'starfield');//  The scrolling starfield background
+/*	var gpx = game.add.graphics(100, 100);//	create graphical test dummy for 'level' icon?
 	gpx.lineStyle(2, 0x0033FF, 1);
 	gpx.beginFill(0x0099FF, .4);//transparent test
-    gpx.drawRect(475, 460, 12.5, 25);
-*/	
+    gpx.drawRect(475, 460, 12.5, 25);*/	
 
 //	the bullet shot group, pShots!
 	pShots = game.add.group();
@@ -140,28 +136,24 @@ function create() { //create is called once preload has completed
     pauseKey.onDown.add(togglePause, this);
 	
 //  create shields guess values
+	/**/
 
-
-	
-	
 //	create/set up the group of lives. Destroy the last array first, later
 	lives = game.add.group();
 	for (var i = 0; i < livesVAL; i++) {
 		var ship = lives.create(8 + (36 * i), 560, 'playShip');
-	}//end for
-	//no lives.render here //lives.render();
+	}//end for 			//no lives.render here //lives.render();
 
-	//	do score counter instead
+//	do score counter instead
 	scoreTXT = game.add.text(game.world.centerX - 100, (game.world.centerY * 2 - 40), "Score: " + scoreVAL, { font: "32px Arial", fill: "#09F", align: "center" });
 	scoreBONUS = bonusREQ;//set bonus to immutable value ref
-	//scoreTXT.render();
-	//render SEEMS to be pretty bugged here
+	//scoreTXT.render(); //render SEEMS to be pretty bugged here
 	
 //	GameOver SFX
     gameOver = game.add.text(game.world.centerX, game.world.centerY, 'GAME OVER!\nClick/Press Input to Try Again!', { font: '72px Arial', wordWrap: true, wordWrapWidth: game.world.width, fill: '#fff', align: "center" });
     gameOver.anchor.setTo(0.5, 0.5);
     gameOver.visible = false;
-	
+	//pause trigger
 	gamePause = game.add.text(game.world.centerX, game.world.centerY, 'PAUSED!\nPress [P] to CONTINUE!', { font: '32px Arial', fill: '#fff', wordWrap: true, wordWrapWidth: game.world.width, align: "center" });
     gamePause.anchor.setTo(0.5, 0.5);
     gamePause.visible = game.physics.arcade.isPaused;
@@ -179,9 +171,11 @@ function create() { //create is called once preload has completed
     explosions.forEach( function(explosion) {
         explosion.animations.add('explosion');//animates the explosion, hope
     });//end for loop
-	
+//end explosions!
 
 //	Enemies, after player spawned
+
+//advanced enemy/FOE
 	advGal_FOE = game.add.group();
 	advGal_FOE.enableBody = true;
 	advGal_FOE.physicsBodyType = Phaser.Physics.ARCADE; //sets physics
@@ -190,32 +184,22 @@ function create() { //create is called once preload has completed
 	/*//set collision size, REDACTED
 	//enemy.body.setSize(enemy.body.width = 8 * 3 / 4*, enemy.body.height = 8 * 3 / 4*);
 	*/
-	enemy.damageAmount = 1;//to represent lives takenth away
+		enemy.damageAmount = 1;//to represent lives takenth away
 	});
 	advGal_FOE.setAll('anchor.x', .5);
 	advGal_FOE.setAll('anchor.y', .5); //no scaling needed here
 	advGal_FOE.setAll('angle', 0); //already rotated
 	advGal_FOE.setAll('outOfBoundsKill', true);
 	advGal_FOE.setAll('checkWorldBounds', true);
-
 		//set freqency of spawning. Cue event timers/est
-	game.time.events.add(1000, advGal_Timer);//spawns the enemy, after trig.
-	//TODO later, spawn an 'array', then check to see if array is still there?
-	
-	
-
-
-
-
-	
+// 	game.time.events.add(1000, advGal_Timer);//spawns the enemy, after trig.	//REDACTED, since array spawns first. It'd be called later.
 
 	//enemy bullet list, before test enemies are spawned
 	advGal_FOE_Bullets = game.add.group();
 	advGal_FOE_Bullets.enableBody = true;
 	advGal_FOE_Bullets.physicsBodyType = Phaser.Physics.ARCADE;
-	advGal_FOE_Bullets.createMultiple(5, 'eShot');
+	advGal_FOE_Bullets.createMultiple(5, 'eShot');//to set limit of amount of bullets on screen.
 	//no needed, as it could be a poor man's spritesheet instead.
-//	advGal_FOE_Bullets.callAll('crop', null, {x: 90, y: 0, width: 90, height: 70});
 	advGal_FOE_Bullets.setAll('alpha', 0.9);
 	advGal_FOE_Bullets.setAll('anchor.x', 0.5);
 	advGal_FOE_Bullets.setAll('anchor.y', 0.5);
@@ -224,21 +208,99 @@ function create() { //create is called once preload has completed
 	advGal_FOE_Bullets.forEach(function(enemy){
         enemy.body.setSize(8, 8);
 	});
+//end advanced enemy/FOE
+
+//	basic enemy
+	baseFoe = game.add.group();
+	baseFoe.enableBody = true;
+	baseFoe.physicsBodyType = Phaser.Physics.ARCADE; //sets physics
+	spawnBaseArray();//spawns the array first.
+//end enemy, basic wise
+
+
 
 	
-	//	fx sound, *BUGGY ATM!* Thus, placed lastly...
+//	fx sound, *BUGGY ATM!* Thus, placed lastly...
 	snd = new Phaser.Sound(game, 'pgun',1,false);
 }
 //disable snd from create later?, end create
 
 function spawnBaseArray() {
+	//baseFoe_Array.createMultiple(44, 'pShot');//spawns multiple, hack test wise
+
+	var z = game.width / 14;//to represent 32 x 32 ish, to get 14 slices of game.width
+	var d = 1; //d is for difficulty
 			//spawn an array, tinker/fix to screen
-	for (var x = 0; x < 10; x++) {//height
-		for (var y = 0; y < 4; y++) {//width
-			var bbaseFoe_Array = lives.create(8 + (2 * x), 8 + (2 * y), 'pShot');
+	for (var y = 0; y < 5; y++)
+	{//height
+		for (var x = 0; x < 11; x++)
+		{//width
+			//code						//IE: 42 * x		 //IE: 24 * dIfficulty * y
+			var Foe = baseFoe.create( ((z * 2) + (z * x)), ((z * d) + (z * y)), 'base-enemy');
+			Foe.anchor.setTo(0.5, 0.5);
+			Foe.body.collideWorldBounds=true;
+			//Foe.body.bounce.set(1);doesn't work, ergo don't bother
 		}
 	}
+	//baseFoe.setAll('outOfBoundsKill', true);//remove if out of bounds
+	//baseFoe.setAll('checkWorldBounds', true);//see on trigger shift to other side, if triggered
 	
+	
+	
+	/*
+	baseFoe.setAll('anchor.x', .5);
+	baseFoe.setAll('anchor.y', .5); //no scaling needed here
+	baseFoe.setAll('outOfBoundsKill', true);
+	baseFoe.setAll('checkWorldBounds', true);//figure out how to trigger if hit/clash at sideFoe
+	baseFoe.forEach(function(enemy){
+		enemy.damageAmount = 1;//to represent lives takenth away
+	});*/
+	
+	/*//set collision size, REDACTED
+	//enemy.body.setSize(enemy.body.width = 8 * 3 / 4*, enemy.body.height = 8 * 3 / 4*);*/
+
+}
+
+var VELO = 128;//64;
+//var a_x = 1; //space invaders
+function baseStep () {
+	
+	X_VELO = VELO * baseFoe_Dir;//velocity direction
+	
+	//works at this step
+	baseFoe.setAll('body.velocity.x', X_VELO);
+    baseFoe.setAll('body.velocity.y', 0);
+	
+	
+	//does NOT work, reference wise.game.world.width
+	
+	for (i = 0; i < baseFoe.length; i++) {
+		//baseFoe.getAt(i).body.x;
+		if ((baseFoe.getAt(i).body.x <= (border_edge / 2)) || (baseFoe.getAt(i).body.x >= game.width - (border_edge * 2))){
+			baseFoe_Dir *= -1; //switch direction
+			X_VELO = VELO * baseFoe_Dir;//reset the X_VELO dir, pre-emptively.
+			baseFoe.setAll('body.velocity.x', X_VELO); //below is debug code for now, just to get shooting/est to work properly.
+			baseFoe.setAll('body.velocity.y', VELO * 8); //move by a notch Y wise. X_Velo * 8 in scope for now.
+			break;
+		} else if (baseFoe.getAt(i).body.y >= (game.height - (108) ) ) {
+			VELO = 0;
+			//livesVAL = 0;//player.damage(bullet.damageAmount);
+			//healthUpdate();//health.render();
+			break;
+		}
+		//else do nothing, endif
+	}
+	
+	
+	
+	
+/*
+
+	if (any at X y) {
+		KILL ALL LIVES
+	}
+
+*/
 	
 }
 
@@ -255,6 +317,9 @@ function update() {//updates all per frame
 		
 		//  Scroll the background. X addition moves/shifts depending on player movement
     
+	baseStep();
+	
+	
 	if(!gamePause.visible){
 		starfield.tilePosition.y += 5;
 		starfield.tilePosition.x += player.body.velocity.x / (ACCEL / 3 * 2);//1;//tweak, consider doing 'random' there?
@@ -309,7 +374,10 @@ function update() {//updates all per frame
 		//hazard collides
 	game.physics.arcade.overlap(advGal_FOE_Bullets, player, enemyHitsPlayer, null, this);
 	
-	
+		//enemy collides
+	game.physics.arcade.overlap(baseFoe, pShots, hitEnemy, null, this);
+		//hazard collides
+	game.physics.arcade.overlap(baseFoe, player, enemyHitsPlayer, null, this);
 	
 	//check also for if test enemy est happens, est enemy wise
 
@@ -447,6 +515,8 @@ function fireBullet () {
 //the render function
 function render() {/*debug render, very very buggy*/
 //advance enemy hit boxes
+
+/*
 	for (var i = 0; i < advGal_FOE.length; i++)
     {game.debug.body(advGal_FOE.children[i]);}
 //bullet test hit boxes
@@ -454,7 +524,7 @@ function render() {/*debug render, very very buggy*/
     {game.debug.body(advGal_FOE_Bullets.children[i]);}
 //player hit boxes
     game.debug.body(player);
-	
+*/
 
 }
 
@@ -525,6 +595,8 @@ function extraLife() {
 	}//end if
 }
 function restart () {//restarts the character
+
+	VELO = 64;
 	//set up, and revive character
 	livesVAL = 3;
 	player.health = livesVAL;
@@ -538,6 +610,9 @@ function restart () {//restarts the character
 
 	//clear all bullets
 	advGal_FOE_Bullets.callAll('kill');
+	
+	baseFoe.callAll('kill');
+	spawnBaseArray();//clear and respawn everyone
 	
 	
     //  Revive the player
