@@ -7,18 +7,13 @@ http://codeperfectionist.com/articles/phaser-js-tutorial-building-a-polished-spa
 
 */
 
-
-
-var game = new Phaser.Game(600, 600, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create, update: update, render: render });
-
+var game = new Phaser.Game(600, 600, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create, update: update, render: render, restart: restart });
 //var sound = Phaser.Sound; //JNC hassle wise
 
-/*http://codeperfectionist.com/articles/phaser-js-tutorial-building-a-polished-space-shooter-game-part-1/  based on this tutorial, asset hack wise
-*/
+ /*http://codeperfectionist.com/articles/phaser-js-tutorial-building-a-polished-space-shooter-game-part-1/  based on this tutorial, asset hack wise */
 
 //spawn player stuff
-	//za player
-var player;
+var player;	//za player
 	//controls
 var moveCtrl;//the movement code for player
 var fireCtrl; //the trigger key for player
@@ -37,10 +32,11 @@ var border_edge = 20;
 var pShots;
 var eShots;//enemy shots
 var BULLET_VELO = -600;
-	
+
 //player variables
+var livesSTART = 3;
 var lives;//is an array of objects
-var livesVAL = 3;//initial amount of lives
+var livesVAL;//initial amount of lives
 var bonusREQ = 7;//sets the minimum requirement
 var scoreBONUS;
  
@@ -50,18 +46,9 @@ var scoreTXT;//a string array of text, plus score
 
 var shields;//object, shield wise. Meant to absorb in a 'wall' manner.
 	
-	
-	//(rest of) the objects themselves
+	//(rest of) the FX objects themselves
 var starfield;//the starfield say
-	//include FX
-var explosions;
-
-
-var baseFoe; //space invaders
-var baseFoe_Array;//spawn a fresh array guess
-var baseFoe_Amount = [];//equals intentionally, an array.
-var baseFoe_Dir = 1;//for movement in one dir. Multiply by -1 every time direction is shifted.
-
+var explosions;//ripoff explosive effects
 
 var advGal_Timer;
 var advGal_FOE;//galaxians, var advFoe;
@@ -69,8 +56,7 @@ var advGal_FOE_Bullets;//the attack variable for test enemies
 
 var testInvader_Timer;
 var testInvader;//second enemy type... Consider sine waves?
-/* 
-var bossFoe; //gorf spawner, or improvised boss
+/*var bossFoe; //gorf spawner, or improvised boss
 */ //end speculated values 
 
 //end of stuff variables.
@@ -79,8 +65,6 @@ var gamePause;//the pause text
 
 var snd;//sound fx
 	//misc variables for player
-
-
 
 //Normally you'd use this to load your game assets (or those needed for the current State), akin to Unity Awake?
 function preload() {//preload is called first. 
@@ -139,6 +123,7 @@ function create() { //create is called once preload has completed
 	/**/
 
 //	create/set up the group of lives. Destroy the last array first, later
+	livesVAL = livesSTART;//set the value pre-emptively
 	lives = game.add.group();
 	for (var i = 0; i < livesVAL; i++) {
 		var ship = lives.create(8 + (36 * i), 560, 'playShip');
@@ -158,6 +143,20 @@ function create() { //create is called once preload has completed
     gamePause.anchor.setTo(0.5, 0.5);
     gamePause.visible = game.physics.arcade.isPaused;
 //end player prefabs
+	
+	/*guess stage display string variable
+	for (i = 0; i < stageVal; i++) {
+		for (i = 0; i < stageVal; i+=5) {
+			for (i = 0; i < stageVal; i+= 10) {
+				stageTxt.text = stage.Txt.text + "X";
+			}
+			stageTxt.text = stage.Txt.text + "V";
+		}
+		stageTxt.text = stage.Txt.text + "I"; 	
+	}
+	
+	
+	*/
 	
 //	explode fx pool
     explosions = game.add.group();
@@ -210,6 +209,8 @@ function create() { //create is called once preload has completed
 	});
 //end advanced enemy/FOE
 
+	c_d = s_d;//reset challenge variable
+
 //	basic enemy
 	baseFoe = game.add.group();
 	baseFoe.enableBody = true;
@@ -217,102 +218,34 @@ function create() { //create is called once preload has completed
 	spawnBaseArray();//spawns the array first.
 //end enemy, basic wise
 
-
-
-	
-//	fx sound, *BUGGY ATM!* Thus, placed lastly...
-	snd = new Phaser.Sound(game, 'pgun',1,false);
+//	fx sound, *BUGGY ATM!* Thus, placed lastly... snd = new Phaser.Sound(game, 'pgun',1,false);
 }
 //disable snd from create later?, end create
 
-function spawnBaseArray() {
-	//baseFoe_Array.createMultiple(44, 'pShot');//spawns multiple, hack test wise
+/*function createBaseAI(){}
+	//if switch sides
+		//add momentum down force, y add on axis
+		//then invert x velocity, and check the left instead.
+	//end if
+*///end guesses
+var S_VELO = 96;//64
+var VELO;// = 128;//64;
+var s_d = 1;
+var c_d = 1;//= s_d; c_d = s_d;
+var flag = false;//bool wise
+var fail = false;
+//var baseFoe_Array;//spawn a fresh array guess?
+//var baseFoe_Amount = [];//equals intentionally, an array. Not needed, due to group fuunctionality.
+var baseFoe; //space invaders, as a group function
+var baseFoe_Dir;//for movement in one dir. Multiply by -1 every time direction is shifted.
 
-	var z = game.width / 14;//to represent 32 x 32 ish, to get 14 slices of game.width
-	var d = 1; //d is for difficulty
-			//spawn an array, tinker/fix to screen
-	for (var y = 0; y < 5; y++)
-	{//height
-		for (var x = 0; x < 11; x++)
-		{//width
-			//code						//IE: 42 * x		 //IE: 24 * dIfficulty * y
-			var Foe = baseFoe.create( ((z * 2) + (z * x)), ((z * d) + (z * y)), 'base-enemy');
-			Foe.anchor.setTo(0.5, 0.5);
-			Foe.body.collideWorldBounds=true;
-			//Foe.body.bounce.set(1);doesn't work, ergo don't bother
-		}
-	}
-	//baseFoe.setAll('outOfBoundsKill', true);//remove if out of bounds
-	//baseFoe.setAll('checkWorldBounds', true);//see on trigger shift to other side, if triggered
-	
-	
-	
-	/*
-	baseFoe.setAll('anchor.x', .5);
-	baseFoe.setAll('anchor.y', .5); //no scaling needed here
-	baseFoe.setAll('outOfBoundsKill', true);
-	baseFoe.setAll('checkWorldBounds', true);//figure out how to trigger if hit/clash at sideFoe
-	baseFoe.forEach(function(enemy){
-		enemy.damageAmount = 1;//to represent lives takenth away
-	});*/
-	
-	/*//set collision size, REDACTED
-	//enemy.body.setSize(enemy.body.width = 8 * 3 / 4*, enemy.body.height = 8 * 3 / 4*);*/
-
-}
-
-var VELO = 128;//64;
-//var a_x = 1; //space invaders
-function baseStep () {
-	
-	X_VELO = VELO * baseFoe_Dir;//velocity direction
-	
-	//works at this step
-	baseFoe.setAll('body.velocity.x', X_VELO);
-    baseFoe.setAll('body.velocity.y', 0);
-	
-	
-	//does NOT work, reference wise.game.world.width
-	
-	for (i = 0; i < baseFoe.length; i++) {
-		//baseFoe.getAt(i).body.x;
-		if ((baseFoe.getAt(i).body.x <= (border_edge / 2)) || (baseFoe.getAt(i).body.x >= game.width - (border_edge * 2))){
-			baseFoe_Dir *= -1; //switch direction
-			X_VELO = VELO * baseFoe_Dir;//reset the X_VELO dir, pre-emptively.
-			baseFoe.setAll('body.velocity.x', X_VELO); //below is debug code for now, just to get shooting/est to work properly.
-			baseFoe.setAll('body.velocity.y', VELO * 8); //move by a notch Y wise. X_Velo * 8 in scope for now.
-			break;
-		} else if (baseFoe.getAt(i).body.y >= (game.height - (108) ) ) {
-			VELO = 0;
-			//livesVAL = 0;//player.damage(bullet.damageAmount);
-			//healthUpdate();//health.render();
-			break;
-		}
-		//else do nothing, endif
-	}
-	
-	
-	
-	
-/*
-
-	if (any at X y) {
-		KILL ALL LIVES
-	}
-
-*/
-	
-}
 
 
 function togglePause() {
-
     game.physics.arcade.isPaused = (game.physics.arcade.isPaused) ? false : true;
 	gamePause.visible = (game.physics.arcade.isPaused) ? true : false; //flipped, so that it's true when paused, and false when playing
 }
-
-
-//same as Unity version, per frame say, render wise?
+//same as Unity version per frame. Called before render.
 function update() {//updates all per frame
 		
 		//  Scroll the background. X addition moves/shifts depending on player movement
@@ -403,9 +336,6 @@ function update() {//updates all per frame
     }//end alive trigger
 }//end of update function
 
-
-
-
 function enemy_fireBullet() {//in order to limit/slow down enemy firing rate, ideally...
 	
 	if (game.time.now > bullet_Timer) {
@@ -431,9 +361,67 @@ function enemy_fireBullet() {//in order to limit/slow down enemy firing rate, id
 	//enemyBullet = blueEnemyBullets.getFirstExists(false);
 	*/
 }
+function spawnBaseArray() {
+	VELO = S_VELO;//* c_d say?
+	baseFoe_Dir = 1;//reset the direction to be on the safe side. And bar a 'zero movement' scenario.
+	//baseFoe_Array.createMultiple(44, 'pShot');//spawns multiple, hack test wise
 
-	//cue enemy AI code
-//	the test code, advGal_FOE wise
+	if (!flag){//if no spawns yet.
+		if (c_d > 1) {//check if stage 2+ is triggered.
+			game.time.events.add(1000, advGal_Timer);//add the timer, on respawning
+			flag = true;
+		}
+	}
+	
+	var z = game.width / 14;//to represent 32 x 32 ish, to get 14 slices of game.width
+	var d = c_d; //d is for difficulty
+		//spawn an array, tinker/fix to screen
+	for (var y = 0; y < 5; y++) {//height
+		for (var x = 0; x < 11; x++) {//width
+			//code						//IE: 42 * x		 //IE: 24 * dIfficulty * y
+			var Foe = baseFoe.create( ((z * 2) + (z * x)), ((z * d) + (z * y)), 'base-enemy');
+			Foe.anchor.setTo(0.5, 0.5);
+			Foe.body.collideWorldBounds = true;
+		}
+	}//	baseFoe.forEach(function(enemy){enemy.damageAmount = 1;});//to represent lives takenth away
+	c_d++;//increment challenge for later spawning/est.
+}
+function baseStep () {
+	//to cover a bug hassle in code direction.
+	if (baseFoe_Dir == 0)
+		X_VELO = 0;
+	else
+		X_VELO = VELO * baseFoe_Dir;//velocity direction. If Dir =/= 0, no movement.
+	//endif
+	
+	baseFoe.setAll('body.velocity.x', X_VELO);//set standard X velocity at X_Velo
+    baseFoe.setAll('body.velocity.y', 0);//no Y falling by nudge default
+	
+	for (i = 0; i < baseFoe.length; i++) {
+		//baseFoe.getAt(i).body.x;
+		if ((baseFoe.getAt(i).body.x <= (border_edge / 2)) || (baseFoe.getAt(i).body.x >= game.width - (border_edge * 2))){
+			baseFoe_Dir *= -1; //switch direction, *= ~/~ multiply/equals wise
+			X_VELO = VELO * baseFoe_Dir;//reset the X_VELO dir, pre-emptively.
+			baseFoe.setAll('body.velocity.x', X_VELO); //below is debug code for now, just to get shooting/est to work properly.
+			baseFoe.setAll('body.velocity.y', S_VELO * 8); //move by a notch Y wise. X_Velo * 8 in scope for now.
+			break;
+		}/* else if (baseFoe.getAt(i).body.y >= (game.height - (108) ) ) {
+			baseFoe_Dir == 0;//the conditional bugger for now, hassle wise
+			VELO = 0;
+			if (!fail) {
+				fail = true;
+				livesVAL = 0;//player.damage(bullet.damageAmount);
+				healthUpdate();//health.render();
+			}
+		}//else do nothing, endif*/ //end buggy code
+	}//if (baseFoe_Dir == 0 && LivesVAL > 0) {}
+	
+	if (baseFoe.countLiving() <= 0)
+		spawnBaseArray();//spawn the array again
+	//ENDIF	
+}
+	//cue enemy AI test code, advGal_FOE wise
+//function createAdvAI(){}
 function advGal_Timer() {
 	var MIN_ENEMY_SPACING = 30;
 	var MAX_ENEMY_SPACING = 300;
@@ -487,20 +475,10 @@ function advGal_Timer() {
     game.time.events.add(game.rnd.integerInRange(MIN_ENEMY_SPACING, MAX_ENEMY_SPACING), advGal_Timer);
 }
 
-//function createBaseAI(){}
-	//if switch sides
-		//add momentum down force, y add on axis
-		//then invert x velocity, and check the left instead.
-	//end if
-//end guesses
-
-//function createAdvAI(){}
-
 // It is called during the core game loop AFTER debug, physics, plugins and the Stage have had their preUpdate methods called. If is called BEFORE Stage, Tweens, Sounds, Input, Physics, Particles and Plugins have had their postUpdate methods called.
 
 function fireBullet () {
 	//grab first bullet from the pool
-	
 	var pShot = pShots.getFirstExists(false);
 	
 	if (pShot && !gamePause.visible) {
@@ -511,9 +489,14 @@ function fireBullet () {
 		pShot.body.velocity.y = BULLET_VELO; //shot speed?
 	}
 }
-
-//the render function
-function render() {/*debug render, very very buggy*/
+//the render function, akin to LateUpdate in unity. Good for debug?
+function render() {
+//	if(baseFoe.countLiving <= 0)
+//		spawnBaseArray();//spawn a new array on clearing all enemies, test.
+	//endif
+	
+	
+	/*debug render, very very buggy*/
 //advance enemy hit boxes
 
 /*
@@ -527,7 +510,6 @@ function render() {/*debug render, very very buggy*/
 */
 
 }
-
 
 function shipCollide(player, enemy) {
 	var explosion = explosions.getFirstExists(false);
@@ -550,7 +532,6 @@ function hitEnemy(enemy, pShots) {
     enemy.kill();
     pShots.kill();
 }//TBDL
-
 function enemyHitsPlayer(player, eShots) {
 	var explosion = explosions.getFirstExists(false);
     explosion.reset(player.body.x + player.body.halfWidth, player.body.y + player.body.halfHeight);
@@ -594,33 +575,40 @@ function extraLife() {
 		}//end for
 	}//end if
 }
+
+
+
 function restart () {//restarts the character
-
-	VELO = 64;
-	//set up, and revive character
-	livesVAL = 3;
-	player.health = livesVAL;
-	healthUpdate();
-	player.revive();
-	
-    //  Reset the enemies
-    advGal_FOE.callAll('kill');
-    game.time.events.remove(advGal_Timer);
-    game.time.events.add(1000, advGal_Timer);
-
-	//clear all bullets
-	advGal_FOE_Bullets.callAll('kill');
-	
+	//clear/kill all on screen enemies
 	baseFoe.callAll('kill');
+	advGal_FOE.callAll('kill');
+	advGal_FOE_Bullets.callAll('kill');
+	game.time.events.remove(advGal_Timer);//clear a spawner, if any's on
+	
+	player.revive();
+	livesVAL = livesSTART;
+	player.health = livesVAL;
+	livesVAL = 3;
+	healthUpdate();
+
+	//reset spawn variables hardly, then call again.
+	VELO = S_VELO;//reset velo to default value again, pre-emptively
+	c_d = s_d;//reset the challenge hack
+	flag = false;
+	fail = false;	
+	
 	spawnBaseArray();//clear and respawn everyone
 	
-	
-    //  Revive the player
+    //reset the score
     scoreVAL = 0;
 	scoreBONUS = bonusREQ;//reset back to normal
     scoreUpdate();
+	
+	//revive, then set up/spawn player
 
-    //  Hide the text
+
+
+    //  Hide the text again
     gameOver.visible = false;
 
 }	//end of stuff
