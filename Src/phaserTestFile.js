@@ -81,9 +81,9 @@ var game = new Phaser.Game(600, 600, Phaser.CANVAS, 'phaser-example', { preload:
 	
 //Normally you'd use this to load your game assets (or those needed for the current State), akin to Unity Awake?
 function preload() {//preload is called first. 
-	//load static art & images
-	game.load.image('playShip', 'IMG/spaceShooter/ShipMono.png'); //the ship
-	game.load.image('starfield', 'IMG/spaceShooter/starfield.png'); //the background
+	//load static art & images, use "https://github.com/AndrewLetailleur/AndrewLetailleur.github.io/tree/master/IMG/spaceShooter" as the extention hack wise
+	game.load.image('playShip', 'https://github.com/AndrewLetailleur/AndrewLetailleur.github.io/tree/master/IMG/spaceShooter/ShipMono.png'); //the ship
+	game.load.image('starfield', 'https://github.com/AndrewLetailleur/AndrewLetailleur.github.io/tree/master/IMG/spaceShooter/starfield.png'); //the background
 	game.load.image('pShot', 'IMG/spaceShooter/BulletO.png');//the projectile shot
 	game.load.image('eShot', 'IMG/spaceShooter/EnemyShot.png');//the ENEMY projectile shot
 	//game.load.spritesheet(); //test enemy, make it animated later
@@ -91,6 +91,11 @@ function preload() {//preload is called first.
 	game.load.image('base-enemy', 'IMG/SpaceShooter/bFOE.png');//a basic enemy
 	//get a custom asset later, potential copyright fears/est wise
 	game.load.spritesheet('explosion', 'IMG/spaceShooter/explode.png', 128, 128); //perfect square
+	
+	//game.load.image('shields', ');
+	
+	
+	
 	game.load.audio('gun', 'assets/audio/shoot.wav');//load audio FAIL
 }
 
@@ -297,26 +302,6 @@ function update_controls() {
 	if (player.alive && (fireCtrl.isDown || game.input.activePointer.isDown)) { fireBullet(); }		//endif	
 	//end player stuff for real this time
 }//end controller updates
-function update_collisions() {
-//	check collisions
-	//	player collides
-	game.physics.arcade.overlap(player, adv_Foe, shipCollide, null, this);
-	game.physics.arcade.overlap(player, baseFoe, shipCollide, null, this);
-	
-	//	enemy collides
-	game.physics.arcade.overlap(baseFoe, pShots, hitEnemy, null, this);
-	game.physics.arcade.overlap(adv_Foe, pShots, hitEnemy, null, this);
-	
-	//	hazard collides
-	game.physics.arcade.overlap(adv_Foe_Bullets, player, enemyHitsPlayer, null, this);
-	
-	//	shield collides WIP
-//	game.physics.arcade.overlap(adv_Foe_Bullets, shield, enemyHitsPlayer, null, this);
-		//
-//	game.physics.arcade.overlap(adv_Foe_Bullets, shield, enemyCrashShield, null, this);
-//	game.physics.arcade.overlap(base_Foe_Bullets, shield, enemyCrashShield, null, this);
-
-}
 function update_GameOver() {
 		//buggy game over trigger. Be VIGILANT on debugging this mess
 	if (!player.alive && gameOver.visible === false) {/*the apocalypse has happened.*/
@@ -513,6 +498,27 @@ function render() {
 */
 }
 
+function update_collisions() {
+//	check collisions
+	//	player collides
+	game.physics.arcade.overlap(player, adv_Foe, shipCollide, null, this);
+	game.physics.arcade.overlap(player, baseFoe, shipCollide, null, this);
+	
+	//	enemy collides
+	game.physics.arcade.overlap(baseFoe, pShots, hitEnemy, null, this);
+	game.physics.arcade.overlap(adv_Foe, pShots, hitEnemy, null, this);
+	
+	//	hazard collides
+	game.physics.arcade.overlap(adv_Foe_Bullets, player, enemyHitsPlayer, null, this);
+	
+	//	shield collides WIP
+//	game.physics.arcade.overlap(adv_Foe_Bullets, shield, enemyHitsPlayer, null, this);
+		//
+//	game.physics.arcade.overlap(adv_Foe_Bullets, shield, enemyCrashShield, null, this);
+//	game.physics.arcade.overlap(base_Foe_Bullets, shield, enemyCrashShield, null, this);
+
+}
+
 function shipCollide(player, enemy) {
 	var explosion = explosions.getFirstExists(false);
     explosion.reset(enemy.body.x + enemy.body.halfWidth, enemy.body.y + enemy.body.halfHeight);
@@ -560,6 +566,10 @@ function enemyCrashShield (enemy, shield) {
 	var explosion = explosions.getFirstExists(false);
 	////
 	explosion.play('explosion', 30, false, true);
+	
+	
+	shields.kill();
+	eShots.kill();
 }
 
 function scoreUpdate() {
