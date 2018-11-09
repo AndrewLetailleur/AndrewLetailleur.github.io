@@ -87,8 +87,8 @@ function preload() {//preload is called first.
 	game.load.image('pShot', 'https://github.com/AndrewLetailleur/AndrewLetailleur.github.io/tree/master/IMG/spaceShooter/BulletO.png');//the projectile shot
 	game.load.image('eShot', 'https://github.com/AndrewLetailleur/AndrewLetailleur.github.io/tree/master/IMG/spaceShooter/EnemyShot.png');//the ENEMY projectile shot
 	//game.load.spritesheet(); //test enemy, make it animated later
-	game.load.image('enemy-test', 'https://github.com/AndrewLetailleur/AndrewLetailleur.github.io/tree/master/IMG/spaceShooter/FOE.png');//a basic enemy
-	game.load.image('base-enemy', 'https://github.com/AndrewLetailleur/AndrewLetailleur.github.io/tree/master/IMG/spaceShooter/bFOE.png');//a basic enemy
+	game.load.image('enemyTest', 'https://github.com/AndrewLetailleur/AndrewLetailleur.github.io/tree/master/IMG/spaceShooter/FOE.png');//a basic enemy
+	game.load.image('baseEnemy', 'https://github.com/AndrewLetailleur/AndrewLetailleur.github.io/tree/master/IMG/spaceShooter/bFOE.png');//a basic enemy
 	//get a custom asset later, potential copyright fears/est wise
 	game.load.spritesheet('explosion', 'https://github.com/AndrewLetailleur/AndrewLetailleur.github.io/tree/master/IMG/spaceShooter/explode.png', 128, 128); //perfect square
 	
@@ -192,7 +192,7 @@ function create_AdvancedFoe() {
 	adv_Foe = game.add.group();
 	adv_Foe.enableBody = true;
 	adv_Foe.physicsBodyType = Phaser.Physics.ARCADE; //sets physics
-	adv_Foe.createMultiple(5, 'enemy-test');//spawns multiple, with the sprite asset in question
+	adv_Foe.createMultiple(5, 'enemyTest');//spawns multiple, with the sprite asset in question
 	adv_Foe.forEach(function(enemy){ enemy.damageAmount = 1; });
 	adv_Foe.setAll('anchor.x', .5);
 	adv_Foe.setAll('anchor.y', .5); //no scaling needed here
@@ -379,7 +379,7 @@ function baseAI_Array() {
 	for (var y = 0; y < 5; y++) {//height
 		for (var x = 0; x < 11; x++) {//width
 			//code						//IE: 42 * x		 //IE: 24 * dIfficulty * y
-			var Foe = baseFoe.create( ((z * 2) + (z * x)), ((z * d) + (z * y)), 'base-enemy');
+			var Foe = baseFoe.create( ((z * 2) + (z * x)), ((z * d) + (z * y)), 'baseEnemy');
 			Foe.anchor.setTo(0.5, 0.5);
 			Foe.body.outOfBoundsKill = true;
 		}
