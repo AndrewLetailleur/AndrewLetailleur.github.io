@@ -84,13 +84,13 @@ function preload() {//preload is called first.
 	//load static art & images, use "https://github.com/AndrewLetailleur/AndrewLetailleur.github.io/tree/master/IMG/spaceShooter" as the extention hack wise
 	game.load.image('playShip', 'https://github.com/AndrewLetailleur/AndrewLetailleur.github.io/tree/master/IMG/spaceShooter/ShipMono.png'); //the ship
 	game.load.image('starfield', 'https://github.com/AndrewLetailleur/AndrewLetailleur.github.io/tree/master/IMG/spaceShooter/starfield.png'); //the background
-	game.load.image('pShot', 'IMG/spaceShooter/BulletO.png');//the projectile shot
-	game.load.image('eShot', 'IMG/spaceShooter/EnemyShot.png');//the ENEMY projectile shot
+	game.load.image('pShot', 'https://github.com/AndrewLetailleur/AndrewLetailleur.github.io/tree/master/IMG/spaceShooter/BulletO.png');//the projectile shot
+	game.load.image('eShot', 'https://github.com/AndrewLetailleur/AndrewLetailleur.github.io/tree/master/IMG/spaceShooter/EnemyShot.png');//the ENEMY projectile shot
 	//game.load.spritesheet(); //test enemy, make it animated later
-	game.load.image('enemy-test', 'IMG/SpaceShooter/FOE.png');//a basic enemy
-	game.load.image('base-enemy', 'IMG/SpaceShooter/bFOE.png');//a basic enemy
+	game.load.image('enemy-test', 'https://github.com/AndrewLetailleur/AndrewLetailleur.github.io/tree/master/IMG/spaceShooter/FOE.png');//a basic enemy
+	game.load.image('base-enemy', 'https://github.com/AndrewLetailleur/AndrewLetailleur.github.io/tree/master/IMG/spaceShooter/bFOE.png');//a basic enemy
 	//get a custom asset later, potential copyright fears/est wise
-	game.load.spritesheet('explosion', 'IMG/spaceShooter/explode.png', 128, 128); //perfect square
+	game.load.spritesheet('explosion', 'https://github.com/AndrewLetailleur/AndrewLetailleur.github.io/tree/master/IMG/spaceShooter/explode.png', 128, 128); //perfect square
 	
 	//game.load.image('shields', ');
 	
