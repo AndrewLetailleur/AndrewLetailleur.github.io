@@ -81,7 +81,11 @@ var game = new Phaser.Game(600, 600, Phaser.CANVAS, 'phaser-example', { preload:
 	
 //Normally you'd use this to load your game assets (or those needed for the current State), akin to Unity Awake?
 function preload() {//preload is called first. 
-	//load static art & images, use "https://github.com/AndrewLetailleur/AndrewLetailleur.github.io/tree/master/IMG/spaceShooter" as the extention hack wise
+	//load static art & images
+	
+	//new image prototype
+	game.load.image('blocks', 'IMG/spaceShooter/Shields.png');//another perfect square, loader wise hack.
+	
 	game.load.image('playShip', 'IMG/spaceShooter/ShipMono.png'); //the ship
 	game.load.image('starfield', 'IMG/spaceShooter/starfield.png'); //the background
 	game.load.image('pShot', 'IMG/spaceShooter/BulletO.png');//the projectile shot
@@ -90,16 +94,29 @@ function preload() {//preload is called first.
 	game.load.image('enemyTest', 'IMG/spaceShooter/FOE.png');//a basic enemy
 	game.load.image('baseEnemy', 'IMG/spaceShooter/bFOE.png');//a basic enemy
 	//get a custom asset later, potential copyright fears/est wise
-	game.load.spritesheet('explosion', 'IMG/spaceShooter/explode.png', 128, 128); //perfect square
-	
-	//game.load.image('shields', ');
-	
-	
+	game.load.spritesheet('explosion', 'IMG/spaceShooter/explode.png', 128, 128); //perfect square	
 	
 	game.load.audio('gun', 'assets/audio/shoot.wav');//load audio FAIL
 }
 
 	//	load create_X features before create, logic wise?
+function create_Shields() {//the shields, which block one hit before disappearing.
+	shields = game.add.group();
+	shields.enableBody = true;
+	shields.physicsBodyType = Phaser.Physics.ARCADE; //sets physics
+
+	//create array here, since it'd not be done twice man!
+
+	var widthy = game.width / 20;	var heighty = game.height - 100;
+	
+	for (var y = 0; y < 3; y++) {//height
+		for (var x = 0; x < (widthy - 1); x++) {//width
+			var Box = shields.create( (12 + (20 * x) ), (heighty - (12 * y)), 'blocks');
+			Box.anchor.setTo(0, 0); //anchor wise
+			Box.body.setSize(16, 8); //hack attempt
+		};
+	};
+}
 function create_PlayerAvatar() {
 //  The player, as a heroic ship
     player = game.add.sprite(300, 535, 'playShip');//32x32 ship spawned her
@@ -113,29 +130,12 @@ function create_PlayerAvatar() {
 	player.events.onKilled.add(function(){});//if player is killed, do X
 	player.events.onRevived.add(function(){});//when player is revived, do Y
 }
-function create_Controls() {
-	//	the player controls
-	moveCtrl = game.input.keyboard.createCursorKeys();
-	fireCtrl = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);//to fire a bullet, trig wise
-	
-//	the pause trigger
-	pauseKey = game.input.keyboard.addKey(Phaser.Keyboard.P);
-    pauseKey.onDown.add(togglePause, this);
-		//and the pause text
-	gamePause = game.add.text(game.world.centerX, game.world.centerY, 'PAUSED!\nPress [P] to CONTINUE!', { font: '32px Arial', fill: '#fff', wordWrap: true, wordWrapWidth: game.world.width, align: "center" });
-    gamePause.anchor.setTo(0.5, 0.5);
-    gamePause.visible = game.physics.arcade.isPaused;
-}
-function togglePause() {
-    game.physics.arcade.isPaused = (game.physics.arcade.isPaused) ? false : true;
-	gamePause.visible = (game.physics.arcade.isPaused) ? true : false; //flipped, so that it's true when paused, and false when playing
-}
 function create_PlayerShots() {
 //	the bullet shot group, pShots!
 	pShots = game.add.group();
 	pShots.enableBody = true;
 	pShots.physicsBodyType = Phaser.Physics.ARCADE;//block physics by image. Simple.
-	pShots.createMultiple(1, 'pShot');//to ensue a space invaders/galaxian lite limit on shots available
+	pShots.createMultiple(51, 'pShot');//to ensue a space invaders/galaxian lite limit on shots available
 	pShots.setAll('anchor.x', 0.5);
 	pShots.setAll('anchor.y', 1);
 	pShots.setAll('outOfBoundsKill', true);//remove if out of bounds
@@ -160,6 +160,23 @@ function create_GameplayValues() {
     gameOver = game.add.text(game.world.centerX, game.world.centerY, 'GAME OVER!\nClick/Press Input to Try Again!', { font: '72px Arial', wordWrap: true, wordWrapWidth: game.world.width, fill: '#fff', align: "center" });
     gameOver.anchor.setTo(0.5, 0.5);
     gameOver.visible = false;
+}
+function create_Controls() {
+	//	the player controls
+	moveCtrl = game.input.keyboard.createCursorKeys();
+	fireCtrl = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);//to fire a bullet, trig wise
+	
+//	the pause trigger
+	pauseKey = game.input.keyboard.addKey(Phaser.Keyboard.P);
+    pauseKey.onDown.add(togglePause, this);
+		//and the pause text
+	gamePause = game.add.text(game.world.centerX, game.world.centerY, 'PAUSED!\nPress [P] to CONTINUE!', { font: '32px Arial', fill: '#fff', wordWrap: true, wordWrapWidth: game.world.width, align: "center" });
+    gamePause.anchor.setTo(0.5, 0.5);
+    gamePause.visible = game.physics.arcade.isPaused;
+}
+function togglePause() {
+    game.physics.arcade.isPaused = (game.physics.arcade.isPaused) ? false : true;
+	gamePause.visible = (game.physics.arcade.isPaused) ? true : false; //flipped, so that it's true when paused, and false when playing
 }
 //end create_X est, including related pause trigger, controls wise.
 
@@ -258,6 +275,8 @@ function create() { //create is called once preload has completed
 	create_BasicFoe();
 	create_AdvancedFoe();
 //end  recreated
+
+	create_Shields();
 	
 /*	FX sound,	*BUGGY ATM!*	Thus, placed lastly...
 snd = new Phaser.Sound(game, 'pgun',1,false);*/
@@ -302,6 +321,19 @@ function update_controls() {
 	if (player.alive && (fireCtrl.isDown || game.input.activePointer.isDown)) { fireBullet(); }		//endif	
 	//end player stuff for real this time
 }//end controller updates
+//fire player shot
+function fireBullet () {
+	//grab first bullet from the pool
+	var pShot = pShots.getFirstExists(false);
+	
+	if (pShot && !gamePause.visible) {
+		//fire the bullet grabbed
+		//snd.play();//jnc
+			//fxgun.play();//play a sound test
+		pShot.reset(player.x, player.y - 16);
+		pShot.body.velocity.y = BULLET_VELO; //shot speed?
+	}
+}
 function update_GameOver() {
 		//buggy game over trigger. Be VIGILANT on debugging this mess
 	if (!player.alive && gameOver.visible === false) {/*the apocalypse has happened.*/
@@ -337,29 +369,8 @@ function update() {//updates all per frame
 	update_GameOver();
 	//GameOver restarts, when needed/prompted.
 }//end updates
-
 //insert enemy prefabs/est
-function enemy_fireBullet() {//in order to limit/slow down enemy firing rate, ideally...
-	if (game.time.now > bullet_Timer) {
-			//  Set up firing mechanimss
-		var shotSpeed = 400;
-			//fire a random number, between min and max range, 1.5/2.5 seconds.
-		var shotDelay = (game.rnd.integerInRange(1500), 2500);//approx 2 seconds?
-		enemy.bullets = 1;
-		enemy.lastShot = 0;
-		
-		if(bullet) {
-			var bulletOffset = 20 * Math.sin(game.math.degToRad(player.angle));
-            bullet.reset(player.x + bulletOffset, player.y);
-            bullet.angle = player.angle;
-            game.physics.arcade.velocityFromAngle(bullet.angle - 90, BULLET_SPEED, bullet.body.velocity);
-            bullet.body.velocity.x += player.body.velocity.x;
-
-            bulletTimer = game.time.now + BULLET_SPACING;
-		}
-	}
-	//check also for if test enemy est happens, est enemy wise
-}//end of update function
+///////////////////VELO = 666
 
 //basic AI response
 function baseAI_Array() {
@@ -414,9 +425,7 @@ function baseAI_Update () {
 	
 	if (baseFoe.countLiving() <= 0){ baseAI_Array(); }//spawn the array again
 	//ENDIF	
-}
-	//end basic AI response team, generalised.
-	
+}//end basic AI response team, generalised.
 //advanced AI response, spawner wise
 function advAI_Timer() {
 	var MIN_ENEMY_SPACING = 30;		var MAX_ENEMY_SPACING = 300;
@@ -463,20 +472,28 @@ function advAI_Timer() {
     }
     game.time.events.add(game.rnd.integerInRange(MIN_ENEMY_SPACING, MAX_ENEMY_SPACING), advAI_Timer);    //  Send another enemy soon?
 }
-
 //fire the enemy projectile.
-function fireBullet () {
-	//grab first bullet from the pool
-	var pShot = pShots.getFirstExists(false);
-	
-	if (pShot && !gamePause.visible) {
-		//fire the bullet grabbed
-		//snd.play();//jnc
-			//fxgun.play();//play a sound test
-		pShot.reset(player.x, player.y - 16);
-		pShot.body.velocity.y = BULLET_VELO; //shot speed?
+function enemy_fireBullet() {//in order to limit/slow down enemy firing rate, ideally...
+	if (game.time.now > bullet_Timer) {
+			//  Set up firing mechanimss
+		var shotSpeed = 400;
+			//fire a random number, between min and max range, 1.5/2.5 seconds.
+		var shotDelay = (game.rnd.integerInRange(1500), 2500);//approx 2 seconds?
+		enemy.bullets = 1;
+		enemy.lastShot = 0;
+		
+		if(bullet) {
+			var bulletOffset = 20 * Math.sin(game.math.degToRad(player.angle));
+            bullet.reset(player.x + bulletOffset, player.y);
+            bullet.angle = player.angle;
+            game.physics.arcade.velocityFromAngle(bullet.angle - 90, BULLET_SPEED, bullet.body.velocity);
+            bullet.body.velocity.x += player.body.velocity.x;
+
+            bulletTimer = game.time.now + BULLET_SPACING;
+		}
 	}
-}
+	//check also for if test enemy est happens, est enemy wise
+}//end of update function
 //the render function, akin to LateUpdate in unity. Good for debugging, use wise
 function render() {
 //	game.debug.text("Queued events: " + game.time.events.length + ' - click to remove', 32, 32);
@@ -486,8 +503,10 @@ function render() {
 	//endif
 	
 	/*debug render, very very buggy*/
+/*shield boxes
+	for (var i = 0; i < shields.length; i++)
+    {game.debug.body(shields.children[i]);}
 //advance enemy hit boxes
-/*
 	for (var i = 0; i < adv_Foe.length; i++)
     {game.debug.body(adv_Foe.children[i]);}
 //bullet test hit boxes
@@ -503,18 +522,20 @@ function update_collisions() {
 	//	player collides
 	game.physics.arcade.overlap(player, adv_Foe, shipCollide, null, this);
 	game.physics.arcade.overlap(player, baseFoe, shipCollide, null, this);
-	
+	//	shield collides WIP
+	game.physics.arcade.overlap(shields, baseFoe, enemyCrashShield, null, this);	
+	game.physics.arcade.overlap(adv_Foe_Bullets, shields, shieldHit, null, this);			
+		
 	//	enemy collides
 	game.physics.arcade.overlap(baseFoe, pShots, hitEnemy, null, this);
+
+	
 	game.physics.arcade.overlap(adv_Foe, pShots, hitEnemy, null, this);
 	
 	//	hazard collides
 	game.physics.arcade.overlap(adv_Foe_Bullets, player, enemyHitsPlayer, null, this);
-	
-	//	shield collides WIP
-//	game.physics.arcade.overlap(adv_Foe_Bullets, shield, enemyHitsPlayer, null, this);
-		//
-//	game.physics.arcade.overlap(adv_Foe_Bullets, shield, enemyCrashShield, null, this);
+
+
 //	game.physics.arcade.overlap(base_Foe_Bullets, shield, enemyCrashShield, null, this);
 
 }
@@ -550,26 +571,22 @@ function enemyHitsPlayer(player, eShots) {
 	livesVAL--;//player.damage(bullet.damageAmount);
 	healthUpdate();//health.render();
 }
-function shieldHit(shield, eShot) {
-	/*var explosion = explosions.getFirstExists(false);
-    explosion.reset(player.body.x + player.body.halfWidth, player.body.y + player.body.halfHeight);
-    explosion.body.velocity.y = player.body.velocity.y;
-    explosion.alpha = 0.7;
-    explosion.play('explosion', 30, false, true);
-    eShots.kill();
-	shield.kill(this object)
-	livesVAL--;//player.damage(bullet.damageAmount);
-	healthUpdate();//health.render(); */
-}
-function enemyCrashShield (enemy, shield) {
-	//remove shield
-	var explosion = explosions.getFirstExists(false);
-	////
-	explosion.play('explosion', 30, false, true);
-	
-	
+
+function shieldHit(eShots, shields) {
+//	var explosion = explosions.getFirstExists(false);
+//    explosion.reset(shield.body.x + shield.body.halfWidth, shield.body.y + shield.body.halfHeight);//   explosion.alpha = 0.7;
+//    explosion.play('explosion', 30, false, true);
 	shields.kill();
-	eShots.kill();
+    eShots.kill();
+}
+function enemyCrashShield (shields, baseFoe) {
+	//remove shield
+//	var explosion = explosions.getFirstExists(false);
+//	explosion.reset(shields.body.x + shields.body.halfWidth, shields.body.y + shields.body.halfHeight);
+//   explosion.alpha = 0.7;
+//	explosion.play('explosion', 30, false, true);
+	shields.kill();
+//	enemy.kill();
 }
 
 function scoreUpdate() {
