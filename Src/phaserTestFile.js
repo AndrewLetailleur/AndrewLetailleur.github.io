@@ -64,7 +64,7 @@ var gamePause;//the pause text
 var snd;//sound fx	//var sound = Phaser.Sound; //JNC hassle wise
 	//misc variables for player
 
-var S_VELO = 96;//64
+var S_VELO = 64;//64
 var VELO;// = 128;//64;
 var s_d = 1;
 var c_d;//= s_d; c_d = s_d;
@@ -105,10 +105,55 @@ function create_Shields() {//the shields, which block one hit before disappearin
 	shields.enableBody = true;
 	shields.physicsBodyType = Phaser.Physics.ARCADE; //sets physics
 
-	//create array here, since it'd not be done twice man!
+	//create array here. This should only be called on level generation, restart wise.
 
-	var widthy = game.width / 20;	var heighty = game.height - 100;
+/* REF Notes, under math land. Did some tweaking on this still! ;P
+
+Width = 600
+Blocks = 70
+Spacer = Blocks / 5 (= 14)
+Amount = 4				
+Gap = ( ( Width - (Blocks * 4) ) / (Amount + 1) ) = 64
+
+	+5		+5		+5
+64	70	64	70	64	70	64
+		70 / 5 = 14
+
+Width / ( (Blocks * Amount) + (Gap * (Amount + 1) ) ) = 1
+
+//test code grabbed/hacked from the following site;
+	//https://www.w3schools.com/js/tryit.asp?filename=tryjs_loop_for
+for (i = GAP; i < 600; i+= GAP) {
+    for (j = 0; j < 70; j+= 5) {
+		i+=10;
+    	text += i + "<br>";
+	}
+    text += "<br>";
+}*/
+
+	var heighty = game.height - 100; //to get the 'min' start of
+	var blocks = 70;
+	var b_lay = 10; //should =/= blocks / 7;
+	var amount = 4;
+	var gap = ( (game.width - (blocks * amount) ) / (amount + 1) ); // should = 64
 	
+	for (var y = 0; y < 5; y++) {//height
+		for (var x = (gap / 8 * 7); x < game.width; x+= gap) {//width. Gap should == 58
+			for (j = 0; j < blocks; j += b_lay) {//bricks
+				x += b_lay;
+				var Box = shields.create( x, (heighty - (8 * y)), 'blocks');
+				Box.anchor.setTo(0, 0); //anchor wise
+				Box.body.setSize(10, 8); //hack attempt
+			}//end j gen valve
+			//x+=2; //jnc debug valve
+		};//end x 
+	};//end y
+	//end for
+	
+/*	old generated code, which covered the entire floor more or less.
+
+	var widthy = game.width / 20;	
+	//var heighty = game.height - 100; //to get the 'min' start of
 	for (var y = 0; y < 3; y++) {//height
 		for (var x = 0; x < (widthy - 1); x++) {//width
 			var Box = shields.create( (12 + (20 * x) ), (heighty - (12 * y)), 'blocks');
@@ -116,6 +161,8 @@ function create_Shields() {//the shields, which block one hit before disappearin
 			Box.body.setSize(16, 8); //hack attempt
 		};
 	};
+*/
+
 }
 function create_PlayerAvatar() {
 //  The player, as a heroic ship
@@ -135,7 +182,7 @@ function create_PlayerShots() {
 	pShots = game.add.group();
 	pShots.enableBody = true;
 	pShots.physicsBodyType = Phaser.Physics.ARCADE;//block physics by image. Simple.
-	pShots.createMultiple(51, 'pShot');//to ensue a space invaders/galaxian lite limit on shots available
+	pShots.createMultiple(1, 'pShot');//to ensue a space invaders/galaxian lite limit on shots available
 	pShots.setAll('anchor.x', 0.5);
 	pShots.setAll('anchor.y', 1);
 	pShots.setAll('outOfBoundsKill', true);//remove if out of bounds
@@ -517,39 +564,26 @@ function render() {
 */
 }
 
-function update_collisions() {
-//	check collisions
+function update_collisions() {//	check collisions
 	//	player collides
 	game.physics.arcade.overlap(player, adv_Foe, shipCollide, null, this);
 	game.physics.arcade.overlap(player, baseFoe, shipCollide, null, this);
+	
+	//	hazard/enemy bullet collides
+	game.physics.arcade.overlap(adv_Foe_Bullets, player, enemyHitsPlayer, null, this);
+	//game.physics.arcade.overlap(base_Foe_Bullets, player, enemyHitsPlayer, null, this);
+
 	//	shield collides WIP
-	game.physics.arcade.overlap(shields, baseFoe, enemyCrashShield, null, this);	
-	game.physics.arcade.overlap(adv_Foe_Bullets, shields, shieldHit, null, this);			
-		
+	game.physics.arcade.overlap(shields, baseFoe, enemyCrashShield, null, this);		
+	game.physics.arcade.overlap(pShots, shields, playerShieldHit, null, this);
+	//game.physics.arcade.overlap(base_Foe_Bullets, shields, shieldHit, null, this)
+	game.physics.arcade.overlap(adv_Foe_Bullets, shields, shieldHit, null, this);
+	
 	//	enemy collides
 	game.physics.arcade.overlap(baseFoe, pShots, hitEnemy, null, this);
-
-	
-	game.physics.arcade.overlap(adv_Foe, pShots, hitEnemy, null, this);
-	
-	//	hazard collides
-	game.physics.arcade.overlap(adv_Foe_Bullets, player, enemyHitsPlayer, null, this);
-
-
-//	game.physics.arcade.overlap(base_Foe_Bullets, shield, enemyCrashShield, null, this);
-
+	game.physics.arcade.overlap(adv_Foe, pShots, hitEnemy, null, this);	
 }
-
-function shipCollide(player, enemy) {
-	var explosion = explosions.getFirstExists(false);
-    explosion.reset(enemy.body.x + enemy.body.halfWidth, enemy.body.y + enemy.body.halfHeight);
-    explosion.body.velocity.y = enemy.body.velocity.y;
-    explosion.alpha = 0.7;
-    explosion.play('explosion', 30, false, true);
-    enemy.kill();
-	livesVAL--;
-	healthUpdate();
-}
+	//enemy colliders
 function hitEnemy(enemy, pShots) {
     var explosion = explosions.getFirstExists(false);
     explosion.reset(pShots.body.x + pShots.body.halfWidth, pShots.body.y + pShots.body.halfHeight);
@@ -561,6 +595,16 @@ function hitEnemy(enemy, pShots) {
     enemy.kill();
     pShots.kill();
 }//TBDL
+function shipCollide(player, enemy) {
+	var explosion = explosions.getFirstExists(false);
+    explosion.reset(enemy.body.x + enemy.body.halfWidth, enemy.body.y + enemy.body.halfHeight);
+    explosion.body.velocity.y = enemy.body.velocity.y;
+    explosion.alpha = 0.7;
+    explosion.play('explosion', 30, false, true);
+    enemy.kill();
+	livesVAL--;
+	healthUpdate();
+}
 function enemyHitsPlayer(player, eShots) {
 	var explosion = explosions.getFirstExists(false);
     explosion.reset(player.body.x + player.body.halfWidth, player.body.y + player.body.halfHeight);
@@ -571,7 +615,14 @@ function enemyHitsPlayer(player, eShots) {
 	livesVAL--;//player.damage(bullet.damageAmount);
 	healthUpdate();//health.render();
 }
-
+	//shield colliders
+function playerShieldHit(pShots, shields) {
+//	var explosion = explosions.getFirstExists(false);
+//    explosion.reset(shield.body.x + shield.body.halfWidth, shield.body.y + shield.body.halfHeight);//   explosion.alpha = 0.7;
+//    explosion.play('explosion', 30, false, true);
+	shields.kill();
+    pShots.kill();
+}
 function shieldHit(eShots, shields) {
 //	var explosion = explosions.getFirstExists(false);
 //    explosion.reset(shield.body.x + shield.body.halfWidth, shield.body.y + shield.body.halfHeight);//   explosion.alpha = 0.7;
@@ -588,6 +639,7 @@ function enemyCrashShield (shields, baseFoe) {
 	shields.kill();
 //	enemy.kill();
 }
+//end colliders
 
 function scoreUpdate() {
 	scoreTXT.text = "Score: " + scoreVAL;
