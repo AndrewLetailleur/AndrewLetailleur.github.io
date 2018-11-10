@@ -1,84 +1,81 @@
-/* WIP IN PROGRESS STILL!
+/* 	Programmed by Andrew I Letailleur, circa 22/10/2018
+ * 	*	Blah blah blha
+ * 	*	
+ */ ///"Playable", but WIP-ish IN PROGRESS STILL!
 
-LOOK AT THESE TUTORIALS TO FINISH THE JOB
+/* LOOKED AT THESE TUTORIALS TO FINISH THE JOB
 https://github.com/jschomay/phaser-demo-game/blob/c5824c6a7569c5536cca150a9589e814f225478b/game.js
 
-http://codeperfectionist.com/articles/phaser-js-tutorial-building-a-polished-space-shooter-game-part-4/
+http://codeperfectionist.com/articles/phaser-js-tutorial-building-a-polished-space-shooter-game-part-1/   
+
+http://www.html5gamedevs.com/topic/16637-get-sprite-in-the-world-xy-position/
+
+http://www.html5gamedevs.com/topic/3175-sprites-in-group-x-position/
+
+http://www.html5gamedevs.com/topic/4939-how-to-remove-gametimeeventsloop/
+
+http://www.html5gamedevs.com/topic/3893-how-to-restart-a-game/
+
+https://leanpub.com/html5shootemupinanafternoon/read
+
+https://gamedevacademy.org/how-to-debug-phaser-games/
+
+http://examples.phaser.io/_site/view_full.html?d=time&f=remove+event.js&t=remove%20event
+
+https://www.w3schools.com/js/js_loop_for.asp
 
 */
 
-
- /*http://codeperfectionist.com/articles/phaser-js-tutorial-building-a-polished-space-shooter-game-part-1/  based on this tutorial, asset hack wise */
-
 //spawn player stuff
-var player;	//za player
-	//controls
-var moveCtrl;//the movement code for player
-var fireCtrl; //the trigger key for player
-var pauseKey; //pauses the game, trigger wise
-
-  /*no fire rate needed by 'one shot on screen' limit via pool limitations
-	unless 'insisted' to have firing rate.*/
+var player; //controls (MOVE, FIRE, PAUSE)
+var moveCtrl; var fireCtrl; var pauseKey; /*no fire rate needed ...
+Due to 'one shot on screen' limit via pool limitations.
+So no fire rate, unless 'insisted/required' to have a player firing rate.*/
+var gameOver; var gamePause;			//end of stuff variables, txt-ish wise
 
 //movement varieties
-var ACCEL = 250;
-var DRAG = 400;
-var MAX_SPEED = 300;
-var bank;
-var border_edge = 20;	
-//
-var pShots;
-var eShots;//enemy shots
-var BULLET_VELO = -600;
+var ACCEL = 250; var DRAG = 400; var MAX_SPEED = 300;
+var bank; var border_edge = 20;	//end movement varieties
+//bullet variables
+var pShots; var eShots; var BULLET_VELO = -600; //end bullet variables
 
 //player variables
-var livesSTART = 3;
-var lives;//is an array of objects
-var livesVAL;//initial amount of lives
-var bonusREQ = 47;//sets the minimum requirement
-var scoreBONUS;
+	//lives. Start/current val, and array.
+var livesSTART = 3; var livesVAL; var lives;
+	//score variables. From value, to starter bonus trigger & requirement, 1UP wise.	
+var scoreVAL = 0;	var scoreTXT; 
+var bonusREQ = 47;	var scoreBONUS;
+var stageVAL = 1;	var stageTXT;// = "I";//to =/= 1, hack wise
  
-var scoreVAL = 0;//initial score value
-var scoreTXT;//a string array of text, plus score
-//end of player variables
+ 
+//objects, FX/misc wise
+var starfield;	//the background
+var shields;	//Meant to absorb in a 'wall' manner.
+var explosions;	//ripoff explosive effects
 
-var shields;//object, shield wise. Meant to absorb in a 'wall' manner.
-	
-	//(rest of) the FX objects themselves
-var starfield;//the starfield say
-var explosions;//ripoff explosive effects
+//enemy variables
+var baseFoe; //space invaders, as a group function
+var baseFoe_Dir;//for movement in one dir. Multiply by -1 every time direction is shifted.
+var S_VELO = 64; var VELO;
+var s_d = 1; var c_d;// = s_d; c_d; //determines the base_foe's starting position, spawn wise.
+//var base_Foe_Bullets;//for their future projectiles
 
 var advGal_Spawner;
 var adv_Foe;//galaxians, var advFoe;
 var adv_Foe_Bullets;//the attack variable for test enemies
 
+	//enemy spawner
 var testInvader_Timer;
 var testInvader;//second enemy type... Consider sine waves?
 /*var bossFoe; //gorf spawner, or improvised boss
 */ //end speculated values 
 
-//end of stuff variables.
-var gameOver;//the game over trigger, buggy ATM
-var gamePause;//the pause text
+var flag = false; var fail = false;//bool wise
 
-var snd;//sound fx	//var sound = Phaser.Sound; //JNC hassle wise
-	//misc variables for player
-
-var S_VELO = 64;//64
-var VELO;// = 128;//64;
-var s_d = 1;
-var c_d;//= s_d; c_d = s_d;
-var flag = false;//bool wise
-var fail = false;
-//var baseFoe_Array;//spawn a fresh array guess?
-//var baseFoe_Amount = [];//equals intentionally, an array. Not needed, due to group fuunctionality.
-var baseFoe; //space invaders, as a group function
-var baseFoe_Dir;//for movement in one dir. Multiply by -1 every time direction is shifted.
+//var snd;//sound fx	//var sound = Phaser.Sound; //JNC hassle wise
 
 var game = new Phaser.Game(600, 600, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create, update: update, render: render, restart: restart });
 
-
-	
 //Normally you'd use this to load your game assets (or those needed for the current State), akin to Unity Awake?
 function preload() {//preload is called first. 
 	//load static art & images
@@ -96,7 +93,7 @@ function preload() {//preload is called first.
 	//get a custom asset later, potential copyright fears/est wise
 	game.load.spritesheet('explosion', 'IMG/spaceShooter/explode.png', 128, 128); //perfect square	
 	
-	game.load.audio('gun', 'assets/audio/shoot.wav');//load audio FAIL
+//	game.load.audio('gun', 'assets/audio/shoot.wav');//load audio FAIL due to CORS policy
 }
 
 	//	load create_X features before create, logic wise?
