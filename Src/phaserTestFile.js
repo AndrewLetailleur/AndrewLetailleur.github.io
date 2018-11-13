@@ -51,8 +51,7 @@ var pShots; var eShots; var BULLET_VELO = -600; //global bullet variables
 
 //enemy variables
 	//space invaders, as a group function, baseFoe wise
-var baseFoe; 
-var baseFoe_Dir;//for movement in one dir. Multiply by -1 every time direction is shifted.
+var baseFoe; var baseFoe_Dir;//for movement in one dir. Multiply by -1 every time direction is shifted.
 var S_VELO = 64;	var VELO;
 var base_Foe_Bullets;//for their future projectiles
 var base_firingDelay = 2000;	//bullet delay, universal
@@ -79,7 +78,7 @@ var testInvader;
 
 var game = new Phaser.Game(600, 600, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create, update: update, render: render, restart: restart });		//Game Start!
 
-function preload() {//	preload is called first, state wise. Akin to Unity Awake?. 
+function preload() {//!	preload is called first, state wise. Akin to Unity Awake?. 
 
 	//first is at the lowest, "z" layer axis wise. So, load backgrounds/est first, more importantly.
 
@@ -275,7 +274,7 @@ function create_AdvancedFoe() {		//	more advanced enemy/FOE, Galaxian lite in mo
 	// 	game.time.events.add(1000, advAI_Timer);//spawns the enemy, after trig.	//set freqency of spawning. Cue event timers/est. //[REDACTED], since array spawns first. It'd be called later.
 }//end advanced enemy/FOE
 //!	end extra create functions
-function create() { //create is called once preload has completed. Akin to Unity Start?
+function create() {//!create is called once preload has completed. Akin to Unity Start?
 //this includes the loading of any assets from the Loader
 	game.physics.startSystem(Phaser.Physics.ARCADE);
 //	begin FX
@@ -382,7 +381,7 @@ function update_GameOver() {//shows the gameOver text. NOT shown over every othe
     }//end alive trigger
 }
 //!	end extra update functions
-function update() {//same as Unity version per frame. Called before render.
+function update() {//!same as Unity version per frame. Called before render.
 	//updates all per frame
 	baseAI_Update();
 	update_controls();
@@ -518,7 +517,7 @@ function enemy_fireBullet() {//fire the enemy projectile.
 	//check also for if test enemy est happens, est enemy wise
 }//end of update function
 //!	end enemy prefabs/est
-function render() {//the render function, akin to LateUpdate in unity. Used soully for debugging, comma wise
+/*DEBUG*/	function render() {//!the render function, akin to LateUpdate in unity. Used soully for debugging, comma wise
 
 //	game.debug.text("Queued events: " + game.time.events.length + ' - click to remove', 32, 32);	//check event listener amount, for spawner spam
 
@@ -573,7 +572,7 @@ function hitEnemy(enemy, pShots) {//if enemy is hit by player shot, 			destroy b
 }//TBDL
 function shipCollide(player, enemy) {//if player crashes with enemy, 			destroy both
 	var explosion = explosions.getFirstExists(false);
-    explosion.reset(enemy.body.x + enemy.body.halfWidth, enemy.body.y + enemy.body.halfHeight);
+    explosion.reset( (enemy.body.x + enemy.body.halfWidth), (enemy.body.y + enemy.body.halfHeight) );
     explosion.body.velocity.y = enemy.body.velocity.y;
     explosion.alpha = 0.7;
     explosion.play('explosion', 30, false, true);
@@ -583,7 +582,7 @@ function shipCollide(player, enemy) {//if player crashes with enemy, 			destroy 
 }
 function enemyHitsPlayer(player, eShots) {//if player is hit by enemy shot, 	destroy both
 	var explosion = explosions.getFirstExists(false);
-    explosion.reset(player.body.x + player.body.halfWidth, player.body.y + player.body.halfHeight);
+    explosion.reset( (player.body.x + player.body.halfWidth), (player.body.y + player.body.halfHeight) );
     explosion.body.velocity.y = player.body.velocity.y;
     explosion.alpha = 0.7;
     explosion.play('explosion', 30, false, true);
@@ -591,7 +590,7 @@ function enemyHitsPlayer(player, eShots) {//if player is hit by enemy shot, 	des
 	livesVAL--;//player.damage(bullet.damageAmount);
 	healthUpdate();//health.render();
 }
-	//shield colliders
+	//shield colliders, they don't have explosions to them sadly :P
 function playerShieldHit(pShots, shields) {//if shield is hit by player shot, 	destroy both
 //	var explosion = explosions.getFirstExists(false);
 //    explosion.reset(shield.body.x + shield.body.halfWidth, shield.body.y + shield.body.halfHeight);//   explosion.alpha = 0.7;
@@ -613,7 +612,6 @@ function enemyCrashShield (shields, baseFoe) {//if enemy moves at shield		destro
 //   explosion.alpha = 0.7;
 //	explosion.play('explosion', 30, false, true);
 	shields.kill();
-//	enemy.kill();
 }
 //!	end colliders
 
@@ -623,9 +621,7 @@ function scoreUpdate() {	//the score update, and 1UP trigger
 	//begin conditional life increment
 	if (scoreVAL >= scoreBONUS) {
 		scoreBONUS += bonusREQ; //so that every X gives a life
-		if (livesVAL < 5) /*if lives are below max*/
-			extraLife();
-		//endif
+		if (livesVAL < 5) { extraLife(); }/*if lives are below max*/
 	}//endif
 }	//health update logic COULD be used to update the assets of levels/est too
 function healthUpdate() {	//the health counter, and game over tracker
@@ -633,9 +629,7 @@ function healthUpdate() {	//the health counter, and game over tracker
 	lives.callAll('kill');//clear, then re-add
 	if (livesVAL > 0) {
 		lives = game.add.group();
-		for (var i = 0; i < livesVAL; i++) {
-		var ship = lives.create(8 + (36 * i), 560, 'playShip');
-		}//end for
+		for (var i = 0; i < livesVAL; i++) { var ship = lives.create(8 + (36 * i), 560, 'playShip'); }//end for
 	} else
 	player.kill();//
 }
@@ -645,13 +639,11 @@ function extraLife() {		//the life increaser, incremental limiter wise
 		player.health = livesVAL;
 		lives.callAll('kill');//clear, then re-add
 		lives = game.add.group();
-		for (var i = 0; i < livesVAL; i++) {
-			var ship = lives.create(8 + (36 * i), 560, 'playShip');
-		}//end for
+		for (var i = 0; i < livesVAL; i++) { var ship = lives.create(8 + (36 * i), 560, 'playShip'); }//end for
 	}//end if
 }
 //!	end HUD updates
-function restart () {		//calls when called upon to reset the game entirely from scratch
+function restart () {		//!calls when called upon to reset the game entirely from scratch
 //restarts the character
 	    //reset the score, included as it's needed to be reset
     scoreVAL = 0;
