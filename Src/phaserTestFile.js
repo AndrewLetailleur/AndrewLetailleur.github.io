@@ -6,6 +6,7 @@
 -----//use them as my references, if needed. Transparency wise et all.
 https://github.com/jschomay/phaser-demo-game/blob/c5824c6a7569c5536cca150a9589e814f225478b/game.js
 http://codeperfectionist.com/articles/phaser-js-tutorial-building-a-polished-space-shooter-game-part-1/   
+https://phaser.io/examples/v2/games/invaders
 http://www.html5gamedevs.com/topic/16637-get-sprite-in-the-world-xy-position/
 http://www.html5gamedevs.com/topic/3175-sprites-in-group-x-position/
 http://www.html5gamedevs.com/topic/4939-how-to-remove-gametimeeventsloop/
