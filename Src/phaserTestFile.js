@@ -1,6 +1,6 @@
-/* 	Programmed by Andrew I Letailleur, circa 22/10/2018
- * 	*	Mainly coded, for a University project. And to learn in hassle, how to use Phaser.
- */ ///Playable to a basic state. Though I feel I ought to still include a boss in there, somewhere...
+/* 	Programmed by Andrew I Letailleur, circa 22/10/2018 - 18/11/2018
+ * 	*	Mainly coded for a University project. And to learn in hassle, how to use Phaser 2.
+ */ ///Playable to a basic state. Though I feel the boss and enemies could be a notch better, in graphics and attitude.
 
 	/* LOOKED AT THESE TUTORIALS/ANSWERS TO FINISH THE JOB
 -----//use them as my references, if needed. Transparency wise et all.
@@ -20,7 +20,7 @@ http://www.html5gamedevs.com/topic/10180-get-random-dead-sprite-from-a-group/
 /*(Known) Bugs to clear still!
 	1. "Game Over loaded behind every other actor/object",	2. "Bullets from an invisible array"	*/
 
-	
+
 ///GLOBAL VAR|IABLES, DUNOT DEVIATE!?!
 
 
@@ -35,43 +35,46 @@ var ACCEL = 250; var DRAG = 400; var MAX_SPEED = 300;
 var bank; var border_edge = 20;	//end movement varieties
 
 //gameplay values
-var livesSTART = 3; var livesVAL; var lives;			//lives. Start/current val, and array.
-var scoreVAL = 0;	var scoreTXT; 						//score variables. From value, to starter bonus trigger & requirement, 1UP wise.	
-var bonusREQ = 47;	var scoreBONUS;
+var livesSTART = 3; var livesVAL; var lives;		//lives. Start/current val, and array.
+var scoreVAL = 0;	var scoreTXT; 					//score variables. From value, to starter bonus trigger & requirement, 1UP wise.	
+var bonusREQ = 47;	var scoreBONUS;						//"" ""
 var stageSTART = 1;	var stageVAL;					//stage variables, reference for basic enemies
-var stageTXT;		// = "I";//to =/= 1, prefab wise
+//  var stageTXT;										// = "I";//to =/= 1, prefab wise. Currently unimplemented
 //!end of player var|iables, txt-ish wise
 
 //objects, FX/misc wise
-var starfield;									//the background
-var shields;									//Meant to absorb in a 'wall' manner.
-var explosions;									//ripoff explosive effects
-var pShots; var eShots; var BULLET_VELO = -600; //global bullet variables
+var starfield;			var blackhole				//the background assets
+var shields;										//Meant to absorb attacks in a 'breakout' manner.
+var explosions;										//ripoff explosive effects
+var pShots; var eShots; var BULLET_VELO = -600; 	//global bullet variables
 //!end of game objects
 
 //enemy variables
 	//space invaders, as a group function, baseFoe wise
-var baseFoe; var baseFoe_Dir;//for movement in one dir. Multiply by -1 every time direction is shifted.
+var baseFoe; var baseFoe_Dir;								//for movement in one dir. Multiply by -1 every time direction is shifted.
 var S_VELO = 64;	var VELO;
-var base_Foe_Bullets;//for their future projectiles
-var base_firingDelay = 2000;	//bullet delay, universal
+var base_Foe_Bullets; var adv_Foe_Bullets; var bh_Bullets;	//for their future projectiles
+var base_firingDelay = 2000;								//bullet delay, universal
 
 	//galaxians, var adv_Foe;
 var advGal_Spawner;
 var adv_Foe;
-var adv_Foe_Bullets;
 var adv_firingDelay = 3500;		//bullet delay, universal
+var adv_enemy_timer = 0;	//timer delay hacks
+
+var bh_timer = 0;
+var hole_summon = 0;
+var hole_time;
+
+var event_Timer = 1500;
 
 	//enemy spawners, for adv_Foe
 var testInvader_Timer;
 var testInvader;
 
-	//the BOSS enemy, TBA.
-/*var bossFoe; //gorf spawner, or improvised boss*/
 //!end of enemy actors
 
 /*Misc/REDACTED Code goes here
-//var flag = false; var fail = false;//bool wise
 //var snd;//sound fx	//var sound = Phaser.Sound; //JNC hassle wise
 */
 ///!END GLOBAL VAR|IABLES
@@ -84,6 +87,7 @@ function preload() {//!	preload is called first, state wise. Akin to Unity Awake
 
 //load objects
 	game.load.image('starfield', 'IMG/spaceShooter/starfield.png'); //the background
+	game.load.image('hole', 'IMG/spaceShooter/holeBlack.png'); //the background
 	game.load.image('blocks', 'IMG/spaceShooter/Shields.png');//another perfect square, loader wise hack.
 	
 //load actors
@@ -95,6 +99,7 @@ function preload() {//!	preload is called first, state wise. Akin to Unity Awake
 //load bullets
 	game.load.image('pShot', 'IMG/spaceShooter/BulletO.png');//the projectile shot
 	game.load.image('eShot', 'IMG/spaceShooter/EnemyShot.png');//the ENEMY projectile shot		
+	game.load.image('meteor', 'IMG/spaceShooter/Meteor.png');
 	
 //load FX
 	game.load.spritesheet('explosion', 'IMG/spaceShooter/explode.png', 128, 128); //perfect square		//get a custom asset later, potential copyright fears/est wise
@@ -107,17 +112,22 @@ function create_Shields() {			//	the shields, which block one hit before disappe
 	shields = game.add.group();
 	shields.enableBody = true;
 	shields.physicsBodyType = Phaser.Physics.ARCADE; //sets physics
-/* REF Notes, under math land. Did some tweaking on this still! ;P
+
+///	LOCAL VARIABLES, for Spawn use only!
+	var heighty = game.height - 100; //to get the 'min' start of
+	var blocks = 70;
+	var b_lay = 10; //should =/= blocks / 7;
+	var amount = 4;
+	var gap = ( (game.width - (blocks * amount) ) / (amount + 1) ); // should = 64
+	
+/* REF Notes for Shield positioning, under math land. Did some tweaking on this still! ;P
 	//create array here. This should only be called on level generation, restart wise.
-
-
 
 Width = 600 	Blocks = 70 	Spacer = Blocks / 5 (= 14) 		Amount = 4				
 Gap = ( ( Width - (Blocks * 4) ) / (Amount + 1) ) = 64
 
-	+5		+5		+5
+	+5		+5		+5		|  70 / 5 = 14
 64	70	64	70	64	70	64
-		70 / 5 = 14
 
 Width / ( (Blocks * Amount) + (Gap * (Amount + 1) ) ) = 1
 
@@ -130,16 +140,9 @@ for (i = GAP; i < 600; i+= GAP) {
 	}
     text += "<br>";
 }*/
-///	LOCAL VARIABLES, for Spawn use only!
-	var heighty = game.height - 100; //to get the 'min' start of
-	var blocks = 70;
-	var b_lay = 10; //should =/= blocks / 7;
-	var amount = 4;
-	var gap = ( (game.width - (blocks * amount) ) / (amount + 1) ); // should = 64
-	
 	for (var y = 0; y < 5; y++) {//height
 		for (var x = (gap / 8 * 7); x < game.width; x+= gap) {//width. Gap should == 58
-			for (j = 0; j < blocks; j += b_lay) {//bricks
+			for (j = 0; j < blocks; j += b_lay) {//bricks, shield objects
 				x += b_lay;
 				var Box = shields.create( x, (heighty - (8 * y)), 'blocks');
 				Box.anchor.setTo(0, 0); //anchor wise
@@ -148,7 +151,7 @@ for (i = GAP; i < 600; i+= GAP) {
 			//x+=2; //jnc debug valve
 		};//end x 
 	};//end y
-	//!end for
+	//!end for loop
 }
 function create_PlayerAvatar() {	//	The player, as a heroic ship
     player = game.add.sprite(300, 535, 'playShip');//32x32 ship spawned here
@@ -204,7 +207,7 @@ function create_PlayerShots() {		//	the bullet shot group, pShots!
 	pShots = game.add.group();
 	pShots.enableBody = true;
 	pShots.physicsBodyType = Phaser.Physics.ARCADE;//block physics by image. Simple.
-	pShots.createMultiple(1, 'pShot');//at 1, to ensue a space invaders/galaxian lite limit on shots on screen is set
+	pShots.createMultiple(31, 'pShot');//at 1, to ensue a space invaders/galaxian lite limit on shots on screen is set
 	pShots.setAll('anchor.x', 0.5);
 	pShots.setAll('anchor.y', 1);
 	pShots.setAll('outOfBoundsKill', true);//remove if out of bounds
@@ -222,7 +225,6 @@ function create_Explosions() {		//	explode fx pool, too many explosions cause a 
 	explosions.setAll('scale.y', 0.5);
     explosions.forEach( function(explosion) { explosion.animations.add('explosion'); } );//animates the explosion, end for loop
 }//end explosions!
-/*FOE*/
 function create_Bullets() {			//	enemy bullet list, before test enemies are spawned
 	//advanced first
 	adv_Foe_Bullets = game.add.group();
@@ -253,7 +255,23 @@ function create_Bullets() {			//	enemy bullet list, before test enemies are spaw
 	base_Foe_Bullets.forEach(function(enemy){
         enemy.body.setSize(8, 8);
 	});
+	
+	//	last, a bundle of meteorites
+	bh_Bullets = game.add.group();
+	bh_Bullets.enableBody = true;
+	bh_Bullets.physicsBodyType = Phaser.Physics.ARCADE;
+	bh_Bullets.createMultiple(10, 'meteor');//to set limit of amount of bullets on screen.
+	//no needed, as it could be a poor man's spritesheet instead.
+	bh_Bullets.setAll('alpha', 0.9);
+	bh_Bullets.setAll('anchor.x', 0.5);
+	bh_Bullets.setAll('anchor.y', 0.5);
+	bh_Bullets.setAll('outOfBoundsKill', true);
+	bh_Bullets.setAll('checkWorldBounds', true);
+	bh_Bullets.forEach(function(enemy){
+        enemy.body.setSize(16, 16);
+	});
 }//end bullet gen
+/*FOE*/
 function create_BasicFoe() {		//	basic enemy physics, generates an array afterwards
 	baseFoe = game.add.group();
 	baseFoe.enableBody = true;
@@ -279,6 +297,9 @@ function create() {//!create is called once preload has completed. Akin to Unity
 	game.physics.startSystem(Phaser.Physics.ARCADE);
 //	begin FX
     starfield = game.add.tileSprite(0, 0, 600, 600, 'starfield');//  The scrolling starfield background
+	blackhole = game.add.sprite(this.world.centerX, (this.world.centerY / 2), 'hole');
+	blackhole.anchor.setTo(0.5);
+	blackhole.alpha = 0;//invisible
 	create_Explosions();
 //!	end FX
 
@@ -391,6 +412,8 @@ function update() {//!same as Unity version per frame. Called before render.
 		starfield.tilePosition.y += 5;
 		starfield.tilePosition.x += player.body.velocity.x / (ACCEL / 3 * 2);//1;//tweak, consider doing 'random' there?
 	}
+	bossHole_Update();
+	
 	update_GameOver();//GameOver restarts, when needed/prompted.
 }//end updates
 ///	begin enemy prefabs/est
@@ -402,7 +425,15 @@ function baseAI_Array() {//basic enemy creation, array wise
 		//cue buggy remove events attempt.
 	game.time.events.remove(advGal_Spawner);
 	game.time.events.remove(advAI_Timer);
-	if ( (stageVAL > 1) && (game.time.events.length < 1) ) {advGal_Spawner = game.time.events.add(1000, advAI_Timer); }/*check if stage 2+ spawner is triggered.*/
+	if ( (stageVAL > 1) && (game.time.events.length < 1) ) {
+		advGal_Spawner = game.time.events.add(event_Timer, advAI_Timer);
+	}
+	else if ( (stageVAL > 2) && (blackhole.alpha == 0) ) {
+		blackhole.alpha = 1;
+		advGal_Spawner = game.time.events.add( (event_Timer / 2), advAI_Timer);
+	}
+	
+	/*check if stage 2+ spawner is triggered.*/
 	/*if (stageVAL > bossVAL) {bossVAL += REQ;//think of SPAWN A BOSS Trigger!;}		*/
 	
 	var z = game.width / 14;	//to represent 32 x 32 ish, to get 14 slices of game.width
@@ -441,7 +472,9 @@ function baseAI_Update () {//basic enemy AI response
 		}//else do nothing, endif*/ //end buggy code
 	}//if (baseFoe_Dir == 0 && LivesVAL > 0) {}
 
-	if (baseFoe.countLiving() <= 0){ baseAI_Array(); }//spawn the array again, if none is left alive... And there's no boss in sight.
+	
+	//conditional boss trigger if alpha is above zero
+	if (baseFoe.countLiving() <= 0 && blackhole.alpha <= 0){ baseAI_Array(); }//spawn the array again, if none is left alive... And there's no boss in sight.
 	else if (game.time.now > base_firingDelay) { base_Foe_Fire(); }//fire gun, after set amount of time
 	//ENDIF	
 }//end basic AI response team, generalised.
@@ -471,7 +504,8 @@ function advAI_Timer() {//advanced AI response, spawner wise
 
 	//after for, set fring mechanics
     var enemy = adv_Foe.getFirstExists(false);
-    if (enemy) {
+    if (enemy && adv_enemy_timer < game.time.now) {
+		adv_enemy_timer = game.time.now + event_Timer;
         enemy.reset(game.rnd.integerInRange(0, game.width), 0);	//random area on top screen, border edge wise
         enemy.body.velocity.x = game.rnd.integerInRange(-100, 100);
         enemy.body.velocity.y = ENEMY_SPEED;
@@ -516,7 +550,48 @@ function enemy_fireBullet() {//fire the enemy projectile.
 //	}
 	//check also for if test enemy est happens, est enemy wise
 }//end of update function
+/*bosss FOE/AI*/
+function bossHole_Update() {
+	if (blackhole.alpha < 0) {blackhole.alpha = 0;}//endif
+	if((!gamePause.visible) && (blackhole.alpha > 0)) {//for animation/transition, and enemy AI Actions
+		blackhole.angle += 1;	//for animated rotation effect
+		hole_tick();
+		spawn_trig();
+	}
+}
+function spawn_trig() {//TDL, spawn another enemy hack, and fire a shot. Currently buggy
+	if (hole_summon < game.time.now) { //time checker
+		hole_summon = game.time.now + (game.rnd.integerInRange((event_Timer), (event_Timer / 4) ));
+		hole_fire();
+		//hole_spawn(); //something TDL
+	}
+}
+function hole_fire() {//shoot lastly, meteor wise
+	var bulletSpeed = (game.rnd.integerInRange((600), (200) ));
+	bh_Bullet = bh_Bullets.getFirstExists(false);
+	
+	bh_Bullet.reset(blackhole.world.x, blackhole.world.y);
+	bh_Bullet.angle = player.angle;//hack wise
+	bh_Bullet.damageAmount = 1;//sets damage value
+		
+	var angle = game.physics.arcade.moveToObject(bh_Bullet, player, bulletSpeed);
+	bh_Bullet.angle = game.math.radToDeg(angle);
+}
+//function hole_spawn() {}//TDL
+function hole_tick() {//the time limiter
+	hole_time = (event_Timer / 20) * (stageVAL);
+	
+	if (bh_timer < game.time.now) {
+		if (blackhole.alpha > 0)
+		blackhole.alpha -= 0.01;
+		else
+		blackhole.alpha = 0;
+		//end hacked if
+		bh_timer = game.time.now + hole_time;
+	}//endif
+}
 //!	end enemy prefabs/est
+
 /*DEBUG*/	function render() {//!the render function, akin to LateUpdate in unity. Used soully for debugging, comma wise
 
 //	game.debug.text("Queued events: " + game.time.events.length + ' - click to remove', 32, 32);	//check event listener amount, for spawner spam
@@ -548,7 +623,7 @@ function update_collisions() {// check collisions between two actors.
 	//	bullet hits player
 	game.physics.arcade.overlap(adv_Foe_Bullets, player, enemyHitsPlayer, null, this);
 	game.physics.arcade.overlap(base_Foe_Bullets, player, enemyHitsPlayer, null, this);
-
+	game.physics.arcade.overlap(bh_Bullets, player, enemyHitsPlayer, null, this);
 //	shield collides WIP
 	//enemy colliding
 	game.physics.arcade.overlap(shields, baseFoe, enemyCrashShield, null, this);		
@@ -557,6 +632,7 @@ function update_collisions() {// check collisions between two actors.
 	game.physics.arcade.overlap(pShots, shields, playerShieldHit, null, this);
 	game.physics.arcade.overlap(base_Foe_Bullets, shields, shieldHit, null, this)
 	game.physics.arcade.overlap(adv_Foe_Bullets, shields, shieldHit, null, this);
+	game.physics.arcade.overlap(bh_Bullets, shields, shieldHit, null, this);
 }
 	//enemy colliders
 function hitEnemy(enemy, pShots) {//if enemy is hit by player shot, 			destroy both
