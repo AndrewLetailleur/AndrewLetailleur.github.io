@@ -208,7 +208,7 @@ function create_PlayerShots() {		//	the bullet shot group, pShots!
 	pShots = game.add.group();
 	pShots.enableBody = true;
 	pShots.physicsBodyType = Phaser.Physics.ARCADE;//block physics by image. Simple.
-	pShots.createMultiple(31, 'pShot');//at 1, to ensue a space invaders/galaxian lite limit on shots on screen is set
+	pShots.createMultiple(1, 'pShot');//at 1, to ensue a space invaders/galaxian lite limit on shots on screen is set
 	pShots.setAll('anchor.x', 0.5);
 	pShots.setAll('anchor.y', 1);
 	pShots.setAll('outOfBoundsKill', true);//remove if out of bounds
