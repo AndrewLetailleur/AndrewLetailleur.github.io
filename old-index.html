@@ -1,27 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head><!--Note to self, clean up code-->
 	<title>Andrew Letailleur (Andrew Let) - Videogame Tinkerer, and Writer</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
-	<!--Insert JavaScript dependencies. Including JQuery and Phaser?--> <!--Include as CDN's for now, to avoid hassle-->
-		<!--needed for caret down arrow, and other awesome font icons-->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <!--Font Awesome 4 CDN-->
-		<!--Externally included Bootstrap, just to save on short term hassle--> <!-- Latest compiled and minified CSS -->
-	<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> <!--Bootstrap CDN-->
-	
-		<!-- Latest compiled JavaScript -->
+	<!--Insert JavaScript dependencies as CDN's for now, to avoid hassle-->
+	<!--Font Awesome 4 CDN--><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		
+	<!--Bootstrap CDN--> <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
+		<!--JQuery CDN -->
 	<!--<script src=https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js></script>			--> <!--  Google  CDN-->
 	<!--	<script src=https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js></script> 			-->	<!--Microsoft CDN-->
-	<!--	<script src="JS\JQuery\jquery-3.3.1"></script> 												--> <!--add .min to use the mini'd version at the end-->
-	<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"> </script> 	--> <!--Bootstrap CDN-->
+	<!--	<script src="libraries\jquery\jquery-3.3.1"></script> 												--> <!--Source version, min-->
+
 
 	
 	
 		<!--Insert homebrew scripts last, as externals override--> <!--Both CSS and JavaScript-->
-	<link rel="stylesheet" href="CSS\styleOld.css" type="text/css">	
-	<script src="JS\basescript.js"></script>
+	<link rel="stylesheet" href="resources\css\styleOld.css" type="text/css">	
+	<script src="resources\js\basescript.js"></script>
 </head>
 <!--content goes here! -->
 <body>
@@ -34,7 +32,7 @@
 
 <div class="navbar">
 	<a href="#">Home</a><!--To include: one liner, game dev list, brief misc stuff on about and contact-->
-	<a href="#">Projects</a><!--Outside games-->
+	<a href="projectlist.html">Projects</a><!--Outside games-->
 	<div class="dropdown">
 		<button class="dropbtn">Dropdown Games <i class="fa fa-caret-down"></i>
 		</button>
@@ -44,7 +42,6 @@
 			<a href="#">Games3</a><!--Prototypes, est-->
 		</div>
 	</div>
-
 	<a href="#" class="right">About</a><!--Intro, Brief Bio, Awards/est-->
 	<a href="#" class="right">Contact</a><!--Add email list, and LinkedIn-->
 	<a href="#" class="right">Misc Stuff</a><!--Writing, misc projects not game related directly-->

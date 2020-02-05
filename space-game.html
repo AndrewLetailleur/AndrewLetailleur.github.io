@@ -26,19 +26,19 @@
 	
 	<!--BEGIN PHASER DEPENDENCIES-->
 			<!--Under LIB: The Phaser game engine, more important than everything else-->
-		<script src="Lib\phaser.min.js"></script> <!-- version used is at 2.11.0-->
+		<script src="libraries\phaser-old\phaser.min.js"></script> <!-- version used is at 2.11.0-->
 			<!--Under SRC: The Game States. Each should be seperate-->
-		<script src="Src\phaserTestFile.js"></script> <!-- Test state version, to load game state-->
-		<!-- <script src="src/preloadFile.js"></script> -->
-		<!-- <script src="src/menuFile.js"></script>	-->
-		<!-- <script src="src/gameFile.js"></script>	-->
-		<!-- <script src="src/winFile.js"></script>		-->
-		<!-- <script src="src/loseFile.js"></script>	-->
+		<script src="resources\js\game-a\phaserTestFile.js"></script> <!-- Test state version, to load game state-->
+		<!-- <script src="resources\js\preloadFile.js"></script> -->
+		<!-- <script src="resources\js\menuFile.js"></script>	-->
+		<!-- <script src="resources\js\gameFile.js"></script>	-->
+		<!-- <script src="resources\js\winFile.js"></script>	-->
+		<!-- <script src="resources\js\loseFile.js"></script>	-->
 		
 			<!--Under SCRIPT: Load the Game States, and start a Game State. -->		
 		
 			<!--/Another Example list of states\-->
-<!--	<script> <!--Load internal Phaser game map-->
+<!--	<script> Load internal Phaser game map -->
 <!--		var game = new Phaser.Game(800, 600, Phaser.AUTO, "game");	-->
 <!--		game.state.add(“preloadState", preloadFunc);				-->
 <!--		game.state.add(“menuState", menuFunc);						-->
@@ -46,7 +46,7 @@
 <!--		game.state.add(“winState", winFunc);						-->
 <!--		game.state.add(“loseState" ,loseFunc);						-->
 <!--		game.state.start("preloadState");							-->
-<!--		</script> <!-- ??? -->
+<!--		</script> ??? -->
 
 		<!--END PHASER DEPENDENCIES-->
 	
@@ -54,8 +54,8 @@
 		
 	<!--BEGIN CUSTOM SCRIPTS-->
 			<!--Insert homebrew scripts last, as external libraries override--> <!--Both CSS and JavaScript-->
-			<link rel="stylesheet" href="CSS\style.css" type="text/css">	
-			<script src="JS\basescript.js"> </script>
+			<link rel="stylesheet" href="resources\css\style.css" type="text/css">	
+			<script src="resources\js\basescript.js"> </script>
 	<!--END CUSTOM SCRIPTS-->
 
 <!--End of head content-->

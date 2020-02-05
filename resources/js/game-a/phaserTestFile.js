@@ -87,23 +87,23 @@ function preload() {//!	preload is called first, state wise. Akin to Unity Awake
 	//first is at the lowest, "z" layer axis wise. So, load backgrounds/est first, more importantly.
 
 //load objects
-	game.load.image('starfield', 'IMG/spaceShooter/starfield.png'); //the background
-	game.load.image('hole', 'IMG/spaceShooter/holeBlack.png'); //the background
-	game.load.image('blocks', 'IMG/spaceShooter/Shields.png');//another perfect square, loader wise hack.
+	game.load.image('starfield', 'resources/img/spaceShooter/starfield.png'); //the background
+	game.load.image('hole', 'resources/img/spaceShooter/holeBlack.png'); //the background
+	game.load.image('blocks', 'resources/img/spaceShooter/Shields.png');//another perfect square, loader wise hack.
 	
 //load actors
 	//game.load.spritesheet(); //test enemy, make it animated later
-	game.load.image('playShip', 'IMG/spaceShooter/ShipMono.png');	//the ship
-	game.load.image('baseEnemy', 'IMG/spaceShooter/bFOE.png');		//a basic enemy
-	game.load.image('enemyTest', 'IMG/spaceShooter/FOE.png');	//an advanced enemy
+	game.load.image('playShip', 'resources/img/spaceShooter/ShipMono.png');	//the ship
+	game.load.image('baseEnemy', 'resources/img/spaceShooter/bFOE.png');		//a basic enemy
+	game.load.image('enemyTest', 'resources/img/spaceShooter/FOE.png');	//an advanced enemy
 	
 //load bullets
-	game.load.image('pShot', 'IMG/spaceShooter/BulletO.png');//the projectile shot
-	game.load.image('eShot', 'IMG/spaceShooter/EnemyShot.png');//the ENEMY projectile shot		
-	game.load.image('meteor', 'IMG/spaceShooter/Meteor.png');
+	game.load.image('pShot', 'resources/img/spaceShooter/BulletO.png');//the projectile shot
+	game.load.image('eShot', 'resources/img/spaceShooter/EnemyShot.png');//the ENEMY projectile shot		
+	game.load.image('meteor', 'resources/img/spaceShooter/Meteor.png');
 	
 //load FX
-	game.load.spritesheet('explosion', 'IMG/spaceShooter/explode.png', 128, 128); //perfect square		//get a custom asset later, potential copyright fears/est wise
+	game.load.spritesheet('explosion', 'resources/img/spaceShooter/explode.png', 128, 128); //perfect square		//get a custom asset later, potential copyright fears/est wise
 	/*load buggy SFX assets... N/A, as that's commented out (Due to CORS policy)
 //	game.load.audio('gun', 'assets/audio/shoot.wav');//load audio FAIL	*/
 }

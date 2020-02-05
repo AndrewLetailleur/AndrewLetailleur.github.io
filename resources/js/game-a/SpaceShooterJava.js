@@ -76,14 +76,14 @@ var snd;//sound fx
 //Normally you'd use this to load your game assets (or those needed for the current State), akin to Unity Awake?
 function preload() {//preload is called first. 
 	//load static art & images
-	game.load.image('playShip', 'IMG/spaceShooter/ShipMono.png'); //the ship
-	game.load.image('starfield', 'IMG/spaceShooter/starfield.png'); //the background
-	game.load.image('pShot', 'IMG/spaceShooter/BulletO.png');//the projectile shot
-	game.load.image('eShot', 'IMG/spaceShooter/EnemyShot.png');//the ENEMY projectile shot
+	game.load.image('playShip', 'resources/img/spaceShooter/ShipMono.png'); //the ship
+	game.load.image('starfield', 'resources/img/spaceShooter/starfield.png'); //the background
+	game.load.image('pShot', 'resources/img/spaceShooter/BulletO.png');//the projectile shot
+	game.load.image('eShot', 'resources/img/spaceShooter/EnemyShot.png');//the ENEMY projectile shot
 	//game.load.spritesheet(); //test enemy, make it animated later
-	game.load.image('enemy-test', 'IMG/SpaceShooter/FOE.png');//a basic enemy
+	game.load.image('enemy-test', 'resources/img/SpaceShooter/FOE.png');//a basic enemy
 	//get a custom asset later, potential copyright fears/est wise
-	game.load.spritesheet('explosion', 'IMG/spaceShooter/explode.png', 128, 128); //perfect square
+	game.load.spritesheet('explosion', 'resources/img/spaceShooter/explode.png', 128, 128); //perfect square
 	game.load.audio('gun', 'assets/audio/shoot.wav');//load audio FAIL
 }
 //100% Warks
