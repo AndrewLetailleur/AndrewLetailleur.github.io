@@ -4,11 +4,12 @@
 
 // This object contains all the Phaser configurations to load our game
 const config = {
-    type: Phaser.AUTO,
+    type: Phaser.CANVAS,
     parent: 'game',
     width: 800,
     heigth: 640,
     scale: {
+      parent: 'phaser-game',
       mode: Phaser.Scale.RESIZE,
       autoCenter: Phaser.Scale.CENTER_BOTH
     },
