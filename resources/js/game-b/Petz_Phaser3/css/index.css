@@ -1,0 +1,25 @@
+body
+  {
+  padding-top: 1.5rem;
+
+  height:100%;
+
+  font-family: 'Roboto Light', Arial, serif;
+
+  background: rgb(238,174,202);
+  background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
+  }
+
+canvas
+  {
+  -webkit-box-shadow: 0 10px 30px 10px rgba(0,0,0,1);
+  -moz-box-shadow:    0 10px 30px 10px rgba(0,0,0,1);
+  box-shadow:         0 10px 30px 10px rgba(0,0,0,1);
+  }
+
+@font-face
+    {
+    font-family: Pixel Font;
+    src : url('../fonts/slkscr.ttf');
+    font-weight : 400
+    }
