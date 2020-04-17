@@ -8,7 +8,7 @@ import * as BalanceGame  from "./scenes/minigames/balance-minigame.js";
 import * as FishingGame  from "./scenes/minigames/fishing-minigame.js";
 import * as FetchGame    from "./scenes/minigames/fetch-minigame.js";
 import * as RPSGame      from "./scenes/minigames/rps-minigame.js";
-import * as SnowballGame from "./scenes/minigames/Snowball-minigame.js";
+import * as SnowballGame from "./scenes/minigames/snowball-minigame.js";
 
 import {DynamicMap} from "./core/System/Collections/DynamicMap.js";
 
