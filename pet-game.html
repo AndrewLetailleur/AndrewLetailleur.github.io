@@ -30,31 +30,11 @@
 	<!--END CUSTOM SCRIPTS-->
 
 	<!--BEGIN PHASER DEPENDENCIES-->
-			<!--Under LIB: The Phaser game engine, more important than everything else-->
-			<script src="libraries\phaser-three\phaser.min.js"></script> <!-- version used is at 2.11.0-->
-			<!--Under SRC: The Game States. Each should be seperate-->
-		<script src="resources\js\game-b\PetGame.js"></script> <!-- Test state version, to load game state-->
-		
-			<!--Under SCRIPT: Load the Game States, and start a Game State. -->		
-		
-<!--/Another Example list of states\
-	<script src="resources\js\preloadFile.js"></script>
-	<script src="resources\js\menuFile.js"></script>
-	<script src="resources\js\gameFile.js"></script>
-	<script src="resources\js\winFile.js"></script>
-	<script src="resources\js\loseFile.js"></script>
-
-		<script> Load internal Phaser game map
-	var game = new Phaser.Game(800, 600, Phaser.AUTO, "game");	
-		game.state.add(“preloadState", preloadFunc);
-		game.state.add(“menuState", menuFunc);
-		game.state.add(“gameState", gameFunc);
-		game.state.add(“winState", winFunc);
-		game.state.add(“loseState" ,loseFunc);
-		game.state.start("preloadState");
-		</script> ???
--->
-
+			<!--Under SRC: The Phaser 3 game engine and game files. Loaded in the same folder as the other two, to save on bugs.-->
+		<script type="module" src="resources\js\game-b\Petz_Phaser3\js\game\phaser.js"></script> <!-- version used is at 2.11.0-->
+			<!--The game handler and config, to load and manage the game states.-->
+		<script type="module" src="resources\js\game-b\Petz_Phaser3\js\game\game-handler.js"></script> <!-- Test state version, to load game state-->
+		<script type="module" src="resources\js\game-b\Petz_Phaser3\js\game\config.js"></script>
 		<!--END PHASER DEPENDENCIES-->
 <!--End of head content-->
 </head>
@@ -100,33 +80,18 @@
 <div class="container"> <!--Mini-game list?-->
 	<div class="row">
 		<div class="col-sm-12">
-			<p class="text-center"><b>Game Instructions (General):</b><br>
-				<i>*WIP*</i>
+			<p class="text-center"><b>Game Controls</b><br>
+				<i>Player 1: WASD to Move, Spacebar for Action.</i><br>
+				<i>Player 2: 8426 to Move, NUM 0 for Action.</i>
 			</p>
 		</div>
 	</div>
+	<div id="pet-game" class="card-body">
+	</div>
 	<div class="row">
 		<div class="col-sm-12">
-			<h2 class="text-center">.Possible GUI for mini-games.</h2>
-		</div>
-	</div>
-	<div class="row"><!--A Gappy space-->
-		<div class="col-sm-3">
-			<h3 class="text-center">mini-game 1 (mg1)</h3>
-		</div>
-		<div class="col-sm-3">
-			<h3 class="text-center">mini-game 2 (mg2)</h3>
-		</div>
-		<div class="col-sm-3">
-			<h3 class="text-center">mini-game 3 (mg3)</h3>
-		</div>
-		<div class="col-sm-3">
-			<h3 class="text-center">mini-game 4 (mg4)</h3>
-		</div>
-	</div>
-	<div class="row"><!--A Gappy space-->
-		<div class="col-sm-12">
-			<h2 class="text-center">.</h2>
+			<p class="text-center"><b>Game buggy? <a href="resources\js\game-b\Petz_Phaser3\index.html">Alternately play the game here</a></b><br>
+			</p>
 		</div>
 	</div>
 </div>
