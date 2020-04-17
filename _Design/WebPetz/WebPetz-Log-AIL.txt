@@ -1,0 +1,2829 @@
+15/01/2020
+17:41 (started at 17:09)
+
+Did some progress, but forgot to save when losing this, so lost progress, log wise. So I'll be brief;
+
+First, assessment deadlines are as follows
+
+Assessment 1 due: Friday 14th February 2020 by 4pm. - "Game Documentation + Website"
+Assessment 2 due: Friday 27th March 2020 by 4pm. "Web Game Submission. MUST BE IN YOUR WEBSITE AS WELL!"
+Separate submission links will be available for each campus one week before submission.
+
+-
+
+Notes out of the way. I'll start with initially went 'solo', before ultimately buddying up with Damian and Ross. Almost got pouched, but confidence in myself along with being weary against buddying with strangers for honours, bailed me out of joining with Kirstin. That's the good news, familiar buddies again wise.
+
+Now, bad news is well, Phaser 3 is required to be used. If precise, 3.2.1 (even though 3.2.2 is up, and odds are we can fudge in that direction at a push; debug wise.) Now, DOOM aside, I've got experience with Phaser before (2 wise.) So it's not end of the world. Just likely to be a bit quirky.
+
+Now, what's quirky about this, is after a brainstorming session (which I dozed in.) An initial vision shaped, to lead to the development of a "pet" like game, that can have mini-games embedded within the game, that also features 'lite' multiplayer elements, in a sense of comparison.
+
+Now, so far so good. Only concern in my end/case, is the passive fear of potentially going a notch to complex, especially when meta pet stats are taken into account. Bar that, and the need for at least 'some' form of a multiplayer gameplay. I think we're cool so far, with Ross as lead.
+
+-
+
+That said, I DID got hit with a stray idea, for a 'simple' fire emblem/chess 'lite' game, with one stat. But I'll leave it at that for now. Which in a nutshell, is to essencially focus on getting myself refamiliar with Phaser again (along with HTML! CSS! And that pested JavaScript that is made out of Phaser!!!)
+
+-
+
+21:23
+
+Had lunch, got distracted, did a light team meeting where I also vouched that I'd cover UML. So, I'll just be brief in finishing things off, then crash.
+
+-
+
+21/01/2020
+12:47
+
+I'm making a note, that not much talk in a group angle has (yet to) happen(ed). So, initiative wise, since I still don't know what (differences) Phaser 3 is(has), I'm going to self-study on that, until I have a time to double check and talk on the current project scope.
+
+Cue, tutorial glancing. ;) :|
+
+-
+
+13:01
+
+So far, I've joined the Phaser discord community, just to keep an 'eye'/track on possible Phaser related advise. And also, got (very) lightly distracted by a 'bunny test' that's apparently infamous, and can spawn LOTS of bunnies, within a browser.
+
+That said, after lightly reading a Phaser 4 related article (general ghist wise), I'm now hopefully, more ready to study the documentation and tutorials/blah behind Phaser 3!
+
+-
+
+13:31
+
+So far, I'm having 'fun' trying to hack RNG in Phaser 3 here.
+https://phaser.io/examples/v3/view/game-config/game-rng#
+
+In theory, it'd be 'nice' in date playing, if there's no seed. In practice, it's a white box, without a seed. And the seed is automatically static, thus no 'true' RNG in rolling.
+
+Ergo, it falls on me to fix this. For programming practice, totally.
+
+-
+
+13:38
+
+Got it to "it just work/s". But that's due to using RNG... To Generate RNG. Crazy, eh?
+
+The winning 'code' to replace all your seeds, is the simple line;
+
+var seed = Phaser.Math.Between(111111, 999999);//141946325896934;
+
+Now that that RNGy is done. What's next, practice wise?
+
+-
+
+13:59
+
+Geeked out a notch in messing around with this, variable wise;
+
+https://labs.phaser.io/edit.html?src=src/geom/circle/clone.js&v=3.22.0
+
+Give or take, until I went all "Earthbound" grade meta on it. Which lead to a distraction, which lead to noise LSD circle rendering heating up my laptop.
+
+So 'brief' cooldown later, I'll see in messing around another example, more productive wise.
+
+-
+
+14:06
+
+Really need to take a break from the 'clone' examples on the "GEOM" folder in Phaser 3. :|
+
+-
+
+14:11
+
+Lazy eye wise, Intersects folder contains some useful reference info on colliders, even if it's a bit scattered.
+
+https://phaser.io/examples/v3/category/geom/intersects
+
+-
+
+14:17
+
+Geeked out enough on the "GEOM" angle, outside lazy eye wise; "could" be useful in fine combing debug on collisions. But odds are we're more likely to just default to 'square', box-like physics (to a point?) So, keep that in mind.
+
+-
+
+14:30
+
+Found an interesting reference to a hypothetical 'shooter' game, Asteroids wise.
+
+https://phaser.io/examples/v3/view/physics/arcade/max-speed
+
+-
+
+14:34
+
+Speaking of Asteroids, another lazy 'example' that has wrap-around, to a "once off screen" degree.
+
+https://phaser.io/examples/v3/view/physics/arcade/wrap-group
+https://phaser.io/examples/v3/view/physics/arcade/wrap-sprite
+
+May consider tinkering on that later, to see if I can have it 'warp' a clone whilst still on the edge?
+
+-
+
+14:39
+
+It's mildly descending into looking at fancy features. But this one is nice eye candy to me, space background wise. Dunno about 'looparounding' though, even/especially if off-screen...
+
+https://phaser.io/examples/v3/view/physics/arcade/space
+
+-
+
+14:42
+
+Of note, multiple different types of colliders, don't work against other types of colliders. They only collide against the same collider they possess.
+
+https://phaser.io/examples/v3/category/physics/multi
+
+That's useful to know/note of.
+
+-
+
+14:57
+
+So, outside of a 'path follow' analog that might be inspiring. 
+https://phaser.io/examples/v3/view/physics/matterjs/body-follow-path
+
+Also got the 'object cling to another' example, which I will also highlight below.
+https://phaser.io/examples/v3/view/physics/matterjs/attractors
+
+-
+
+Bar that, I've honestly began to mentally blank out a notch too much in looking over what they 'could' do, over the code itself. So taking my due, overdue break now. Especially as I blanked out whilst writing this log update.
+
+---
+
+22/01/2020
+15:33
+
+Before I begin, I'll start with stray commentary/reminder to myself. That there exists Internships that I can benefit definately on. And I've been highly encouraged (read, ASAP) to see on taking on those internships ASAP (read. Likely as soon as Monday/Tuesday and all that at latest. Rush look and talk as soon as possible. Sort of blah.) That said...
+
+In general, I'm following to a hack degree, the bullet point list of tasks assigned now, initiative wise. Give or take, installing the recommended version of Phaser here, blah look at stuff there.
+
+Another thing to note, is hassle/headache wise, I made a mountain out of a moehill with a website war, debate wise. I knew it in my gut that I need to make a web PAGE, to host the content. As part of the criteria. At least, I believed that. Until I got into a needless argument on needing to make a NEW Web SITE, (not Web PAGE.)
+
+At the end, that is sorted. It's just a matter of making a new web-PAGE (emphasis.) Update the Site a notch, and ensure the PAGE in general (HTML and all that) is friendly with the HTML and blah/design of the Phaser 3 game to-be-made and all that. ;)
+
+-
+
+15:44
+
+MILD distraction under spring cleaning here, and light set up of sticky note tasks for extra reminding.
+
+-
+
+15:54
+
+I've so far, got loose notes on a hypothetical summary. I'd ramble more, but sometimes brief is best. My english is terrible, and meme wise there exist previous examples to "scientifically" skim through, before thinking on a not-chinese ripoff example that takes the points they cover, in general?
+
+Sort of blah. Anyhow. I'll cite the 'summary' and such.
+
+
+(Duck Life _General_) train  this little duckling to become a championship __
+
+(Duck Life 5) Race your duck past obstacles and collect as much treasure as possible.
+
+And of course, it also has 'titles' as an additional summary. So fun for that!
+
+-
+
+Train your __ to run, swim and fly. Can you *Raise the best?
+
+-
+
+16:05
+
+Geeked out enough on Duck Life (series/summary glance alone.) To have a 'loose' base to guess on.
+
+-
+
+16:13
+
+Final draft for my first 'take', is this;
+
+"Play with other trainers in online/offline multiplayer, in raising your pet monster's within a variety of mini-games."
+
+Ain't perfect, but so far, so good. Give or take rewording to "Tamers" or something fitting.
+
+That said, thinking back on the rough/original pitch, I still feel a fear that there's a risk of not enough emphasis ON, the Multiplayer.
+
+16:17
+
+Now, that I've sent all those details on one sentence pitch, and did a counter-proposal on some 'rough' lines that can be easily covered by Ross better. I'll focus on a 'rough' bullet point 2 on the WAY overdue (in my standards/loose opinion), the "Design" (or a take on audio?)
+
+And that's before I take a step back, and think of hypothetical pseudo-code for stats at the end as well. Good thing I wasted a day ages ago playing Duck Life, so I have a 'loose as hell' base to work on, ref wise.
+
+-
+
+16:31
+
+Damn, set up and time flied. That said, got a 'loose notes' plan on covering examples of audio, research wise. Along with music. Will probably also need to pre-emptively cover bases in potential issues to behold in adding audio to a game. Given recalled hassle in security tests last year; site wise. ;)
+
+-
+
+16:41
+
+So far, I've setted a 'framework' for working/tackling on Audio in paperwork terms. And swapped parts of a role in exchange for accepting a few more responsibilities. (As glance wise, I felt that Ross as Project Manager, would be in a better position to handle the wording/intent of those parts, dead easy.)
+
+Of the top of my head, it's "blah Software & Hardware" sort of blurb. Give or take wording it in justifying the power/viability OF using them. ;)
+
+-
+
+And incidentally, I've so far spent over an hour on this. So I'll likely do this for nearly an hour more, up to 5.30pm, before dinner break.
+
+Would do 6pm, but got talked out of overburn.
+
+-
+
+17:01
+
+Hassle wise, did some hack running and I still can't seem to be getting that 'key word' of a technical issue I stumbled upon. So assume stupid, I'm just going to see on quickly 'grabbing' (or hack developing) a "dummy" site, to test-bed audio and such. So I know what to watch out for 
+
+-
+
+17:24
+
+I had a bit of a break (needed, body wise.) But so far, the test/hunch I wanted to check when I got the chance, went all green light oddly. On the "Internal sound" side of things. On that front/end, I'm a bit concerned. But I'll leave it as is, give or take shift through the hassle of my previous year's documentation later. To ensure I can track that issue I had previous year, to see if it still applies to modern browsers, update wise.
+
+But so far, my feared issues sound almost like a false alarm. If not for my past experience/hell, I'd have not known/forgotten about that nasty potential 'nail'.
+
+
+----
+
+27/01/2020
+16:16
+
+I'm going to continue work on the audio part of the paperwork. Especially as it's been such awhile, that it's slipped my mind the past few days, priorities and such.
+
+-
+
+16:44
+
+Forgetting the 'time' of my last log entry aside, I've so far did some overdue notes for not just a reference, but also fully ported..
+
+-
+
+17:34
+
+Did just more than an hour, but suffice to say, I've finished off with finding... 'a', possible source for audio. And an additional reference, that DEFINATELY includes "Duck Life 4" as a possible key reference/example for audio design (background wise.) That may even/especially apply to a general reference in terms of gameplay element/s example/s.
+
+I'd say more, but I'm just going to chill down for now.
+
+---
+
+28/01/2020
+07:15
+
+Did a light tweak on Tamagochi. Would tinker more, but got insisted on a light break.
+
+So, I'll take that, while keeping mind I have some TLC to do on Web Games, before thinking on one other subject (likely to be related to HCI, which I honestly confused this for at one point.)
+
+Only reason why I'm even mentioning another course by name, is it 'might' be of parraell use in designing the UI here. But eh.
+
+-
+
+09:36
+
+I'll start doing some earnest work on the paperwork, instead of a 'skim edit' here. ;)
+
+-
+
+10:26
+
+For a moment, was professionally distracted. But I got 'a' rule of three reference, for possible 'simple sounds', idea wise. So, I'll leave it at that, and see on if I can iron out everything else in background music, give or take a 'free to use', 'cartoony' style of audio.
+
+-
+
+11:12
+
+Glance wise, I've done the first 'draft' for audio. Now it's just a matter of digging up old graves, when it came to earlier/previous project, audio hassle wise. And other potential/technical setbacks.
+
+
+-
+
+11:23
+
+Took some fiddling, but found my previous year's log, web games wise. So 'skim' wise, I should find my murphy, instead of mumble vaguely recalled excuses.
+
+-
+
+11:27
+
+Did some skimming, and the key note is if set up just right, this can be dodged entirely if back up management can ensure the audio is tested/works within the 'server' side. As it only has potential playback issues/bars development if developing the software 'locally' (read, file from your D/C drive, upload/browser wise.)
+
+-
+
+TLDR. "Best bet" is to ensure audio is tested on the server side of things, instead of the local side of things, security wise.
+
+-
+
+11:45
+
+I've done to the best of my extent (draft wise), the audio section of the paperwork, including the potential setbacks to take into account. I'd say more, but it's a brief bicker on "can we justify HAVING this in the first place?" In thinking of contingency measures for things that 'could' go wrong. But on that end, I just compromised by putting the 'text' itself in red. And if as it stands, it's OK, then leave it in. Otherwise, to just cut the thoughts of what 'could' go wrong, plans and such accordingly.
+
+---
+
+29/01/2020
+08:34
+
+I'm going to continue doing more paperwork sections on Web Games, before I see Ross and all that, Web Games wise. At most, I might do a slight tweak to my 'red writing' to take away the murphy, but that's about it. If it's still "too" murphy, I'll discuss with Ross before seeing if it SHOULD be kept in, or scrapped in a 'don't even bother' angle.
+
+-
+
+09:06
+
+So far, I'm all dice in figuring out a 'corner' to do further work on, when it comes to headings. But blank glance wise, I'm done with software, and have yet to fully-fully do it yet.
+
+And it's a 'lazy' done, not the done in a sense of assessing/noting WHAT Tools/assets we can/have to use for the project.
+
+-
+
+09:33
+
+Did a rough draft on the audio side of software, and incidentally ended up parraelling part of that right back to the audio references, 'blah' wise sort of speak.
+
+-
+
+09:49
+
+I'm beginning to blank out a bit more, but I did do a 'blurb' start on what we 'could' end up using, toolkit wise. Just having a bit of a headache on how to word the hypothetical server side of things, coding wise.
+
+That said, I geeked out on this youtube video on what 'could' be needed for a web game; https://www.youtube.com/watch?v=ZjuVCTZMnbg
+
+And uh, the general ghist on that, plus referring to a current site of mine, is 'use Bootstrap, and Jquery.' at minimum. And geekout wise, possibly MySQL and PHP as well. Though my lack of experience in 'setting' up a custom website will bite me in the ass there.
+
+-
+
+10:00
+
+Taking a break. Suffice to say, I've at least added a 'glance' note on WAMP for this, and now to take a break, breather, set up/prep and go, sort of deal.
+
+--
+
+16:21
+
+Some key notes;
+
+A: Stayed awake for this lecture. Huzzah!
+B: Double checked, and gave/had an informative discussion on the progress of the document. (Which nutshell wise, led to the 'cutout' of a 'potential setbacks' section, as it was too much 'Murphy's Law' in spite of it's good intentions for contingency planning. As contingency planning should NOT Be part of a design document.)
+
+Eh, ramble on B aside. Still feel there's a place. But well, 'feel' wise it just didn't sound right for this document, so it's now fully axed. I will not feel dissed by a mental "told you so/you shouldn't bother", as I feel it's a just/safe feeling to have regardless. Now, ramble/rant over, that I didn't even intend to be a rant aside....
+
+Oh, and C: Lab's for today is more Phaser. And on a hindsight angle, stupid me forgot to download week 3 stuff, which led to an assume stupid lens of "Also do week 3, just to be sure."
+
+-
+
+16:39
+
+Now, rant said. I'll spend time in looking over the previous two week's slides (this and last weeks.) Before skimming/see on doing a 'bit' of each weeks lab work, sort of thing.
+
+-
+
+16:41
+
+I've glanced enough on last week's presentation, to treat/view of it as a further refresher on JavaScript, IF I need it. Same with technical details on Phaser, which I was up awake enough to follow through (to a rough degree, for a change.)
+
+So now, hopefully with less capital 'distraction', I can resume looking at the JavaScript lab, recap wise. Under an assume stupid of "since I forgot (to download) week 3. Ergo, didn't do the lab on it" (or at least, 'mentally' simulated it, sort of thing/speak.)
+
+-
+
+17:20
+
+Got mildly distracted, before a little 'lag' knocked me out. So, continuing studying for now, lab wise. ;o
+
+-
+
+17:38
+
+I'm likely going to 'skim' the lab soon enough, to the fourth week's one, hack wise. But suffice to say, I'll conclude with at LEAST Geeking out on the Bootstrap tutorial/s on Week 3's lab, blah wise. And make a 'note' list for stuff to 'quote' on the safe side, line wise. ;)
+
+-
+
+17:47
+
+Bootstrap blurb is this;
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+-
+
+18:15
+
+It's been nearly two hours, and I've just started a 'hack' at the fourth week's lab, give or take a 'skim' on how it does things, more or less. Odds are at my current pace, I'll have to quit in 5-10 minutes. But eh, at least I gave a 'bit' of an overall read/skim on things, if nothing else.
+
+-
+
+18:40
+
+Done, now taking a long overdue break-ish, distractions aside.
+
+----
+
+04/02/2020
+09:29
+
+It has been a long while. Then again, that 'while' was due to distractions in having to deal with other modules, in spite of the fact there's a looming deadline for this module. So, in that sense, I'll take a look in what else needs to be done on my end, and see on trying to cover that if possible, if not now-ish, then later on, once I'm done with a IRL exercise.
+
+--
+
+To start of, I can continue to look at/work on the "Section 3.2" to start with, as I noticed quite a few pieces of "WIP/FIXME" tags that need checking out.
+
+---
+
+09:47
+
+Light geek wise, tried to run Visual Studio for web programming, and though at a hack, it just works on HTML. It doesn't really work that well on JavaScript. So, I'm going to install Visual Studio Code, and hope that helps/just works out fine.
+
+---
+
+13:08
+
+Lunch break over, and having had a nice glance impressions on 
+Visio Studio Code, I'll just continue on with things.
+
+-
+
+14:09
+
+Mental geek out over ports here, and hassle putting into words how to do a Web Server (for dummies), I've done an ironing on the 'web server software' aspect of 'software'. I'd geek out more, but I'll pray (IF need be), for Damian to have a once over on that section at best.
+
+And now, to hopefully continue dealing with the fields I can more reliably cover on.
+
+-
+
+14:40
+
+I've done a rough draft on the hardware. But before I think of doing anything else, I'm waiting for feedback on what else needs to be included within the web games document itself.
+
+And so far, it's an extra/emphasised blurb on html5, along with storage of data and such.
+
+-
+
+14:58
+
+One last check done with, I'm taking a break for now...
+
+-
+
+16:08
+
+After some twiddling, going to resume doing yet another sprint on this, before calling it a day. Give or take reading on things one last time, before potentially doing a 'hack' draft on some pseudo-code examples, to deal with what 'stats' are, along with other things that need saving/loading and such.
+
+-
+
+16:20
+
+Checks over, now to start doing some pseudo-code to fill things in to start with. ;)
+
+-
+
+16:59
+
+Mind went nearly blank in the end, so I only did a little bit of pseudo-code. If nothing else, it's a good base to start from, on tomorrow.
+
+---
+
+05/02/2020
+07:54
+
+Just leaving this as a self-study note, in hoping to do at least an hour or so on ironing out the loose notes I made on pseudo-code, before arriving for Web Games again this week.
+
+---
+
+08:41
+
+Did some doodling, and already got a pseudo idea/take on a possible 'age' code, pet wise. Ain't perfect, and may be subject to revision. But so far, so good?
+
+-
+
+08:52
+
+Of the top of my head, in a nutshell I've done a decent draft on the pseudo code. Doing one last look, but odds are I'm going to be a bit of a blank for the next hour, in iteration.
+
+So, I'm just going to relax, enjoy tea. And do another module, in mind numbing glory. More so as last time I checked, this was the final 'part' or task I was assigned to, though I'll likely check up on that again, later.
+
+-----
+
+05/02/2020
+14:26
+
+Took awhile before I could make a comment, but it's general a bit of time wasted doing set up. I'll throw some context, before I talk on short and long term for this module/project.
+
+First, I geeked out in trying my best to link GitHub Desktop to Visual Studio Code's git functionality, and it has two answers. Short answer being, Don't Bother.
+
+Long answer is, I 'could' link it to git, functionlity wise and such. And even installed git, to ensure compatibility with that functionality. But in practice, it's easier to just run/use Git(GitHub) through GitHub Desktop, than to go through the push/pull functionality within VS Code, especially as it makes it easy/visualised to see the changes made/being pushed through, than an invisible.
+
+So, it feels a bit defeatist, in a "Don't bother" camp of time wasted, out of a making a mountain out of a moe hill. But that said, it's informative, and at least had some functionality stuff set up in future. No doubt I'm still stupid, and can't do it fully well yet, so I'd likely need to fine tune it...
+
+But eh, that's Git, or GitHub out of the way. (Before I touch 'blah, GitHub Kraken'.) And now for the longer term...
+
+So, ONCE I've finished a rough draft on the documentation, deadline wise. I took account/note on my current website. And in a nutshell...
+
+As it stands, it's a mess. Or at least, it's functional. But 'half' the buttons don't work, and I could in theory make it work. But eh, it'd need TLC, file movement/management in website layout, etc.
+
+But hey, once that's done. It should be a stable framework to not only add a new page, dedicated to the game itself. But even lead to a setup for a "Making of" web page, so I can give more detailed due credit's to Ross and Damian here, and other trivia there related/linked to a Game's Design Document, sort of blah.
+
+Next update, should be progress on the actual web SITE itself, sort of speak.
+
+--
+
+14:46
+
+Did minute tweaks on my website, but have a 'plan' for future. I'd say more, but I'd be memo brief;
+
+First, make a "Deprecated" folder, and name the Phaser 2 folder (PTwo) into Phaser2, for a Phaser3 folder. And from there, blah yeah.
+
+---
+
+16:37
+
+To be brief, I am stupid;
+
+As in, I got distracted and such during a lecture. So, assume stupidity, look over the slides, again. Before I continue on my tinkering/ironing out on file sortage, with the previous tutorial as reference and enlightenment. Once that's done, magic! :)
+
+---
+
+16:55
+
+Short term is, geeked out slightly over impact, and fun fact at a glance, is impact, or "weltmeister" seems to actually be free. A fact I may have only vaguely recalled, 
+
+https://github.com/ajbkr/residentraver
+
+That said, did last minute geeking in the lore, before sending an 'update' e-mail as my OBJECTION! To the Lecturer. So, handy notes! :)
+
+So now, to finish reading up on the slides, THEN update my website, optimizer wise. OVERDUE, optimizer wise.
+
+-
+
+17:58
+
+Got mildly distracted, so I'll spend one more hour (or so), just doing the website. Then I'll take an honest break from there...
+
+-
+
+16:47
+
+I geeked out a little bit, in getting 'a' page added. And though it ain't perfect. Quite a bit buggy, at least it's somewhat included.
+
+A fact that in hindsight, makes me sad that an 'old' index.html is more functional (to a point/certain point of view), than my current/"new" index page. Eh, food for thought.
+ 
+If nothing else, at least there's been 'some' progress in fixing, give or take file structure management. But it ain't perfect. So odds are I'd likely do another review later.
+
+That, and this sort of geeky shit is actually in an ironic manner, hopefully inspiring enough for me to honestly give a shot/crack at further fixing this throughout the weekend. The sort of weekends that I'm normally a coin toss in slacking off, give or take.
+
+-
+
+06/02/2020
+08:55
+
+Had another light look at what I have so far...
+
+And by gods, it's unoptimised in a few lens. As in, I'm having hell figuring out 'how' to fix a little buggy part of a code, sort of thing/lens.
+
+So, fun there. In having a waste of time trying to tinker/fix a 'navbar' glitch, sort of concern. That I recall saying is serious enough to actually get me motivated to spend saturday trying to tinker, instead of slack of.
+
+-
+
+09:03
+
+So, after doing some geeking out and examining. It turns out that the css I had, is incompatible. In a joke manner, it's why I had an 'old' css example, that worked a bit better without bootstrap and such. Compared to the new css which is uh, more compatible. But without that nice looking 'dropdown' menu.
+
+So, assume stupidity, I'm going to at least set things up in looking over a stupid tutorial, on "how to have dropdown menus, with bootstrap and such", sort of blah here. And see on if I haven't done already, update my Bootstrap and all that there.
+
+A fact not helped by looking over on bootstrap, and them having an intentional 'no scroll dropdown' lists in mind. A fact I'd also have to take into account, sort of fun.
+
+--
+
+09:23
+
+Looking back, I'm beginning to get 'a' picture on what is needed. and as my site is formatted as is, it's an ugly picture. So here's my battle plan/s.
+
+Either A: Get dropdown working (yay!) Or
+
+B: Assume stupid, and just cut out dropdown links entirely in my 'envisioned' design, and focus on a seperate curated 'games' page, where all the subsequent 'hosted' content is linked to.
+
+Ain't perfect, but some times you're just better knowing when to fold 'em, which I think I did just that on last year.
+
+As things stand, I currently have a 'slight' twiddle 22 on lazyitis, so I'm just going to spend my time re-familiarizing myself on possible guides, tutorials blah here, and look over at a yesterday's lab there, for additional refreshing.
+
+---
+
+09:39
+
+I'm just going to conclude the study session, by taking a 'step back', and think back to the core premise of my (current) website. What it is, what it's supposed to do, things like that.
+
+I have a base I could work on, but my hunch is chances are said base is not optimised, or used properly. So in that front, I have to re-analyse my approach, give or take 'cut' away that hoped for 'tinker' feature, given the intentional restrictions of bootstrap when it came to a 'little' feature.
+
+-
+
+10:07
+
+Just taking a breather for now, after geeking out on site design here, and starting a notch earlier as well.
+
+-
+
+08/02/2020
+16:09
+
+Almost got hit by lazyitis, but I'm so far pushing myself to do at least a minor amount of work, in my promise on geeking out over the website sort of deal, lens wise.
+
+And hunch wise, I'm considering the viability of having a 'simplified' navbar, management wise. But eh, I'll sleep on it for now.
+
+-
+
+18:17
+
+Scatterbrained at best, on this. So taking a break on website for now. That said, did... Minimal tweaks so far, and had 'something' set up for possible easier navbar management, but damn my drive. Thought it was stronger than this... 
+
+-
+
+09/02/2020
+14:40
+
+House chores aside, I'm currently going to do a last minute edit/reference on my documentation so far. Though so far, "rough" draft wise I'm done, I'm not assuredly done yet.
+
+So, assume stupid, I'm doing more on the paperwork side first, Deadlines First and all that.
+
+-
+
+15:27
+
+I've so far read through the entire 'music' section once more. Now, odds are it's a manner of doing the same with the "Software" section (which, on the Server side, I'd ideally want Damian to double check, given my naivity towards the 'finer' points on that field.) The "Hardware" section, and finally the "Pseudo-code" section.
+
+I'll do what I can on the other ends/aspects, but I'm still filled with doubt on the Server side of software, which I'm still waiting on Damian to see if it's cool as it is.
+
+-
+
+15:39
+
+Soft and hard checked quicker, now to read through again, on the pseudo-code. Should be in theory, simple to do. Hard to think/iterate on how it could be better written, per say.
+
+-
+
+16:02
+
+Nearly done in giving some polish to the pseudo-code of the web games. Just need to give it one more read through here, and possible last minute inspiration/innovation, and I should be groovy.
+
+Closest bane should be avoiding last minute reading over and over again. But I'm nearly done on that part, so groovy.
+
+---
+
+16:19
+
+Did my last minute checks, and so far on my blind's eye, pseudo-code is all functional, after a check. Give or take a few tweaks, but I'm at the stage where I can ill afford to give too many tweaks.
+
+---
+
+10/02/2020
+12:06
+
+Today, I'll focus on doing some hack/rushed 'set up' for the project itself, give or take tinkering to use/refer to the "New Phaser project format", and such. ;)
+
+-
+
+12:14
+
+Hack wise, almost done. Just need to do set up, in making a 'skeleton code', Phaser3 wise. Ain't pretty, and 'so far', have no "in dev" tools to refer to Phaser3 functions during hypothetical/future development. But that's a fact I'd hope to fix soon enough.
+
+-
+
+12:31
+
+Having issues still, so sent an advanced PM, that will hopefully get me support within half an hour, if I can't fix this on my own by then. This is what I (essencially) get, when rushed. :PAGE
+
+-
+
+12:39
+
+Short term, I'm going to update my repo in the short term, but currently my audio bug from last year, has haunted the cradle of my blank Phaser3 page. Which, if anything; is already more of a nightmare than it is so far.
+
+-
+
+Good news (so far?) Is I got... 'a', canvas to load. Bad news, well~... I have a "Canvas auto-set below footer of web page", bug.
+
+So, hack wise, gonna need to figure out how to fix THAT! And then 'basic framework' wise, mess wise. I'd call groovy.
+
+-
+
+12:56
+
+Bingo!
+
+After some overdue hassle in positioning wars, I decided to do a light re-check on the code as it is, with a tutorial asking on "positioning hassle", over audio. And I got this as a linked response.
+
+https://phaser.discourse.group/t/how-to-fix-dom-element-to-coordinates-in-canvas/1330/2
+
+In this case, blank template now "just works". So I'll continue to tinker from there ;)
+
+-
+
+13:03
+
+I noticed some further fun whilst doing some fixing, that incidentally may have 'tainted' the space game a notch. So, I'll likely send a 'mr. dot' to that page soon enough.
+
+But for now, hack wise / the 'screen/page' just works as a template. Now it's a matter of doing further polish on the rest of the website itself, hack wise.
+
+-
+
+13:59
+
+Got slightly distracted here, a bit tinkery there. But basic ghist is after some read through, some blatant 'WIP' notes have been removed, or slightly more refined in the short term.
+
+What this means, is my references and 'such' to my project list has been mostly ironed out, functionality wise. Ain't perfect, but good enough on honest 'execution' tilt, bootstrap wise.
+
+Now, the major fun will probably begin when I finish off by making a brief, 'state of facts' fill-in for my 'about' page. But eh, I'll wait until later to tinker on that.
+
+--
+
+11/02/2020
+13:01
+
+Today, after gathering feedback from another module, I'm going to be doing some further tinkering on the web page design. Give or take, some magic known as "set up" and all that.
+
+-
+
+13:23
+
+Tried to figure out how to simplify my code, but I couldn't. So I'll let it be for now. Whilst setting up an 'about' page for later documenting 'referencing', so to speak.
+
+-
+
+14:05
+
+So far, it's a bit mind-numbing, but I have a 'hack' excuse/cheat for a 'fix' on Google Forms, in the short term. "Contacts" wise. Longer term, I'd likely need to polish the 'contact' page a bit more. 'Ideally' with built in feedback gathering not (strictly) dependant on Google, but eh.
+
+-
+
+14:30
+
+That's my 'soft fix' quick wise, done and dirty. Now it's just a matter of 'vague' set up, fixing the 'light' headings and content, and perhaps grabbing a few 'snippets' of custom images, for that 'space game' thing at least?
+
+-
+
+14:52
+
+Formatting of my 'Project list' is over. Now it's a simple matter of doing a quick 'pre-fab' in image/asset creation, and I'm groovy.
+
+-
+
+15:01
+
+I've just finished making a 'hack' of a game icon for my "Sails of Santiago" project. Ended up putting a 'bit' of paint.net editing, due to a cursor worse. But eh, 'fudge' wise it's there, at least.
+
+-
+
+15:10
+
+I'm taking a break now, as tinker/drafting wise, I've included the 'last' of my 'game icons' for the projects I'm showcasing from previous years and such.
+
+----
+
+12/02/2020
+08:35
+
+I've been on/off when it comes to the website design, and glance check notice wise, noticed that 'one' of my links was made a download by mistake. So SHORT Term, focus on fixing that. Medium term, need to check to death, to ensure that to a 'functional' degree, the website works as intended, give or take a short term 'hack'.
+
+-
+
+Did a check, turns out it was a false alarm (on my end.) That said, need to focus on fixing things as well as possible, final day-ish wise. Deadline wise.
+
+---
+
+08:58
+
+So far, I'm near the final mile, but I have a feeling that already, my website is a lot more polished up, even if it may not be 'perfect' per say.
+
+Starting with likely 'stealing' an image from Ross, to use as a 'template folder' for the web pets game (to be made.)
+
+-
+
+09:09
+
+Just need to worry on an 'about' page, and that's it. Give or take at worst, I can just focus on adding the finished/worded documentation, to the website. If not, at least do a 'head start' on setting up my 'face' introduction, give or take.
+
+--
+
+09:32
+
+So far, I've set things up so that there's 'loose' content for my website page, about wise. Now it's just a matter of identifying what else needs worked ON my website, and groovy.
+
+-
+
+09:47
+
+Mind went slightly blank, but I figured I may as well spend the last few minutes doing 'rough' set up on my HTML version of a contacts page. Though I "cheated" (externally, via Google forms) in making a hyperlink to that instead. If lazy wise, I can embed a Google Forms inside a web-page, then that'd be more dandy.
+
+--
+
+10:00
+
+For a moment, I was near a deadend, form/contacts page wise. Thankfully, Bootstrap saved the day, with format.
+
+https://getbootstrap.com/docs/4.0/components/forms/
+
+So, I'll look over that part, and make it bootstrap friendly, function ab/use wise. Before preparing for leaving. ;)
+
+-
+
+10:11
+
+I've done the 'contact form' to a base degree. Only remaining issue is to code it in 'such' a way, as to actually parse/gather the information, for later viewing/browsing, so to speak. But for now, base wise it works in appearance. Good job, Bootstrap! :P
+
+-
+
+13:42
+
+To be brief, did a few pre-class tweaks to my webpages, as I ended up having download links for a few key pages. That said, though I'm currently confident in my web page AS IS, I have to again, verify that I'm on the right track in expanding my current website for this module, and not derailed by "handy" bias.
+
+That said, I'm currently in a state of tweaking here, and see on last minute documentation fixing to get things done by the 'earliest' deadline of tonight. That said, the latest I have to upload everything is no LATER than 4PM on Friday, this week.
+
+-
+
+14:34
+
+Didn't said much, but that's because I was busy doing light tinkering in getting a download link functionality to work here, and the 'home pages' for the Pet Game to be calibrated there, to draft standards.
+
+Only annoyance, was being needled on how carp Disney was, whilst working. But eh, it didn't interrupted my work flow at all, fortunately.
+
+-
+
+14:44
+
+I'm going to cut myself a bit short soon, as I'll have to leave the room soon travel wise. But so far, things are kinda-ok? In action, just need to be vigilant and ensure on my end, everything format wise is uploaded by the appropiate day. While keeping an ear to see IF my website, as it is, is STILL OK?
+
+Because I still feel stupid, even though I feel I might still meet the criteria as it is.
+
+-
+
+16:40
+
+I'm on the final mile for my website, effort wise. And all I'd say on the matter, is it'd be a case of "ensure website is all polished-ish, and download link for a 'dummy word file' works as well." And I'm groovy.
+
+-
+
+16:49
+
+Finally got a working download link for sure. And that's when I started with the 'real deal' (meat wise.) The Word "DummyFile".
+
+So now, I can do last minute polish (or close enough), on my website (as it is, in whole.) ;)
+
+-
+
+18:16
+
+A bit focused and distracted later, I feel that I've got 89% of my website done, give or take a mugshot. So now, comes the final mile in ensuring the "about web petz" page is OK in a draft analog, before I skim the final details and such from the finished document.
+
+-
+
+18:45
+
+And that's to the best of my extent? A Draft functionality included right from the getgo, placeholder wise. And I feel that this should be enough for me, 'pass' wise. Now it's a matter of waiting for the document, link it to my web page, and send a zip file AND the contents of a web page to the lecturer.
+
+Only, include the relevent information (the web pages dedicated to the game itself, and related content.) To save on memory and such.
+
+---
+
+14/02/2020
+08:00
+
+Today is the hand in day, and in preparation for this I did a light glance and assured update on my website, just to be on the safe side. Ain't perfect, but it's in prep for a speedy last minute skim/readthrough, update, and bang. So, next update will be when I get the documentation, linked in, then hand-in sort of deal.
+
+-
+
+13:57
+
+Had to wait for near the deadline. But, the document is uploaded, key features are skimmed, and the file including the document itself is zipped in ONE Student folder, ready for upload. And to top it off, the website itself is fully updated on top.
+
+-
+
+13:59
+
+I did the whole upload in zipped file, and website format. So now I can just let it be.
+
+----
+
+19/02/2020
+07:18
+
+Wish I can be more optimistic in a bit of a 'gap time' after paperwork. But in a nutshell... I dropped the ball. So apologies if a bit negative. Mainly, in the sense of 'not listening', and lack of paying attention in a fogged mind (excuse~).
+
+But eh, that said I now finally have a ballgoal to work on. Mainly, develop/work on the prototype for the snowball games, after having the github project synced in last night, sort of deal. So now it's a matter of programming, from scratch, heh. Hopefully, without my mind being too foggy, again. Or distracted...
+
+-
+
+07:52
+
+So far, I'm in a catch 22 of "can't work on this", as I'm having 'fun' issues in figuring out how to get a Github 'pull' request to work properly. So procrastinating by the seat of technical issues, is my situation right now. I should be able to figure this out in a jam soon, shortly.
+
+-
+
+08:05
+
+Finally, after an hour of twiddling; I got the pull to work. So now, it's just trying to understand/parse enough on complex Phaser tinkery to make a "two player" snowball game at a base.
+
+-
+
+08:24
+
+Also, whilst testing, got this fun little bug again;
+
+"Access to XMLHttpRequest at 'file:///D:/GithubArchive/Petz_Phaser3/img/phaser-game/pets/test-pet.png' from origin 'null' has been blocked by CORS policy: Cross origin requests are only supported for protocol schemes: http, data, chrome, chrome-extension, https."
+
+So, geekout adventure wise. I'll no doubt be thinking to myself; "how to solve this issue", in a lazy D:/ file testing analog.
+
+-
+
+08:35
+
+Still geeking out. And by that, I mean struggling to get a 'local to 'website' server' test thing-y working. 
+
+-
+
+08:41
+
+Aaaaaaaaaaand found it! No fancy server set up, just an app to do all the mess for me, Chrome wise. That by default, will make all my previous year's fiddling around with D;// files, a thing of the past.
+
+https://chrome.google.com/webstore/detail/web-server-for-chrome/ofhbbkphhbklhfoeikjpcbhemlocgigb/related?hl=en
+
+By all means, RECOMMENDED!
+
+-
+
+09:25
+
+Good news thanks to that web server thing, is the images work.
+
+Bad news being, I so far have... Issues in setting up 'basic' collision between player and 'wall'. Before I even get started in potential snowball collisions to behold and such. So, fun!
+
+If nothing else, I'll give this approx. half an hour more, to tackle. Before letting it be, for now.
+
+--
+
+09:57
+
+I'll give up the ghost. Mainly, I did as much as I (reaonably) could, thought wise. But I still, can't get a 'dummy' pet to collide/not be able to move 'past' a wall, so far.
+
+So odds are, I'd need to take a step back, inquire. And depending on context, work around with this issue, and pray hope it doesn't affect collisions between snowballs per say.
+
+---
+
+15:25
+
+So, between not much feedback before lecture happened and meetings out of my hands, I'll be stuck working on the tutorial for now. That said, I've also heard an idea/recommendation, format wise to do two things. A: Make my own dedicated 'test' folder for test things within the 'site', ie: "andrew-test".
+
+B: go dash case instead of camel case. like-this instead of likeThis. JavaScript wise. It's better, but still funny with JavaScript, so...
+
+Also, Damian will be pushing an update soon enough, so hold horses until then. So if repeated, just an excuse as any to do the multiplayer lab whilst waiting for that push from him on the Master branch. But until then, I can at least start/finish the group end in getting a better 'test' format set up, before I touch/read up on the lab tonight, multiplayer/etc wise.
+
+---
+
+15:46
+
+Having issue's pulling the update. So I'll assume silly for now, and let it be until server issues fix themselves.
+
+That means, lab tutorial time. Yay! And I know what my message will be in time, pully wise;
+
+"doing a pull request now, after many failed attempts"
+
+-
+
+16:39
+
+Blank/geeking out on technical tutorials here, and doing a reboot to install software there along with accepting 'spam' for e-mailed resources blah. I've more or less managed to by luck; pull from Master. Ain't perfect, and 'odds' are I may need to go through this hassle again. But bare bones wise, changes have been made, that will hopefully, maybe make the bug I had, 'disappear'. And if not, follow through on Multiplayer tutorial here, continue tinkering on that buggy problem there...
+
+-
+
+16:50
+
+At this stage, I've "lost" my marbles in trying to follow through on the Lab, so I'll take a 'break' from that end, and resume focus in trying to continue programming on the web-games prototype, 'format' wise. Hopefully, with less bugs galore and such.
+
+... Hindsight, dinner later. I need to seriously take a break from this module, and work on other more important tasks, deadline/s wise.
+
+======
+
+20/02/2020
+16:01
+
+A long mental break by heavy studying aside; I start my day by downloading Damian's change/s into a pull request, give or take no conflict (thus far.) So with that out of the way...
+
+So far, it seems Damian had added a 'draw' debug thing, which hopefully should help. Now, to tweak and (give or take), add blah here, muh Snowballs and blah there... ;)
+
+---
+
+16:13
+
+Aaaaand I now has an issue, under this funny little quote;
+
+"Uncaught SyntaxError: The requested module './test-andrew/snowball-game-scene.js' does not provide an export named 'default'"
+
+In short, can't test my test scene now. :(
+
+But that's likely due to a lack of well... "Extending", so to speak. ;)
+
+"export default class Game" wise. So that barrier should be sorted. So now it's a matter of now ensuing the images appear as well.
+
+--
+
+16:20
+
+Some shenanigans involving copy/pasting over Damian's test code into mine, 'blank' wise later. It works, with debug barriers.
+
+Sadly, trying to re-implement my 'bar movement' code, led to as usual, the object phasing through, player wise. So, fun there.
+
+-
+
+16:50
+
+Spent half an hour more or less digging up Phaser Documentation/API, for a hint on potential collision fix. 'Cause as is, due to logic on only 'tracking' movement, instead of velocity. Phaser 3 is apparently bugging out on collision codes, without any 'stop gap'. So, gotta fix that in that case/sense.
+
+-
+
+16:58
+
+Thinking back, it's been nigh an hour, and pragmatically speaking I've made jack all progress in fixing this bug, over hypotheticals. So, assume stupid, to get SOMETHING to work. I'm at the stage where I'm better of making the 'test scene' more isolated, in the hopes of getting it to work on a prototypical stage, before I 'sync' it to the grander framework.
+
+Odds are, it'd be a mess in programming. But I'm at the point on grasping at straws here, especially with a looming deadline/s that I simply cannot afford to sling unlimited time on, debug hell wise.
+
+---
+
+17:07
+
+I'm at the stage where I need to sadly, take yet another brief break on this project. As I'm still stuck in circles, getting nowhere (more or less.) And internet's down. So I'll quickly do another project until then.
+
+----
+
+21/02/2020
+08:10
+
+Having a quick look with a fresh mind. Can't promise much, but I'm just going to assume silly, and look through tutorials again. Scratch wise, just in case it's my stupidity that caused collision woes.
+
+---
+
+08:43
+
+I'm hitting a brick wall, so I'm giving this a notch of a break for now, until I cool down, and can do some more hacking at this bloody menace.
+
+---
+
+25/02/2020
+07:47
+
+A big wound up argument in the morning, and I'm not in a good mood over this. That said, I'm in a situation where I HAVE to get something working, or god help me; I will cry for help. In calling myself a failure and all the jazz.
+
+Especially as by a certain ruler measure, I've failed to fix a bug for two days now. Axe wise.
+
+-
+
+Now, taking a step back. I need to in Phaser 3, do a simple thing.
+
+Mainly, get a moving box; controlled by the player. To NOT be able to move past an immovable obstacle, or box. Simple, right?
+
+In practice, a bloody nightmare. But eh, better show, no tell. Or no doubt I'd be wound up to the point of better of being dead, more or less.
+
+-
+
+07:52
+
+I'll start by lazy eye glancing through the lectures again. For I am stupid, and it might contain a eureka hint that I missed by being a fucking dozer.
+
+-
+
+08:16
+
+Some mixed news. Thus far, I've YET to get a 'stupid bloody work' in collisions, to well; work. Under this error;
+
+Uncaught TypeError: Cannot read property 'collide' of undefined
+
+However. I DID, managed to at least get world bounds to work. I think. And looking back, may have a global idea, to fix this. Hack wise...
+
+-
+
+08:21
+
+Realised why I was fucking up. Was referring to Phaser 2 examples, INSTEAD of Phaser 3. Which has bugged me up, yet again.
+
+-
+
+08:32
+
+So far, still can't understand how to do. In a look at examples, they lose me. Especially with how things are formatted.
+
+-
+
+08:46
+
+Still made no progress on collision. But, the silver lining is, the collision code isn't bugging up the entire scene anymore. So that's a mild improvement.
+
+---
+
+09:45
+
+I've looked through the slides, tutorials and even the documentation. And I'm still hitting a brick wall.
+
+As it's (more or less) Been two hours by now. I'm going to assume stupid, call myself an idiot and ask for help. Pushing what I've done so far (after a 'fix' on GameHandler), before throwing the towel (for now.)
+
+Since as a group, we. And especially I, cannot afford to be in a stuck boat for too long. Especially as this is now the third day of being stuck with this blasted issue, that simply refuses to give a clear cut sollution to me!
+
+In short, SDL2 hell all over again.
+
+-
+
+11:10
+
+I'm finally getting help in chat at this date/time, so I'll likely be switched back on for a 'double down' on web games, to fix the issues I've been persistently having on commentary.
+
+==
+
+Array order ;=
+
+STR, AGI, POW, I.Q, FUN
+
+== "Reference" for Pseudo-code
+
+----
+
+15:30
+
+I'll be brief, and say if I did a notch more work, or 'work', it was unlogged. As it was more continued tinkering in fixing things thanks to Damian's end. Who in the 'back end' manner, enabled functionality on actual colliders, that's all neat and tidy and all, I think?
+
+I'd say more, but suffice to say, odds are I'd now have to 'set up' my Web Server 'app' to a more specialised path in the short term, to avoid needing to needlessly 'tinker' at a scene, so to speak.
+
+----
+
+26/02/2020
+08:18
+
+A notch late. But checked Discord this morning. Got a suggestion to make a list of EVERY little thing I'd need in my mini-game/s. So I'm going to assume silly, and think of every little mechanic (instesad of generic), in the off chance I'm a numpty/idiot, and have to deal with the same hassle/mistake I had with the collisions and shit.
+
+-
+
+08:48
+
+Give or take half an hour's worth of thinking, and listening to Bomberman music. I got a 'rough' draft of gameplay mechanics/functions and such sorted, for the snowball mini-game. Now to give it one more iteration/etc, before throwing messages and such, alongside thinking on other mini-games to cover pre-emptively, sort of deal.
+
+-
+
+09:21
+
+I've done enough re-iteration, to more or less have the Snowball mini-game ironed out; more or less. So now it's taking a step back and re-look at the documentation as is/so far, sort of deal.
+
+10:11
+
+Going to take an early-er break. As I'm beginning to blank out again. And need to prepare/pack up early, to bring my laptop for further/future work sort of deal/thing.
+
+----
+
+15:00~ > 16:20
+
+So, I talked with my group and such, and essentially it was double checking all bell's
+
+This essentially means, that I have say; 4ish to 6ish on homework.
+Then give or take an hour or so, on at most; 7/9ish for self study homework.
+
+...
+
+16:30
+So, breather over with. Now to do actual programming, son. As I have a bucket list of stuff to implement on my end, after doing a last minute check through on Trello, on what needs to be done (to fine comb death.)
+
+
+16:46
+
+So far, I'm having hassle again, in trying to implement a lazy 'function' to hide the spawn code in. Worst case scenario, I'll assume stupid and go un-optimal in the programming.
+
+Doesnt' matter if it's dirty, so long as it works. Sort of blah.
+
+-
+
+17:44
+
+Did a basic 'hack' in programming son, in having a level layout 'laid', basic wise. I'll probably from there, take a quick breather for my laptop to cooldown, before doing another programming session.
+
+-
+
+19:54
+
+I've now had supper/dinner, and did light doodling. But fact is, so far; coding wise. I got slightly procrastin' with getting a 'basic' level layout sorted. So now comes the second part; figuring out how to 'spawn' and recycle/etc, Snowball's (give or take.)
+
+Which will be my new 'mechanic', or core part to work on, before I think of 'twiddling' in background to be a bit more n/ice-y.
+
+-
+
+20:45
+
+Before I knew it, spent nearly an hour or so in trying to get the 'skeleton' of a 'fire' snowball key set up. Ain't perfect, ain't fully done. But it's piecemeal progress, or more than my previous barrier.
+
+However, I'm still having some slight... technical difficulties. But hopefully, I'd get it done before wasting more than three days on it.
+
+-
+
+21:18
+
+Distraction later (heart beat wise). Got a bit more progress made. Ain't working, ain't perfect. But I think I'm on a direction here.
+
+And now, for a sincere break.
+
+===
+
+27/02/2020
+21:28
+
+Going to say a brief break. But I did roughly half an hour to an hour, just doing a bit of programming.
+
+Still stuck on GETTING, the firing code to work. But at least, I got the firing mechanic, to work. Kinda?
+
+====
+
+28/02/2020
+11:55
+
+I'm going to do one more shot at trying to get the functionality to 'just work' (more or less.) Give or take, that fun technical aspect known as 'aspect recycling' (or such.)
+
+-
+
+12:58
+
+It's been an hour, and so far; no dice. :(
+
+-
+
+13:56
+
+Another hour, another brick wall. For now, I'll pre-emptively upload my branch, in case if I do another sprint, it's the same old story.
+
+But until then, I'll just take a break.
+
+---
+
+15:54
+
+A bit of a break later, spent some time doing further programming, give or take 30 minutes from here. And so far, though I'm now 'kinda' got cleaner shot code. Said shot code still ain't working.
+
+-
+
+16:04
+
+Gonna take a lazy break now, sort of deal.
+
+---
+
+01/02/2020
+09:17
+
+Did some time doing some spriting, for approx. one to two hours. Got a bit twiddly, but to a base degree, I felt I made some decent (and visually differented) Tile sprites.
+
+Give or take trying to stick to a couple 'base' colours, and a more stark contrast with a possible 'water' block tile.
+
+So now that's done. To simply make some 'prefabs', give or take a potential Tiled "Sprite" layout, JSON wise. ;)
+
+-
+
+09:51
+
+Took awhile of twiddling, but base wise, I've drawn up a 'base' terrain now. Now it's a matter of lightly figuring out 'how' to do terrain, collision and such wise. ;)
+
+-
+
+10:12
+
+Got some mixed news. As 'is', I'm taking too long. But I can't afford to not make some progress. So short term 'fix', I've set up a sort of 'lazy map' image to default to, which I'll try and implement in my test game before calling a mid-break from there, arbitary 2 hour work session wise.
+
+-
+
+10:18
+
+And implemented. Collisions and such have yet to be added, but I've at least done some 'framework' set up, give or take a rough hack deal.
+
+====
+
+03/03/2020
+10:56
+
+Took a long break, but I'll see on what I can do on the programming side. Give or take, a 'little' tinker with map layout here, and see on coding/adding in collision tile/s for 'water' there.
+
+-
+
+11:19
+
+So far, I've done a 'rough' hack on the layers system. Now it's just a matter of just plain understanding it, and them implementing it within the dummy game. If I can get things to the 'point' of having the player unable to move 'past' a hypothetical 'water' collider, then I'm groovy.
+
+-
+
+11:42
+
+So far, I did more progress in programming the tileset. But I've made barely much progress in implementing said tileset per say, other than set up.
+
+-
+
+11:58
+
+So I made some hypothetical progress. All fine and dandy. But alas, it glitched out on my end. So I'm giving it a tactical break for now (more or less.)
+
+Depending on shenanigans/circumstances, I may instead 'dumb down' my code a notch to implement a basic tiled 'seabed' instead.
+
+===
+
+12:52
+
+Now, to give one last sprint (more or less) on this level. Best case scenario, I get layers and tiles. Worser case, I assume stupid and make a 'dummy' layout, that's more 'straight up', and auto generated with sea tiles instead.
+
+---
+
+13:14
+
+Thus far; bug city has fucked me again, with this lovely bug;
+
+"Uncaught TypeError: Cannot read property '2' of undefined"
+
+So. I'll likely need to redo/try my map code yet again. That said, here's hoping I get this figured out the easy way, over the hard way...
+
+-
+
+13:35
+
+Went through a few more hoops, and it's the same story, more or less.
+
+So I'm just going to assume stupid, and make a 'lazy map' version of the code now, more or less ;) :(.
+
+---
+
+14:00
+
+Hack wise, it's 'works' enough to leave as is. Wish I could add in a fancy level layout/design, but I had/have to assume stupid in technical difficulties, when it comes to the program/code itself, so to speak.
+
+===
+
+04/03/2020
+13:30
+
+Spent some time doing a related survey, and a quick lecture, before pulling in a change made by Damian in coding and such. Thing is, he has issues with GitHub, so odds are by the time I return/etc, it'd be all sorted.
+
+Bad news however, is my deadline I assumed/think I had, "by end of Week." is two days earlier than planned/expected, which is Friday. At a push, I might argue otherwise , but I'll treat the worst case scenario, as an additional motivator, at the expense of other modules.
+
+I need to get shooting, implemented. Collisions, implemented. And at least a 'hit/die' effect, implemented. Before a 'game over/replay' angle is applied, sort of deal.
+
+-
+
+15:28
+
+Travel, stress and cooldown later. I'll re-iterate.
+
+First, until now I assumed I had more time than professionally given. And when I got bluntly hit I had an earlier deadline, I went in a self-depricating spiral.
+
+So, fact is. I got until Friday to get the Web Games sorted. Which honestly (cynically speaking.) Is just the extra motivation I needed to get it done at a faster pace than my "Slow ass piece of cow" progress on the mini-game.
+
+I'll rant more, but I STILL got to implement on top of the now working shooty code, the second player, then collisions/hits, and the 'lives/health' system for a dodge-ball lite snow fight, for two player.
+
+And hell knows what I'd do to myself, if I fail an arbitary early deadline of 6pm on Friday...
+
+Again, I'd rant more. But the more I talk, the less I do...
+
+--
+
+15:38
+
+Had a slight hiccup with Damian's code, but I fixed it by parring it agian, to the working version. That said, another note I forgot to send myself...
+
+Is that until I get my programming sorted. I should not give any spare time towards cooling down or entertainment in my bedroom, until this is done. So, homework until it is done, more or less. Otherwise, I'm no different from a pig better of having it's head chopped off.
+
+-
+
+15:54
+
+Twiddle wise, I'm at the point/stage of needing to fix the snowball code a notch. Either in implementation, or execution. I can only pray this doesn't take too bloody long to implement.
+
+-
+
+16:16
+
+I'm having a nightmare of technical issues. So for now, I'll assume stupid, and revert my changes made so far, outside of some reliable optimization. And hope THAT Works. For clearly, I am a stupid git when it comes to folder shenanigans/issues, test wise. That, and in future for sanity's sake, move my unused code to a 'new' file for the moment, storage wise.
+
+-
+
+16:39
+
+I'm just going to take a step back, look at the structures of the files AS THEY STAND/IS, and make a suggestion/think on how to fix it, with multiple states that obviously are currently fucking up (in my lazy eye opinion.) That can pretty much put me under stress creak by Friday. As it could impact on getting a WORKING Snowball game.
+
+-
+
+16:58
+
+Fuck.
+
+I tried to fix it, it not only not work, but went error on my ass. So I'll have to assume stupid, and 'redo' from what I got working so far. A fucking gain.
+
+At this rate, I've spent two hours, and had zero fucking progress, apart from spawning optimisation. :(
+
+-
+
+17:04
+
+If nothing else, I've gotten the whole 'optimised' code added/fixed so far, spawning water wise. So I'll push that, and give myself a breather, before I do something worse than punch a wall.
+
+-
+
+17:45
+
+I'm going to spend roughly an hour-and-a-half from now, to do more programming. Then hopefully, taking a swim without gala closures or corona barring me another swimming trip. And the 'theme' for right now, is to test parraell what changes have been done behind the main scenes, to my own. In preparation to have well; more 'bug free' hassle, hopefully.
+
+-
+
+18:55
+
+-
+
+In advance, spent over an hour doing debug and question asking. Which ultimately led to a journey that ended in super fast object spawning. So thanks Damian for that...
+
+===
+
+21:56
+
+Got slightly distracted, and by the looks of things; Damian's crashed.
+
+So, I'm just going to spend my last waking hour, just tinkering. Then crash.
+
+-
+
+22:01
+
+Good news, is with some tinkering. I got projectile to fire on player position. Bad news, is no icons.
+
+So, that's something I'd likely need to do tender fixing soon enough.
+
+-
+
+22:07
+
+Fixed it. Turns out to be a matter of a "image load" issue. A matter that's best solved using math.
+
+In this case, have a 'list' of layers of objects to load, over. Totally. ;)
+
+-
+
+22:13
+
+Now that I've sorted out the matter of layering my snowballs. Comes the matter of figuring out how to re-use those snowballs, once they're out of bounds/screen, so to speak.
+
+-
+
+22:50
+
+So far, I'm having no dice when it comes to having the snowballs 'recycle', which is important. So I'm just going to do one last look on a Youtube tutorial, before calling it a night.
+
+=====
+
+05/03/2020
+07:43
+
+I'm going to be brief. So far, I'd still be working on getting those snowballs 'recycled' (more or less.) As until that is possible, the game can't really 'run' in the long term.
+
+-
+
+08:07
+
+I am a fucking, stupid gfik how deseresg...
+
+Okay, self hate aside. I am currently, struggling on Object Pooling, and winding myself up on that fact. I'll TRY my best. But stupid me, brain wise. Can't comprehend it, let alone figure out a stupid easy sollution to this hassle.
+
+So, worst case. I'll just have to assume stupid, and figure out on getting 'collisions' sorted out instead in the shorter term instead. Because that's also overdue. Way fucking overdue.
+
+-
+
+08:12
+
+Rage aside. SO far, I have so far'd made a tweak to have only one config. Ain't perfect, but little optimisations are better than the Jack Fuck All I feel I've been able to do, thus far.
+
+=
+
+08:18
+
+Jack.
+Fuck.
+All.
+
+-
+
+At this rate, I'm plagued with dark thoughts. On two lines;
+
+A: Better of dumping the entire burden/responsibility of the fucking snowball game to Damian;
+
+B: Just quit the team, accept a fail on fucking phaser/web games. And if it B/C grades my entire honours, accept it with self-inflcited hate.
+
+C: Chop a hand off. BEtter tghan fuvcki..
+
+I'm a self hating, spoiled little brat who dseserves to fuckking die.
+
+-----
+
+08:22
+
+Going by the age old logic of "take a step back, and breathe/think." I'm going to do just that.
+
+FUCK. Getting object recycle to work. I just CAN'T. I fucking tried, and failed. Ergo (I'm a failed programmer who deserves to die.)
+
+=-
+
+So, to be productive, instead of a self-hate spiral that'd make me smash a laptop, or worse. I'll focus on collisions, for fucking real. Hopefully, THAT won't have petty horror issues. :(
+
+-----
+
+08:29
+
+To a base degree, snowballs collide. Now the tricky part; figuring out 'how' to lower "HP" ('trigger' flag wise.) Remove snowball (Hack/tbc wise.) And on 'zero hp', kill player. And trigger that ucking 'game over screen' that's going to be cranked in.
+
+----
+
+08:45
+
+It's been an hour now. And all my mind has been, is "I don't fucking understand." If nothing else, I can at least, kinda understand a hint of collisions, more than fucking item recycle/spawn, pools wise.
+
+--
+
+09:30
+
+Near the end of two hours, and still no fucking progress. Probably not helped by how my mind's so plagued with "feel like a failure", that I'm actively searching FOR Feeling like a failure.
+
+-
+
+So, stupid wise. If I don't get it done. I'll double memo/pester Damian on "halp, I'm also a stupid ass git who can't understand collision events!" Much to self-deprecation, and a further dead confidence on being ABLE to meet a deadline.
+
+God, good thing I think I gave advance DOOM to Ross, instead of holding this doubt in, and let it explode with self-mutilation.
+
+---
+
+09:36
+
+And just when I got a chat, I fucking snapped. Just goes to show how fucking volitile my emotions are.
+
+Fucking hate them. Better of without them, period.
+
+===
+
+09:43
+
+Suffice to say, anger led to wasted time, getting more angry and talking about it. So assume stupid, I am not in the right state of mind to catch up 'til 10. I'm taking a break.
+
+But honestly, I'm now tempted with stray thoughts on if 'less' dark, just taking emotion killing drugs...
+
+But eh, small mercy is, I've letted Damian know about my hell in advance, instead of bottling it up.
+
+Now, for some fucking tea. And a break from a monitor that's a thread away from being smashed.
+
+Along with the ever present temptation, to shove a knife down my vocal cords/throat.
+
+----
+
+10:59
+
+I've cooled down now. Excessively so, but better with a completely clear mind, than a mind full of fire, or boiled anger.
+
+So, stupid me wise. I'll check my stuff (again), and see on continuing tinkering with snowballs from there.
+
+As is, I'm still cynical on my prospects of getting 6pm sorted out.
+
+-
+
+11:27
+
+No matter which way I slice my mind, still can't bloody understand, let alone figure out how to do events on collisions and shit.
+
+So, stable of "assume stupid", is I'll take a step back and think. In this case, look at the Trello board for tasks, and updates to do. As I'm such a stupid programmer, that doubt is already killing my chance of GETTING the mini-game done on time.
+
+-
+
+11:41
+
+Good news is, Damian's here. I'd talk more, but I'll leave it to another update.
+
+-
+
+11:48
+
+Damian's made another change, that should hopefully fix some/all issue's I've had until now. I'll give it a wait until it loads on GitHub's side of things.
+
+-
+
+12:16
+
+It's been nearly two hours, so I'll just state I'd take a lunch break by 13, or 1pm.
+
+That, and I've now got/recieved the push from Damian, more or less.
+
+-
+
+12:33
+
+And now I'm having re-iteration technical issues with configs and handlers. Which as is, is beyond my pay grade/ability. So, I'll likely take an early lunch, and see if I can fix this hassle manually.
+
+-
+
+13:08
+
+Break over-ish. Now to see on how to implement Damian's code/tweaks, while also fixing some sudden minute technical difficulties on my end.
+
+-
+
+13:20
+
+I'm stuck in a bind, I can't quite debug myself.
+
+Issue/error I have so/thus far, is "Uncaught SyntaxError: The requested module '../core/System/input-handler.js' does not provide an export named 'default'"
+
+Shortened form...
+
+Uncaught SyntaxError: The requested module '..' does not provide an export named 'default'
+
+[=
+
+So, had a look on that. And blind's eye wise, can't find a key 'tag' or such/blah called "default". And the code itself works brilliantly/reliably on the 'main page'.
+
+So in short, fun.
+
+-
+
+13:36
+
+I've posted a screenshot to the og squad, or group chat. As it's a bit too much of a thorn, and I utterly can NOT do testing, whilst it's still persistent.
+
+Thus, I am trapped in a self-destructive cycle, until that bug is fixed. :(
+
+=---
+
+13:48
+
+Kept on looking, and it's the same cycle. Even if I follow a hypothetical 'fix' found online, it still didn't worked.
+
+Thankfully, Damian stated that he'd have a look over, to see where went wrong, and how to fix it. But until then, I'm essentially stuck with a non-working, proto-version of the game itself. Which is quite horrific as is.
+
+---
+
+14:15
+
+Took a break-ih. And now just going to continue hammering down in getting that technical difficulty fixed. By myself ideally, if not by Damian give or take 2-or-so hours later.
+
+-
+
+14:27
+
+So I took a step back, went under the "if in doubt, cut it out" lens. And presto, at least the 'broken' game is loaded again. Even if the controls by themselves no longer work as planned/expected.
+
+From there, odds are I'd probably "assume stupid" wise, need to see on importing over the "multiple player" lens in a short term, feature wise. And build/plan from there.
+
+-
+
+14:30
+
+And so far, the obvious reason was that I forgot to update the "input handler" inport. As it 'was' imported as thus;
+
+"import [InputHandler] from..."
+
+Instead of this; (the newest version)
+
+"import * as Input from..."
+
+So now, I'll just compare the notes/noots, import p2, and hopefully things will go smooth sailing from 'ere on end.
+
+-
+
+14:57
+
+Before I knew it, I might have nearly spent two hours on this. So I'll check my log, to see if I need a kitkat of a break.
+
+-
+
+15:34
+
+Had a long enough break, so now I'm gonna continue debug fun, with Damian and pals in tow.
+
+-
+
+16:29
+
+Spent an hour before I knew it, in trying to debug a 'reload' code. However, I ain't perfect, and it's still buggy, so importance wise, I'm giving this a dab pass for now...
+
+That said, some ingenious programming on my end, ensured I added a bit of 'depth' to the throwing snowball code, to shoot at an 'odd' angle (give or take.) Ain't perfect, but any little variation of gameplay is to be welcomed IMO.
+
+So now, to get the basic 'gameplay collisions' to just work between mortal players, and by my miminum standards/lens, the gameplay would work. Maybe not perfectly, C grade wise. But it would at least work for the criteria itself.
+
+-
+
+16:36
+
+Going to take a brief breather, before I continue programming. But suffice to say, progress wise. I'm currently got basic collisions set with player's against snowballs again.
+
+Sadly, no advanced collisions. In a sense of getting damage on player, then knocking them 'out' in a sense, sort of deal.
+
+--
+
+16:52
+
+Nice hearing aside, I'm going to give another stab in re-implementing functions for checking, blah wise.
+
+Give or take, check for collisions from the snowball, and call a fancy event if it hits sort of deal (before removing a 'tick', sort of deal.)
+
+-
+
+17:19
+
+As my mind is right now, I'm struggling to comprehend event colliders. Even if I may have made a brief 'spark' on it for now.
+
+So, I'm going to likely do ten or so more minutes hacking through on this, before taking another breather. This time outside.
+
+-
+
+19:19
+
+Had a nice walk and break, so now with a clear head, to do further programming in attempting to get event collisions working.
+
+-
+
+19:24
+
+Did/added a little 'gap' on the throwing, give or take a slight divergence point. Shouldn't do much difference, but better little tweaks than massive sweaps.
+
+-
+
+20:19
+
+Did light blank outs, but suffice to say, I've got the 'skeleton' of an event system all sussed out. And to think I don't need to Actively ADD variables inside the function, in the assumption that those two variables would be INSIDE from the getgo...
+
+But eh, now I got very conditional trigger's in effect, I can expand into arbitary 'deduct HP from Player 1/2', then disable body if their HP is at zero, sort of deal. Complete with fanfair.
+
+-
+
+20:54
+
+Did final tweaks. But to a naked minimum, the basic gameplay is FINALLY implemented. Ain't perfect, could be polished. But from there, better GUI and limitations could be added here, sound effects and pet icons there. Along with a "Victor" code implemented. Basic C assured, now let's aim for a high A!
+
+NOW! I can rest. NOW, I can crash. Or in laymens terms; NOW, I can order my new monitor, do etcs, and relax on other checklists for the gameplay itself, mu-usic wise.
+
+===
+
+06/03/2020
+08:49
+
+Took awhile to breathe, but I have things set up.
+
+In general, talk wise it's agreed upon that I'll start work on the sound, while Damian takes over for the programming in the short term. I'll use this time to no doubt take/have a breather on things (more or less.)
+
+That said, sound should in theory, be dead simple to implement. Just need to do light planning here, and make the sounds.
+
+Of which, sounds should at most, take no more than two hours, tops. Ideally...
+
+-
+
+09:53
+
+Took a bit of twiddling, but to a base degree, I got sound already. Or at least, a 'safe' version. Now it's just a matter of at most, "muting" the throw sound, before implementing it within the project, to a base degree.
+
+-
+
+10:00
+
+That's the sounds made, tested and shared. Now to implement them within Phaser 3 and such hells.
+
+-
+
+10:06
+
+Added audio to the 'website files', now it's a matter of linking them into the game, and testing to ensure they (just) work. More or less. ;)
+
+---
+
+10:26 > 10:41
+
+Found a way to get the audio working, to a base degree. However, I'm now with the 'fun' time of having audio 'glitch in' to rapid repetition, to a base degree.
+
+So, debug it is. More or less. But base wise, I got the 'sample' sounds included now. So now it's a matter of figuring out how to add sound for all collisions and such.
+
+So now, odds are I'll spend the rest of this morning figuring out a way to make the 'audio' less glitchy, give or take some tinkering. And then, I can waste two more hours after lunch, essentially getting a decent background track playing quietly.
+
+Simple, eh?
+
+-
+
+11:06
+
+Nearly on my lunch break, and got almost the 'basics' implemented (sans 'disappearance'). And I got given a few suggestions on what I could be doing.
+
+Which is extending osme Dynamic Map he made, with stuff. I'll likely continue on until that advice is said, see if I can parse it before having lunch, and then parse it some more.
+
+-
+
+11:21
+
+Took a bit of re-attempts, but so far; audio is working to a base degree, sans one last sound effect.
+
+But alas, I'll now need to take an earnest lunch break. Odds are I'll continue my vigil next sprint, give or take also including a quiet background loop more or less.
+
+----
+
+13:00
+
+Now for my second part; find a music track.
+
+I got to the "naked near minimum", the sounds to work, even if not related/linked to the appropiate functionality and such. So now it's a matter of two things.
+
+A: Find a 'low key', retro/8-bit loop that's 'easy' on the memory.
+
+B: After seeing on sharing that finding online (music track, as a 'litmus' test to make it small and portable.)
+
+---
+
+13:16
+
+I've found my 'links' to refer to. And though glane wise, all of them should be free for use. Some of the samples are under a more restrictive version of a creative common's license.
+
+In laymens terms. If/when I find a music track, I will have to check and verify if liked.
+
+-
+
+14:03
+
+Took awhile to find 'a' music track, but in the end I'm just going to default to a CC0 song, called "Rewind" to edit out, more or less, to save on a loop.
+
+Sadly couldn't find something maybe 'christmas' related, but I think it's just as well, really.
+
+So short term, edit the asset. Then see on including it with hopefully not too much of a load.
+
+---
+
+14:24
+
+So far, yaawning hassle aside, I got the "Rewind" file folded down to something as small as 422 KB, akin to 0.4 MB.
+
+-
+
+14:35
+
+Breather aside, audio wise I've included the audio and such to the website structure. Now it's only a matter of linking it to the main scene, have the audio 'loop', and to a basic degree, things just work.
+
+-
+
+14:52
+
+Audio is in, just need to make sure it's not too loud, and I can mark that done.
+
+---
+
+14:56
+
+By the time two hours are nearly done, I have at a naked minimum, included 'some' form of audio, and 'some' form of music. So now to take a breather, before I do one last sprint to optimise everything in before.
+
+---
+
+15:40
+
+So, I had a laptop BSOD on me again. Which I took as a sign of having a long enough break.
+
+So now, as stated? Priority is to do code optimisation. Give or take at a minimum, also including 
+
+-
+
+16:34
+
+I did not said much, bar working on optimising code. And though IMO I made piecemeal progress...
+
+My laptop crashed, twice in a row. And I recall there being a phraise "Three times/thrice is enemy action".
+
+I'm just going to assume stupid, and run ccleaner to hopefully fix lingering bugs that could fuck me up, before continuing to hack at optimising my code, so to speak.
+
+-=
+
+16:50
+
+I tried to on the 'front end', to implement the final sound effect. But couldn't quite grasp the 'hows'. So I'm just going to let it be for now.
+
+That said, I'll likely conclude with spending the time to see if I can 'amp' the sounds a notch, if nothing else. If they end up too loud, they can easily be quieter in program, compared to made louder
+
+---
+
+17:03
+
+And I've just about made the sounds as loud as reasonably possible. So I'll leave it at that. ;)
+
+---
+
+11/03/2020
+12:50
+
+It's been nearly a week since I've last made an entry, or done something for this module. So I'll be brief;
+
+Odds are I'll likely do a "once over" in checking what else needs to be done, before on an 'ideal' state, spend a week (two, tops.) On making a Fetch game. Unlike last time, I'd at least not have a vaguely hanging gullotine, or doomsday clock hanging over my shoulder. But that will likely be countered, by spending less time on this to deal with a looming early deadline on another module.
+
+So, I'll see what I can do, planning wise, before I dab on a skeleton for a Fetch game. ;)
+
+---
+
+13:34
+
+So I finished trying not to fall asleep aside, next couple of lectures are apparently going to be labs, so in a certain point of view, I'd likely 'skip' those labs for now, and likely do them all in-house, sort of deal.
+
+That said, though the current deadline is currently the 30th March, we were hinted that the 'new due' day could be pushed even further, up to the 10th of april at most, projected wies.
+
+However, as with due respect, that date is uncertain to be pushed back, better of assuming the former in the short term, unless/until given advance notice, and prepare accordinly.
+
+-
+
+14:11
+
+Good news is so far, to a rough degree, I have generated some sounds. But JNC, I'll likely have to do some twiddling, before I take a step back, and make a brief checklist on a sticky note, before continuing.
+
+-
+
+14:30
+
+Now that I've made the sounds, I will name them, hear them again, and then ideally, mark the audio part of my music task, done.
+
+-
+
+14:34
+
+And that's the audio done, to a first rough draft. I'll likely now waste a brief two hour session next time, in searching for some (better?) Music, before taking another due break in travel arrangements.
+
+---
+
+16:26 > 16:44
+
+Thought I had this written, but ney. So I'll be brief. General ghist is to essentially two simple tasks;
+
+A: Find music for Fetch (first part, in general?)
+
+B: Write/get credits.
+
+Of which, I've done B up until now, and in the process of selecting A music track for the Fetch mini-game. Once I'm done with that, add appropiate credits in my text file, and save/upload that backup on 
+
+--
+
+17:06
+
+And that's me done on the Web Games. Everything checked twice and all that. So now to take a brief breather, before doing some self study on a critical module.
+
+---
+
+13/03/2020
+09:06
+
+Goalpost for today, is to short term, 'take a step back, and breathe'. Give or take, do some file management antics to be more pragmatic in file storage/usage.
+
+Medium term, make folly for a 'balancing' game, at the end. Give or take a soundtrack.
+
+-
+
+09:15
+
+File restructuring was quick to do/make, so now it's part a, balancing. and part b, sound making on hypothetical sounds, plan and implementation wise.
+
+-
+
+09:21
+
+Did some basic/minor Trello set up, sticky wise. However, before I even begin
+
+-
+
+10:32
+
+On off need to eat early aside, made progress in getting the sound done, in a bang. All's needed now, is to find a good soundtrack, or CC0 music track from Open Game Art, source wise.
+
+I'd have worked half an hour more, but alas early packing.
+
+---
+
+14:39
+
+Today's block is simple. At a minimum, my 'hunch' for advanced prep should be done on the dollar, tonight. And got far too much time assigned on this module, when my current/only priority for the group, is to work/focus on the sound assets themselves. If anything, I could argue I'd likely need to speak to my group to see what else I can do (at this rate), that I can reasonably handle without too much stress/etc.
+
+That said, my battle plan is two-fold;
+
+A: Get a reasonable (CC0/Public Domain) retro/8-bit tune to play for the game itself, before editing that tune to load quickly in a condensed manner.
+
+B: Double check/fix some of the example mini-games in a "rule of three" compromise. Give or take add an additional/briefer blurb on the 4th/5th mini-games, in the off chance we end up as a group, more than enough time/effort implemented to make that viable to add in within a day. ;)
+
+--
+
+14:48
+
+So far, I did some minor adjustments to the Trello board, before I continued. Give or take, parced/gave some context on the other mini-games, based of what's (to be) done.
+
+So now, I'll (ideally) resume my focus in getting the music track found, so to speak.)
+
+-
+
+15:01
+
+ATM, Internet is slightly laggy. Hopefully not for long.
+
+-
+
+15:20
+
+Some Corona concerns aside (message wise, for Monday wise in light of a surprise an nouncement on my Discord.); I'm all good on the sounds. Give or take, 'soften' the BGM in-game/settings, and I'm groovy.
+
+-
+
+15:28
+
+Upload/s done, now to do last-last minute thinking on a Balancing Game, in terms of mechanics (minimum.) Before calling it a night for real there.
+
+===
+
+14/03/2020
+09:54
+
+Did a minor update, but that's more uploading my progress to discord for transparency reasons, instead of hiding it on a branch I did on GitHub.
+
+---
+
+16:02
+
+I'm going to spend some initial time doing a rough 'set up' for misc. Monster sounds, to do with the rough draw list of 'verbal cues'. Before going on a line of "how could it be expanded", sort of deal. In other misc, hypothetical scenarios.
+
+-
+
+16:30
+
+Took half an hour of some calibrating, but so far; I got at least a handful of possible "death" sounds to check, give or take "which" one would be most suitable for the pets game.
+
+---
+
+17:11
+
+I'll leave it be for now. As A: I had enough breaks as is, and B: Stuck in dealing with how to do happy/sad cues, to leave it as is for now.
+
+Eh, I'll leave it as a possible self study event, later.
+
+====
+
+17/03/2020
+08:01
+
+Would have continued work yesterday, but I got nap happy. And before I knew it, needed to spend time elsewhere.
+
+So, today. I'll finish off my sounds, take a breather. And think on what else I could do for Web Games, before doing other errands, if I can't do anything else.
+
+-
+
+08:12
+
+Slept on the sound for awhile. And my hunch is, the happy sound/s is more or less ironed out, ish. Now it's the last minimum sound cue I need to make/get.
+
+---
+
+08:17
+
+I so far, have a snap thought on a 'sad' sound already in hand. Now, it's just a matter of re-iteration, and see if I can improve on the sound, or let it be.
+
+-
+
+08:30
+
+So with (to a degree), all the sounds I need included, added in. I can now safely take a step back, and think on what else needs doing, sort of deal.
+
+---
+
+09:33
+
+I spent an hour, roughly tinkering on grass tiles and a gameboy ocean tile. Initially spent some time double checking the new pallette. But I think I got it covered now. ;)
+
+--
+
+09:48
+
+I've uploaded my current progress to the uni boys team, in case I go all mentally blank later.
+
+That said, I'll likely end up pacing myself for now, and see on taking an earlier break, possibly.
+
+So in that sense, I'll likely take a break, and for future Web Games dev stuff; talk to Ross about it.
+
+====
+
+19/03/2020
+10:40
+
+Did some light polish on proto-sprites, and now aiming to do a rough 'sketch'/printout of the level layout using tiled. Give or take, taking notes on map limits and such, for possible "HUD" Elements. ;)
+
+---
+
+11:09
+
+Cutting it micro-short for now, as I've set up a "rough" map and file structure, for a 'test' game in fetch. I'll leave it at that, before I go too "johnny got his gun far too early", analog.
+
+====
+
+21/03/2020
+14:03
+
+I just got this log up on my main PC, after twiddling my thumbs a bit here, and honestly, currently waiting for everyone to be here? So I can not so twiddle, and do stuff. But eh, untill then, I can probably do 'some' sort of planning at least, asset wise ;).
+
+-
+
+15:35
+
+So far, I've feel like I've made almost jack fuck all in doing actual work. When so far, I'm twiddling my thumbs, trying to get the core functions to work, within the limited confines of a test environment. :(
+
+--
+
+16:02
+
+In conclusion. Though I may have done a micro-contribution. So far, I've ended up doing jack fuck all. So assume stupid, I'm just going to cow two more hours now, to catch up to the fact I ended up being a distracted slacker, of jack all.
+
+Hours spent distracted, is hours doing nothing. Ergo, doing nothing is better.
+
+-
+
+16:36
+
+I'm just going to take an earnest break on this for now. I'm stuck in a bud in technical difficulties, and need to breathe in/out before I see on maybe doing another shot on it. Best case, I debug it. Worst case, I'll work on another module instead.
+
+====
+
+24/03/2020
+11:08
+
+Tis' been a mild while, and I've yet to fully fix my yeet/bug up in a functional 'frame' for the Fetch mini-game. So I'll continue in trying to hack (read, 'fix') the mini-game itself.
+
+----
+
+11:25
+
+So far, I'm an utter blank in debug hell. That said, I've so far commented away all the 'bugs' to the point/part where I'm in a... "Kinda" functional state.
+
+So from there, I can ideally, debug my way, into implementing/adding in a functional players, give or take.
+
+-
+
+12:12
+
+So/thus far, I've edited in, and out. And looked from seas to shore. And in spite of that, I am plain unable to debug a movement glitch, that's by proxy fucking the ability for the game screen to properly load.
+
+Key word I'm suffering from thus far; is this phraise; ""uncaught typeerror cannot read property 'right' of null""
+
+-
+
+That's the message I've left. In digging up and down, with a fresh perspective. And still, a blasted load code refuses to work, the moment I start implementing a controller within the dedicated game.
+
+I don't know why that's a case. And odds are it's due to a stupidly simple reason, again. But as is, it's just plain buggy for me. And I can't code an ounce of gameplay, whilst still suffering from this. So, I sounded an alarm bell now, instead of later. Assume stupid wise.
+
+--
+
+12:40
+
+Breather aside, I ended up doing a bit of a debug help/nudge, with Ross and such. Sadly, no debug happened, but some semblence of console logging did.
+
+So, just going to quickly grab myself something to eat, and cooldown. Before I resume hacking at this road block that's barring further development of the fetch game.
+
+----
+
+15:17
+
+If I haven't said before? Now's the time I finally have/found assistence. So I'd be doing some screen sharing here, debug there. And see how things go/break down from there. ;)
+
+-
+
+15:37
+
+Turned out the root cause for all the bugs, was because I got a bit too cut happy with input.inputs. Assuming it was just cutting a 'player firing mechanic', when in fact; it was a vital movement script for keys on top of firing. So I "dummied" the player firing spirte to 'player', and bingo.
+
+---
+
+16:08
+
+Added a prototype "Block collider", in spriting. Ain't perfect, but so far; it's positioned well. Just not colliding well. But I'm sure in referring to past examples? It'd work out fine.
+
+=====
+
+29/03/2020
+13:12
+
+Took a bit of set up, and twiddling. But right now, I'm ready to hack in something... On Fetch. Give take, figuring out what I'm supposed to do, on top of technical hassles galore. Something that I got to do, within less than half a week, tops.
+
+---
+
+13:15
+
+To start with, glitches aside to figure out how to implement a 'block' to bar player from moving past a 'wall', for GUI and all that analog.
+
+----
+
+13:22
+
+Already I'm having a headache in trying to get the colliders to work. Give or take, assuming I'm a stupid idiot and looking through the tutorials again, that leads to the same story of "in theory, [THIS] code should work. But in practice, it just does not work."
+
+So far, it's fun demotivation right there. Twiddle wise. Before I even include or implement random obstacles and such.
+
+--
+
+13:42
+
+Still in a brick wall, so I did a hypothetical 'future proof' code for hypothetical resetting position, while I'm still grasping at straws, in a certain lens view.
+
+---
+
+13:46
+
+And now if that ain't 'fun' enough as is. I'm having even more bugs now with colliders. Joy. So... I'm just going to take a breather, with stumbling upon a phaser grade  technical issue.
+
+----
+
+19:07
+
+Starting to continue some effort/work on this, after taking a gap out on it. But as is, I feel like I'm going far too slow on this mini-game, for the team.
+
+--
+
+21:01
+
+For all due respect, assume I've done nigh feck all for two hours or so. In a 'stare at screen, do nothing' at best, be distracted at worst.
+
+That said, I'm just jumping out of the box for now, to deal with what I CAN do. Instead of mope in a negative feedback loop. And that's at this rate, just 'randomly' generate the stick, instead of the obstacles. At the rate I'm going, it'd be a miracle if I can include obstacles instead of just a 'barren' land, with no 'spice' to the gameplay.
+
+===
+
+30/03/2020
+08:57
+
+I've started work on some added sounds that needed to be do. As a partial warm up/break, and part set up on 'doing something, over nothing' in tone/analog. And already, got briefly distracted by a hidden feature of Bfxr, in the 'reverse' sound effect. Rad.
+
+--
+
+09:27
+
+Did some last minute tweaks. But so far, I have all the audio in hand already. Now it's a matter of hunting for a decent audio fishing track, 8-bity wise. 
+
+--
+
+09:47
+
+Mild distractions aside. I got a couple of tracks already. Now it's just a matter of a bit more fishing for alternates. Compare the best version, and grab/use it, as a reference board, more or less.
+
+---
+
+10:01
+
+Found the track. Now it's a matter of doing some editing, and I'm gold for a breather.
+
+---
+
+10:18
+
+Tea break aside. I have found and edited, and credited the chosen song. Now to 'upload' my choice picks, mark tasks as done, and take a breather. For real.
+
+-
+
+11:15
+
+Break over. Now to passively find that audio-clip, before I start programming.
+
+---
+
+11:27
+
+Found some catchy tunes, after a bit of googling. So now it'd be a case of 'find the best track' overall, and call that the theme.
+
+----
+
+11:35
+
+That's the backgroud audio found. Now I have no excuse not to do anything else in programming, twiddle wise.
+
+That said. If, once the horrible bugs are cleared, I can 'hypothetically' have the player reach/'bite' into a bone/fetch object, then in theory, I can add a 'score', and increment to a miracle from there. Give or take, then 'reset' the positions and such. ;)
+
+---
+
+11:51
+
+Now. Some set up on a bug aside. I'm now back to square one. How to fix the bugged spawning in-game?
+
+Tried 'removing' the one line of code that doesn't work, and it bugs up the game even more. Ergo, I NEED to include the "Setworldbounds" that is causing a body glitch. Problem, is. *How* is that simple line of code, that 'should' work; is bugging up?
+
+For my sanity, I'm just going to focus on beating my audio obligations, before I take a lazy/early lunch. As things stand, I'm not confident that I can DO the Fetch game, by the deadline.
+
+----
+
+12:20
+
+Took a bit of thought. But suffice to say, I have done added an extra sound, for now. At this rate, I WILL need to ask for help, in debug. As I'm just frankly blind in dealing with Phaser, to a detrimental degree.
+
+--
+
+13:10
+
+Making a note on a time gap, as I got so wound up I needed a breather earlier than before. So, I'm just going to 'slack' a notch on some pet projects, before trying to think of another angle I can work on, that isn't technical related 'set up to fail' analog.
+
+--
+
+13:35
+
+And as usual, it's the same case just looking at the code alone. In lazy eyed reference. The eternal trap of "It should work, but it does not."
+
+So, breather aside. I'm just going to procrastinate by thinking of lenses/fields I COULD be working on, within. That doesn't test/work on the glitchy spawn code, sort of deal.
+
+---
+
+13:48
+
+So far, my operation; continue outside the box. Has enabled me in a hack value/point of view, implement a 'reset' function. Ain't perfect, but if bare strapped. Once things are ideally, 'working'. Would in theory, lead to a case of less work needed for a bare naked, working/functional game.
+
+And from there, I can work/focus on implementing some 'assets' in possible hazards. Though at this rate, odds are it's better of simple 'movement' hazards over the frogger grade damage/position reset hazards. Fun, how deadlines can simplify gameplay.
+
+14:10
+
+Was distracted whilst fiddling on the project, on tasks done. And tasks to do. Which is an important rain check as any, to assess how far I have to go, on getting the 'game' itself to just work... No doubt it'd get to a point where I seriously need to re-debug the movement bug. But until then, frameworks are being set up, on a hypothetical lens.
+
+That said. With optimism, it still feels like a simple enough 'game' to implement to a base degree. Even if I may not end up with enough time to implement & test possible hazards.
+
+-
+
+14:17
+
+Did a light lookthrough, and at a glance. I don't know what much else I could hypothetically add in, without fixing the movement and such.
+
+So, I'll use it as a part break, and part revision on other modules/subjects.
+
+---
+
+19:15? > 20:00
+
+Took awhile and such, and having to push an update. But suffice to say, I did a stupid, and made a 'block' group "This.block", instead of a just plain block.
+
+Now, that bug out of the way. The game is... Functional. But not yet playable. As the colliders still don't plain work. But one step at a time, is progress enough as is. :)
+
+---
+
+20:37
+
+Spent the rest of my time, trying to debug an issue with getting 'overlap' to trigger. So taking a breather on that field/subject for now. Later on, I will get it fixed, with Damian if need be. Before I add the 'juice' to the naked gameplay, with enemy colliders, that could knock back the player to the beginning. Such as cars and such.
+
+That said, for simplicity/deadline reasons, I've 'simplified' my prototype map, to be only roads and grass, give or take a 'subtle' tweak on the spawn positions for both player and bone/stick, in accordance to the revamped/simplified spawn code.
+
+===
+
+31/03/2020
+08:40
+
+I'll be brief. Initial feelings is I've went one step forward, or a few. And a few steps stopped. Last time I checked, I'm having issues with getting the gameplay to function in colllisions.
+
+And though thus far, I finally have movement. But what I DON'T have, is the last key part (in my opinion), for the 'naked' gameplay. And that's "collide with bone, call game done."
+
+So, need to figure out how to do just that. ;)
+
+---
+
+08:48
+
+Lazy glance wise, still stuck on overlapping/colliding collisions. So I'm going to assume stupid, and look through the documentation, to a blind eye degree.
+
+-
+
+08:50
+
+So far, I've added functional 'bounce' now. But it feels more like side progress, compared to the main concern in gettig the 'overlap' or collider event to 'just work'.
+
+-
+
+Also trimmed the 'bone' prefab to be more reflective in collisions, but that's not the point. :(
+
+---
+
+09:07
+
+Made minor progress in a collision event. But sadly, I'm unable to call forth a functional 'reset' event from there. And further testing reveals it only works once, in-game.
+
+Still, progress. Which is better than nothing.
+
+----
+
+09:19
+
+And now I'm back to square one. Any element of my code working before. Now just does not work at all. So, back to square one, the saga.
+
+I'll see what else I can do. But worst case, NEED to take a breather.
+
+---
+
+09:41
+
+I've so far, spent 20 minutes trying to debug. And I'm in a brick wall of jack fuck all progress. Only thing I might be clear, is a hint;
+
+https://www.youtube.com/watch?v=vjlXPXLy5KU
+
+That, and self loathing, over studying like a fucking stupid idiot, on Phaser. And ending up in the same brick walls when I STRICTLY, look for "blah", colliders. And "Blah", events.
+
+Clearly, I am a dummy. Or that Phaser is a fucking nightmare, I forgot last academic year.
+
+-
+
+09:47
+
+To be on the safe side, I've pushed my changes for now. Though it kinda works as is so far... I'm still struggling with debug. So I've pushed it, in the off chance I spend the rest of my time/etc looking over documentation and shit, instead of doing another hack attempt at debug.
+
+---
+
+09:57
+
+I'm beginning to think in circles far too much. In a sense of mentally parcing the same 'should work' logic on a simple collider, far too much.
+
+So, to nip a mental cycle in the bud, I'm taking a break. Give or take, refuse to work on this further until back-up/assistence arrives, or such.
+
+Either way, I feel like such a dummy...
+
+That said, if strapped. Might look at what's there for the fishing mini-game, under an "assume stupid" mantra. But that's just about it. :(
+
+------
+
+13:33
+I've given enough time for Damian to maybe arrive. But alas, I'd just have to assume he's crashed at some point, again. So, odds are, it's all on me again.
+
+And bugs, I'm going to be hit by, again.
+
+At the rate I'm going, I'd be lucky if I can 'replicate' the same half-step I've managed to reach, in getting the collision to trigger WHEN a player collides, and not a moment sooner.
+
+In practice, it's getting to that point that'd be a bane.
+
+--
+
+14:01
+
+All it took, was a bit of a fresh perspective here, and some 'assume stupids' there in simplifying collisions and such, and I got the code to "Just work". Now, to see if I can fix it in a "simplify to dodge null/this"), see if THAT works. And then push the 'naked gameplay'.
+
+https://phaser.discourse.group/t/collision-enter-exit-event/1001/2
+
+Give or take, also figure out how to 'zero' velocity at the same time. ;)
+
+---
+
+14:31
+
+And proto-wise, I've got the Timer implemented, to a proto-degree. Not perfect, and would probably need Damian to link/sync it to the "in game timer" at some point, but 'a' timer function is there... ;)
+
+---
+
+15:12
+
+I've so far, included a graphical 'fix' from what Ross did so far, along with updating/dragging the disclaimer to the google drive here, and some fixes there.
+
+Only issue I see at a lazy eye/glance, is how as it is, the 'stick' is now a notch harder to find. But eh, I'll let it be for now, creative vision wise. That, and I had to tweak spawning a bit to ensure the players are positioned in the 'grass' area/field, sort of deal/lens.
+
+---
+
+15:28
+
+I'm going to take a break now. Did not do much programming bar twiddle guesses at best. But I spent the remaining time doing light 'set up' (more or less) on the whole gameplay itself. Give or take, grabbing/getting car assets for later.
+
+So, twiddle set up wise; I'll let it be for now. Push my "micro" changes, and tweak it on my main PC later on. With motivation at least. ;)
+
+---
+
+17:43
+
+I've made myself tea and such, just when Damian arrived. So from here on, odds are it'd be inspired work in implem
+
+---
+
+18:34
+
+Had on/off distractions. But so far, I've figured out the 'positions' for the firing mechanisms, for simple cars. That in an 'ideal' world, will be shot by RNGesus, and limited to a 'pool' cap in a manner similar to uh, bullets. Yeah.
+
+Now, the second 'twiddle' part; how to implement the 'basic moving car' threat.
+
+-
+
+19:34 > 20:27
+
+Damn. Got distracted for an hour or so. From video watching, then riffing on irl stuff. So, I'll probably take a 'hack' break shortly, then start another sprint to compensate.
+
+If I can at least get the 'start' of the 'spots' firing vehicles, then I'm gold. ;)
+
+---
+
+21:27
+
+Instead of keeping it bottled up, I've asked for help in advance. So odds are, I'll be assisted in spawning the cars with Damian on an ASAP basis. Best case scenario, I might even get it done tonight.
+
+Worst case, the seeds are there to ensure it's done by tomorrow, hopefully. And then polishing can be done, at best from there.
+
+-
+
+21:37
+
+I think I'll take an honest break for now, on my homework studies. At the very least, I got a helpline in hand for tomorrow, and need to get some decent sleep to be in top gear for tomorrow.
+
+====
+
+01/04/2020
+07:38
+
+Of the top of my head, I got the 'position' for the spawners set up, and all that jazz. Now, the major hassle and final obstacle? Is figuring out how to fire/spawn the 'cars', in a repetitive cycle, in variance and such. Give or take, "random hole 'position', sans colliders."
+
+Thankfully, I got pre-emptive warnings and bare notes to help iron through on that, phaser documentation as a maybe, and Damian's help 'til 6pm-y if all else fails. Either way, I still feel confident I can get the 'final skin mechanic' done by tonight, ideally. So I can then channel any remnant ability in polishing the meta gameplay loop itself.
+
+-
+
+08:24
+
+So far, I'm kinda half way there, -ish. In a sense of having car entity spawners set, but not registered, identified, or functional. That said, I don't know 'how' far or much progress I've made, other than the simple answer of "not yet ready".
+
+Hopefully, that will be resolved soon. Then I can go all cheese. ;)
+
+---
+
+09:14
+
+Still having technical issues with firing the spawn mechanic, when I got hit with a stray thought. Which led to future proof making the game more in a playable state. Give or take, less 'lanes' like bullet hell, more of a chance for an arbitary gap. In the hypothetical scenario of well, "Car (Bullet) Hell."
+
+----
+
+09:30
+
+So far, I'm mentally stuck, in figuring out another angle, or corner to try and debug a not actually working spawner. Eh, I'll give it half an hour, before I push my current progress. Take a breather, and then see if I can get it working, or Damian vice versa. Sort of deal.
+
+Ideally, with effort at least. Let's put it like that way... ;)
+
+---
+
+09:37
+
+I got hit with a minor 'eureka' moment, in thinking "maybe" the reason why the cars refused to spawn, was because the spawners were not constantly updated properly, within the update function.
+
+Sadly, it didn't work like a miralcle aid/cure. But the logic is there, I feel it. Probably not helped, by figuring out how to call an update, from a GROUP of objects. That is bound to be fun, no doubt. ;)
+
+----
+
+09:52
+
+I'll push what few/any changes I've made thus far, on my repository, git wise. So that Damian could potentially look over. I'll likely at best, spend 10 or so minutes looking at possible cues, before taking a break.
+
+---
+
+10:59
+
+After cooling down, and showing Damian what (little) I've done as side/pet projects, when relating/related to gaming. I'm going to with fresh eyes, do another dab/jab on trying to implement spawning mechanics/features. 
+
+---
+
+11:21
+
+A fun, evil chuckle I found, while being fresh eyed in needing to google. But in advance, fuck phaser.
+
+Specifically, for putting group updates, under the "PreUpdate" analog, apparently. If this quote is anything to go by;
+
+"Updates any group members, if Phaser.GameObjects.Group#runChildUpdate is enabled."
+
+So, with signs/stars aligned, "runChildUpdate" set to true/enabled, etc. HOPEFULLY, this will be the sexy sauce, for my spice.
+
+-
+
+11:29
+
+Sadly, "preUpdate" does not work, as hoped. But I feel it's a possible step, in a right, if convoluted direction.
+
+-
+
+11:39
+
+If anything. My biggest bane, is to figure out 'how' to call "preUpdate" in the first place. But eh, it should be ideally, easy enough to call?
+
+-
+
+11:42
+
+Geeked out on scene, but I don't think it could/would make much of a difference, sadly.
+
+-
+
+11:55
+
+So far, I'm in the trap angle of thinking in circles, again. So, I'll likely at most, do 15/30 or so minutes of effort, then make noodles. Then take a breather/game break, sort of deal.
+
+-
+
+12:00
+
+As my thoughts are beyond a doubt in a cycle right now, I need to take a bit of a breather. That said, since I've made so 'little' changes. I'll revert the changes I made thus far, and make a mental note to include/see on having a functional 'preUpdate' function within the main game for the 'groups' (update wise), and console.log to track/debug individual-ish timers.
+
+-----
+
+15:18
+
+So, while gaming here, and cooling down. Got hit with a horrible stray thought, to simplify my code... Which frankly, might lead to in a certain point of view, a more playable game, that can be 'gamed' with skill.
+
+Premise is, worst case scenario, yeet-y rush. I'd be fully content in implementing 'just' the boulder like objects instead. But that would sadly, lead to not good gameplay.
+
+Which leads me to point two on evil idea. Set the cars in advance, no evil spawning mechanics needed. Then have them move at a set tempo, and yeet back upon colliding on an edge.
+
+Rinse, repeat, bingo. No world colliders. All bingo upon "exit world bounds".
+
+Should, be relatively simple. And something I can 'hack on' sort of speak.
+
+--
+
+16:07
+
+So far, I've done some twiddling and the 'position' of the 'car bolders' is now set. Now machine wise, the only thing left is to A: Get them moving, and B: Get collisions assurely working.
+
+Once both are done, frogger-lite is agogo.
+
+---
+
+16:27
+
+So far, object 'base' spawn is working. As expected however, getting 'object overlap' to work, ain't working thus far, sadly. :(
+
+---
+
+16:53
+
+I'm going to take a needed breather now, before I forget. But suffice to say, to a buggy degree; gameplay is got skin with bolder collision. Give or take, added collision to water.
+
+Ain't perfect, and kinda buggy on the second player thus far. Which needs debug. But once that is debugged, I can continue in my trek/quest to add the last 'salt' to the gameplay loop itself.
+
+----
+
+22:23
+
+Okay, twiddle with games later, I've started doing debug, do the debug, then crash. And here's the joke;
+
+Not only was colliders fully working (son!), but only one part bugged out, because it was commented out!
+
+So, I fixed that. Which in an ironic twist, leads to one last thing to do;
+
+See if I can do a 'sprint' development on getting 
+
+-
+
+23:17
+
+Tis nigh an hour, and I've not figured out how to debug. That said, I at least debug'd my hassle, which was my folly.
+
+So now, tomorrow deadline. It's a case of "Make cars MOVE, or gtfo".
+
+==
+
+02/04/2020
+07:39
+
+With a fresh mind, I am now ready to do one last sprint, or couple. In ensuring the gameplay works to clothed layer. Give or take, get velocity, AND 'looparound' working.
+
+Two, relatively simple things. That should ideally be done in a day. But Phaser being Phaser, I'm reserved on that optimism.
+
+Regardless, do or die. At least there's more meat than skin on the gameplay, as it stands right now.
+
+-
+
+07:57
+
+Good, well mixed news.
+
+The good news being, I got cars to move. Give or take, using a lower key 'setVelo' instead of 'SetVelo', somehow.
+
+Now, the bad news, is the bugs in cars not 'resetting' position, bug wise. Hopefully, tis a bug that can be fixed in time.
+
+--
+
+08:32
+
+Bug wise, got hit with another sphaghetti, with reset position. So I'm pushing what I've done so far, pre-emptively. In case Damian can debug it before me.
+
+That said. Also got a brief tango/glitch fest with a faulty origin pull. Thankfully, I resolved it, before it can ruin my ability to make future changes and such.
+
+Now, to continue on the final countdown. :)
+
+---
+
+09:14
+
+Just when I gave up hope, I did some checking, and turned out that calling by 'x' value, doesn't refer to the object. Only the value.
+
+So I debugged that. And viola, game works!
+
+So now that I've pushed the update and such, and got a complete, functional game (before the GUI is implemented.) I'm going to take a game break. ;)
+
+----
+
+13:43
+
+Making a brief note/update, but for roughly 15/30 minutes, I've been working on ironing out, and double checking all the required sounds for the mini-game/s, are made/included within the build. Which incidentally, led me to being able to reuse unused assets for a last minute balancing game, into generic menu cues/sound effects for game state, and functionality.
+
+So now, it's a matter of pushing the file name tweaks, and bingo!
+
+====
+
+05/04/2020
+10:11
+
+So far, I did a light re-run after debug and all that. And so far, my lazy eye is saying 'the stick is too small', and noticed a 'minor' gap on the car in respawning.
+
+On those cases, I'm going to do a short term 'debug/fix' on that, before I even begin to continue working on trying to 'parse/include' the GUI elements into the gameplay itself, to the structure similar to the snowball mini-game.
+
+---
+
+11:29 > 11:39
+
+Though I initially came to fix UI and such, I ended up working on polishing the gameplay a notch instead. Give or take, adding SFX, make the stick more 'visible'...
+
+To well, polish on code here, fixing the 'car gaps' a notch there, sort of deal. Ain't perfect, but I feel that little brush, was what the gameplay needed.
+
+Could do more 'tweaks' on that, but as is, I now need to seriously get into fixing the GUI and such, analog wise.
+
+So now, all that's done aside. I feel like I can now get to 'moving' the test Fetch analog (heh), to the actual fetch mini-game analog. UI set up and such, deal.
+
+---
+
+12:01
+
+So, I've pulled and pushed the 'gameplay' as is, to the 'core' gameplay, without double checking in case technical difficulties arise. So in that lens/viewpoint, I'd probably at a push, check if Damian's OK with debugging that end for a bit.
+
+All that's needed is last minute debug/checking, and I can probably take a break from here. Give or take, distracted checking and being OK with the finer details of player collisions, sort of analog.
+
+====
+
+16/04/2020
+23:32
+
+It's been awhile. So I'll be brief. I'm currently twiddling my thumbs for the final update, and see if I need to do commentary for a recording.
+
+That, and given my foggy/tired mind (ha.) No doubt by the time the project is done, I'll crash. So by the time I wake up, I'll have to work on Web Games first thing. So that mental dagger is out of the road.
+
+------
+
+17/04/2020
+00:19
+
+Stayed awake, after doing a 'rough' notes draft on what I could do while foggy awake. Only to end up with no "need" for actual recording on my end. And odds being the game would take last last tweaks (no thanks to Phaser being Phaser.) To make, before it can "just works" enough for upload.
+
+So, I'm going to crash. And hope I can be functional enouhg on the morning.
+
+=====
+
+09:15
+
+Final countdown. Ideally, it'd be last last minute 'upload/sync to website, make sure it just works-ish'. And then bang, bingo. Upload twiddles (possibly) to the Lecturer, and I'm gold. Even if not gold, I'd still want to at least link/sync it to my website anyway, for that nice CV juice, sort of deal.
+
+And knowing I'll write/blah this in advance, I've written this from yesterday~, at approx. 22:31 ;)
+
+^Building on to this. My bullet point goals for now is a nice, mental list.
+
+A: Get the game 'working', in my web-site proper.
+B: "Gut" my website, to contain only the game itself.
+
+?: ???
+
+Z: Upload my end of the stuff. Documentation, and 'hollowed' website with game, to the assessment. And I should be golden. :)
+
+Should be easy enough to do, before 12. Hopefully... :)
+
+---
+
+09:32
+
+And woe and behold, I have a bit of technical difficulties in getting the project to load well/fully. I'll see what I can do TO get that game working. If not, I'll do a hack workaroud in a 'downloadable' zip, see if that works sort of deal. Ain't ideal, but if I can get this game playable somehow, I won't lose a couple points on my end, website wise. ;)
+
+And for the record, the bug I'm hit is the keyword; "Cannot use import statement outside a module".
+
+-
+
+09:42
+
+Got the game working. May have needed to add a bypass, but I got it working. And if it "just works", it just works. ;)
+
+-
+
+10:14
+
+Persistence wise, I'm still being hit with a Murphy list of bugs. Still seeing what I can do, in a debug point of view. But I'm at least somewhat content with having at least a download link included as well.
+
+No thanks to that "net::ERR_ABORTED 404" tag, which is a bloody HTML nightmare now.
+
+-
+
+10:33
+
+It's been an hour of debug now, and no dice. So far, I've added alt text as a dummy prompt the game is not loading. As said, I'll see what I can do, to get it working, before I upload the 'dummy files' in hand. But so far, it's bugs galore really.
+
+----
+
+10:40
+
+I'm just going to "bite the bullet" for now. In a sense of I can at MOST, "simulate" the game. But I cannot get the game to 'run' properly, per see.
+
+So I'll mention that within the page, for players determined to play the game. Ain't perfect. But I'm no technical genius, and a deadline is nearing.
+
+-
+
+10:56
+
+I'm filling things out on the 'accessibility' perspective. But suffice to say, I've included/embedded a Youtube link within my pets game. A warning and worded controls that's better than my verbosity. And planning on giving a 'brief' polish to the Pets about page. Give or take a 'brief' blurb on how we're a swell team, even if plagued with technical difficulties.
+
+---
+
+11:29
+
+I've now done the last 'rough' tweaks to show a bit more/nicer, on the 'about' page for the pets game. Now, enough slacking. Time to 'port' my log over, final edit wise. Then port the rest of everything to a 'zippable' web page (trimmed wise.) And get it uploaded.
+
+
+
+
